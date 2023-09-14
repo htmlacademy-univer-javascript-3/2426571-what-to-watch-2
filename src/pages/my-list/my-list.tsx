@@ -131,3 +131,5 @@ function MyListPage(props: MyListPageProps): JSX.Element {
     </div>
   );
 }
+
+export default MyListPage;

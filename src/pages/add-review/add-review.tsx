@@ -97,3 +97,5 @@ function AddReviewPage(props: AddReviewPageProps): JSX.Element {
     </section>
   );
 }
+
+export default AddReviewPage;

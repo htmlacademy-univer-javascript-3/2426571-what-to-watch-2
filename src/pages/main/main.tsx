@@ -96,12 +96,14 @@ function MainPage({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: MainPag
     }
   ];
 
-  const filmsSmallCards = filmsInfo.map(({filmName, filmSrc}, index) => 
-    <FilmSmallCard
-      key={index}
-      filmName={filmName}
-      filmImageSrc={filmSrc}
-    />
+  const filmsSmallCards = filmsInfo.map(({filmName, filmSrc}, index) =>
+    (
+      <FilmSmallCard
+        key={index}
+        filmName={filmName}
+        filmImageSrc={filmSrc}
+      />
+    )
   );
 
   return (

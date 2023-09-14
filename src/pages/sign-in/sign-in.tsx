@@ -50,3 +50,5 @@ function SignInPage(props: SignInPageProps): JSX.Element {
     </div>
   );
 }
+
+export default SignInPage;
