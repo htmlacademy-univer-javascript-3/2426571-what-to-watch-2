@@ -1,9 +1,13 @@
 import MovieSmallCard from '../../components/movie-small-card/movie-small-card';
+import { Genre } from '../../types/genre.enum';
 
 type MainPageProps = {
+  promoMovieName: string;
+  promoMovieGenre: Genre;
+  promoMovieReleaseDate: string;
 }
 
-function MainPage(props: MainPageProps): JSX.Element {
+function MainPage({promoMovieName, promoMovieGenre, promoMovieReleaseDate}: MainPageProps): JSX.Element {
   type MovieInfo = {
     movieName: string;
     movieSrc: string;
@@ -92,8 +96,9 @@ function MainPage(props: MainPageProps): JSX.Element {
     }
   ];
 
-  const moviesSmallCards = moviesInfo.map(({movieName, movieSrc}) => 
+  const moviesSmallCards = moviesInfo.map(({movieName, movieSrc}, index) => 
     <MovieSmallCard
+      key={index}
       movieName={movieName}
       movieImageSrc={movieSrc}
     />
@@ -132,14 +137,14 @@ function MainPage(props: MainPageProps): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src="img/the-grand-budapest-hotel-poster.jpg" alt={`${promoMovieName} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{promoMovieName}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{promoMovieGenre}</span>
+                <span className="film-card__year">{promoMovieReleaseDate}</span>
               </p>
 
               <div className="film-card__buttons">
