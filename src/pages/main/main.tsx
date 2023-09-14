@@ -1,106 +1,106 @@
-import MovieSmallCard from '../../components/movie-small-card/movie-small-card';
+import FilmSmallCard from '../../components/film-small-card/film-small-card';
 import { Genre } from '../../types/genre.enum';
 
 type MainPageProps = {
-  promoMovieName: string;
-  promoMovieGenre: Genre;
-  promoMovieReleaseDate: string;
+  promoFilmName: string;
+  promoFilmGenre: Genre;
+  promoFilmReleaseDate: string;
 }
 
-function MainPage({promoMovieName, promoMovieGenre, promoMovieReleaseDate}: MainPageProps): JSX.Element {
-  type MovieInfo = {
-    movieName: string;
-    movieSrc: string;
+function MainPage({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: MainPageProps): JSX.Element {
+  type FilmInfo = {
+    filmName: string;
+    filmSrc: string;
   }
 
-  const moviesInfo: MovieInfo[] = [
+  const filmsInfo: FilmInfo[] = [
     {
-      movieSrc: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
-      movieName: 'Fantastic Beasts: The Crimes of Grindelwald',
+      filmSrc: 'img/fantastic-beasts-the-crimes-of-grindelwald.jpg',
+      filmName: 'Fantastic Beasts: The Crimes of Grindelwald',
     },
     {
-      movieSrc: 'img/bohemian-rhapsody.jpg',
-      movieName: 'Bohemian Rhapsody',
+      filmSrc: 'img/bohemian-rhapsody.jpg',
+      filmName: 'Bohemian Rhapsody',
     },
     {
-      movieSrc: 'img/macbeth.jpg',
-      movieName: 'Macbeth',
+      filmSrc: 'img/macbeth.jpg',
+      filmName: 'Macbeth',
     },
     {
-      movieSrc: 'img/aviator.jpg',
-      movieName: 'Aviator',
+      filmSrc: 'img/aviator.jpg',
+      filmName: 'Aviator',
     },
     {
-      movieSrc: 'img/we-need-to-talk-about-kevin.jpg',
-      movieName: 'We need to talk about Kevin',
+      filmSrc: 'img/we-need-to-talk-about-kevin.jpg',
+      filmName: 'We need to talk about Kevin',
     },
     {
-      movieSrc: 'img/what-we-do-in-the-shadows.jpg',
-      movieName: 'What We Do in the Shadows',
+      filmSrc: 'img/what-we-do-in-the-shadows.jpg',
+      filmName: 'What We Do in the Shadows',
     },
     {
-      movieSrc: 'img/revenant.jpg',
-      movieName: 'Revenant',
+      filmSrc: 'img/revenant.jpg',
+      filmName: 'Revenant',
     },
     {
-      movieSrc: 'img/johnny-english.jpg',
-      movieName: 'Johnny English',
+      filmSrc: 'img/johnny-english.jpg',
+      filmName: 'Johnny English',
     },
     {
-      movieSrc: 'img/shutter-island.jpg',
-      movieName: 'Shutter Island',
+      filmSrc: 'img/shutter-island.jpg',
+      filmName: 'Shutter Island',
     },
     {
-      movieSrc: 'img/pulp-fiction.jpg',
-      movieName: 'Pulp Fiction',
+      filmSrc: 'img/pulp-fiction.jpg',
+      filmName: 'Pulp Fiction',
     },
     {
-      movieSrc: 'img/no-country-for-old-men.jpg',
-      movieName: 'No Country for Old Men',
+      filmSrc: 'img/no-country-for-old-men.jpg',
+      filmName: 'No Country for Old Men',
     },
     {
-      movieSrc: 'img/snatch.jpg',
-      movieName: 'Snatch',
+      filmSrc: 'img/snatch.jpg',
+      filmName: 'Snatch',
     },
     {
-      movieSrc: 'img/moonrise-kingdom.jpg',
-      movieName: 'Moonrise Kingdom',
+      filmSrc: 'img/moonrise-kingdom.jpg',
+      filmName: 'Moonrise Kingdom',
     },
     {
-      movieSrc: 'img/seven-years-in-tibet.jpg',
-      movieName: 'Seven Years in Tibet',
+      filmSrc: 'img/seven-years-in-tibet.jpg',
+      filmName: 'Seven Years in Tibet',
     },
     {
-      movieSrc: 'img/midnight-special.jpg',
-      movieName: 'Midnight Special',
+      filmSrc: 'img/midnight-special.jpg',
+      filmName: 'Midnight Special',
     },
     {
-      movieSrc: 'img/war-of-the-worlds.jpg',
-      movieName: 'War of the Worlds',
+      filmSrc: 'img/war-of-the-worlds.jpg',
+      filmName: 'War of the Worlds',
     },
     {
-      movieSrc: 'img/dardjeeling-limited.jpg',
-      movieName: 'Dardjeeling Limited',
+      filmSrc: 'img/dardjeeling-limited.jpg',
+      filmName: 'Dardjeeling Limited',
     },
     {
-      movieSrc: 'img/orlando.jpg',
-      movieName: 'Orlando',
+      filmSrc: 'img/orlando.jpg',
+      filmName: 'Orlando',
     },
     {
-      movieSrc: 'img/mindhunter.jpg',
-      movieName: 'Mindhunter',
+      filmSrc: 'img/mindhunter.jpg',
+      filmName: 'Mindhunter',
     },
     {
-      movieSrc: 'img/midnight-special.jpg',
-      movieName: 'Midnight Special'
+      filmSrc: 'img/midnight-special.jpg',
+      filmName: 'Midnight Special'
     }
   ];
 
-  const moviesSmallCards = moviesInfo.map(({movieName, movieSrc}, index) => 
-    <MovieSmallCard
+  const filmsSmallCards = filmsInfo.map(({filmName, filmSrc}, index) => 
+    <FilmSmallCard
       key={index}
-      movieName={movieName}
-      movieImageSrc={movieSrc}
+      filmName={filmName}
+      filmImageSrc={filmSrc}
     />
   );
 
@@ -137,14 +137,14 @@ function MainPage({promoMovieName, promoMovieGenre, promoMovieReleaseDate}: Main
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt={`${promoMovieName} poster`} width="218" height="327" />
+              <img src="img/the-grand-budapest-hotel-poster.jpg" alt={`${promoFilmName} poster`} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promoMovieName}</h2>
+              <h2 className="film-card__title">{promoFilmName}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promoMovieGenre}</span>
-                <span className="film-card__year">{promoMovieReleaseDate}</span>
+                <span className="film-card__genre">{promoFilmGenre}</span>
+                <span className="film-card__year">{promoFilmReleaseDate}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -205,7 +205,7 @@ function MainPage({promoMovieName, promoMovieGenre, promoMovieReleaseDate}: Main
           </ul>
 
           <div className="catalog__films-list">
-            {moviesSmallCards}
+            {filmsSmallCards}
           </div>
 
           <div className="catalog__more">
