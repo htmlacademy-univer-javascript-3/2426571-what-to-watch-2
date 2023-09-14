@@ -1,4 +1,4 @@
-import MainPage from '../../pages/main-page/main-page';
+import MainPage from '../../pages/main/main';
 import { Genre } from '../../types/genre.enum';
 
 type AppProps = {
