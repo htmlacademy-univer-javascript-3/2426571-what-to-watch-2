@@ -1,14 +1,14 @@
-import FilmSmallCard from '../../components/film-small-card/film-small-card';
-import { Genre } from '../../types/genre.enum';
+import { FilmSmallCard } from '../../components/film-small-card/film-small-card';
 
-type MainPageProps = {
+interface MainPageProps {
   promoFilmName: string;
-  promoFilmGenre: Genre;
-  promoFilmReleaseDate: string;
+  promoFilmGenre: string;
+  promoFilmReleaseDate: number;
 }
 
-function MainPage({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: MainPageProps): JSX.Element {
-  type FilmInfo = {
+export const MainPage = ({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: MainPageProps) => {
+
+  interface FilmInfo {
     filmName: string;
     filmSrc: string;
   }
@@ -231,6 +231,4 @@ function MainPage({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: MainPag
       </div>
     </div>
   );
-}
-
-export default MainPage;
+};

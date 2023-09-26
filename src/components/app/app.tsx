@@ -1,20 +1,13 @@
-import MainPage from '../../pages/main/main';
-import { Genre } from '../../types/genre.enum';
+import { MainPage } from '../../pages/main-page/main-page';
 
-type AppProps = {
+interface AppProps {
   promoFilmName: string;
-  promoFilmGenre: Genre;
-  promoFilmReleaseDate: string;
+  promoFilmGenre: string;
+  promoFilmReleaseDate: number;
 }
 
-function App({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: AppProps): JSX.Element {
-  return (
-    <MainPage
-      promoFilmName={promoFilmName}
-      promoFilmGenre={promoFilmGenre}
-      promoFilmReleaseDate={promoFilmReleaseDate}
-    />
-  );
-}
-
-export default App;
+export const App = (props: AppProps) => (
+  <MainPage
+    {...props}
+  />
+);
