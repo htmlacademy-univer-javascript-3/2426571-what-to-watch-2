@@ -7,7 +7,7 @@ interface PrivateRouteProps {
 }
 
 export const PrivateRoute = ({ authorizationStatus, children }: PrivateRouteProps) => (
-    authorizationStatus === AuthorizationStatus.Auth
-      ? children
-      : <Navigate to={RoutePath.Main + RoutePath.SignIn} />
+  authorizationStatus === AuthorizationStatus.Auth
+    ? children
+    : <Navigate to={RoutePath.Main + RoutePath.SignIn} />
 );

@@ -29,7 +29,7 @@ export const App = (props: AppProps) => (
           <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
             <MyListPage />
           </PrivateRoute>
-          }
+        }
         />
         <Route path={RoutePath.Films}>
           <Route path={RoutePath.Film} element={<FilmPage />} />

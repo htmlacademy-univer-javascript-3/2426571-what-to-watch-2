@@ -97,15 +97,13 @@ export const MainPage = ({ promoFilmName, promoFilmGenre, promoFilmReleaseDate }
     }
   ];
 
-  const filmsSmallCards = filmsInfo.map(({ filmName, filmSrc }, index) =>
-  (
+  const filmsSmallCards = filmsInfo.map(({ filmName, filmSrc }, index) => (
     <FilmSmallCard
       key={index}
       filmName={filmName}
       filmImageSrc={filmSrc}
     />
-  )
-  );
+  ));
 
   return (
     <div>
