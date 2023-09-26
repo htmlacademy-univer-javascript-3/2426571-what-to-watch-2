@@ -1,3 +1,5 @@
+import './film-page.scss';
+
 interface FilmPageProps { }
 
 export const FilmPage = (props: FilmPageProps) => (
@@ -22,7 +24,7 @@ export const FilmPage = (props: FilmPageProps) => (
           <ul className="user-block">
             <li className="user-block__item">
               <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                <img src="img/avatar.jpg" alt="User avatar" />
               </div>
             </li>
             <li className="user-block__item">
@@ -62,7 +64,7 @@ export const FilmPage = (props: FilmPageProps) => (
       <div className="film-card__wrap film-card__translate-top">
         <div className="film-card__info">
           <div className="film-card__poster film-card__poster--big">
-            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" />
           </div>
 
           <div className="film-card__desc">
@@ -109,7 +111,7 @@ export const FilmPage = (props: FilmPageProps) => (
         <div className="catalog__films-list">
           <article className="small-film-card catalog__films-card">
             <div className="small-film-card__image">
-              <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
+              <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" />
             </div>
             <h3 className="small-film-card__title">
               <a className="small-film-card__link" href="film-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
@@ -118,7 +120,7 @@ export const FilmPage = (props: FilmPageProps) => (
 
           <article className="small-film-card catalog__films-card">
             <div className="small-film-card__image">
-              <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175" />
+              <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" />
             </div>
             <h3 className="small-film-card__title">
               <a className="small-film-card__link" href="film-page.html">Bohemian Rhapsody</a>
@@ -127,7 +129,7 @@ export const FilmPage = (props: FilmPageProps) => (
 
           <article className="small-film-card catalog__films-card">
             <div className="small-film-card__image">
-              <img src="img/macbeth.jpg" alt="Macbeth" width="280" height="175" />
+              <img src="img/macbeth.jpg" alt="Macbeth" />
             </div>
             <h3 className="small-film-card__title">
               <a className="small-film-card__link" href="film-page.html">Macbeth</a>
@@ -136,7 +138,7 @@ export const FilmPage = (props: FilmPageProps) => (
 
           <article className="small-film-card catalog__films-card">
             <div className="small-film-card__image">
-              <img src="img/aviator.jpg" alt="Aviator" width="280" height="175" />
+              <img src="img/aviator.jpg" alt="Aviator" />
             </div>
             <h3 className="small-film-card__title">
               <a className="small-film-card__link" href="film-page.html">Aviator</a>
