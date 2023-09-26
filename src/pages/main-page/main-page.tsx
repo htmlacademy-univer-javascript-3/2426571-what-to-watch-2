@@ -1,4 +1,5 @@
 import { FilmSmallCard } from '../../components/film-small-card/film-small-card';
+import './main-page.scss';
 
 interface MainPageProps {
   promoFilmName: string;
@@ -6,7 +7,7 @@ interface MainPageProps {
   promoFilmReleaseDate: number;
 }
 
-export const MainPage = ({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: MainPageProps) => {
+export const MainPage = ({ promoFilmName, promoFilmGenre, promoFilmReleaseDate }: MainPageProps) => {
 
   interface FilmInfo {
     filmName: string;
@@ -96,14 +97,14 @@ export const MainPage = ({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: 
     }
   ];
 
-  const filmsSmallCards = filmsInfo.map(({filmName, filmSrc}, index) =>
-    (
-      <FilmSmallCard
-        key={index}
-        filmName={filmName}
-        filmImageSrc={filmSrc}
-      />
-    )
+  const filmsSmallCards = filmsInfo.map(({ filmName, filmSrc }, index) =>
+  (
+    <FilmSmallCard
+      key={index}
+      filmName={filmName}
+      filmImageSrc={filmSrc}
+    />
+  )
   );
 
   return (
@@ -127,7 +128,7 @@ export const MainPage = ({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: 
           <ul className="user-block">
             <li className="user-block__item">
               <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                <img src="img/avatar.jpg" alt="User avatar" />
               </div>
             </li>
             <li className="user-block__item">
@@ -139,7 +140,7 @@ export const MainPage = ({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: 
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt={`${promoFilmName} poster`} width="218" height="327" />
+              <img src="img/the-grand-budapest-hotel-poster.jpg" alt={`${promoFilmName} poster`} />
             </div>
 
             <div className="film-card__desc">
