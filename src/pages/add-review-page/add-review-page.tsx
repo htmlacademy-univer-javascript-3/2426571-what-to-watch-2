@@ -1,4 +1,5 @@
 import React from 'react';
+import './add-review-page.scss';
 
 interface AddReviewPageProps { }
 
@@ -43,7 +44,7 @@ export const AddReviewPage = (props: AddReviewPageProps) => {
           <ul className="user-block">
             <li className="user-block__item">
               <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                <img src="img/avatar.jpg" alt="User avatar" />
               </div>
             </li>
             <li className="user-block__item">
@@ -53,7 +54,7 @@ export const AddReviewPage = (props: AddReviewPageProps) => {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" />
         </div>
       </div>
 
