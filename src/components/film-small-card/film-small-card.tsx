@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { RoutePath } from '../../types/enums';
 import './film-small-card.scss';
 
 interface FilmSmallCardProps {
@@ -11,7 +13,7 @@ export const FilmSmallCard = ({filmName, filmImageSrc}: FilmSmallCardProps) => (
       <img src={filmImageSrc} alt={filmName} />
     </div>
     <h3 className="small-film-card__title">
-      <a className="small-film-card__link" href="film-page.html">{filmName}</a>
+    <Link className="small-film-card__link" to={RoutePath.Film}>{filmName}</Link>
     </h3>
   </article>
 );

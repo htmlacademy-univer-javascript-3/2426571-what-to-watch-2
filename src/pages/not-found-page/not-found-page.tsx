@@ -14,7 +14,7 @@ export const NotFoundPage = () => (
       </div>
     </header>
     <div className='not-found-page__content'>
-      <h1>404. Страница не найдена</h1>
+      <h1>Страница не найдена</h1>
       <h3><Link to={RoutePath.Main}>Вернуться на главную страницу</Link></h3>
     </div>
     <footer className="page-footer">

@@ -1,4 +1,4 @@
-export enum RoutePath {
+export const enum RoutePath {
   Main = '/',
   SignIn = 'login',
   MyList = 'mylist',
@@ -8,7 +8,7 @@ export enum RoutePath {
   Player = 'player/:id'
 }
 
-export enum AuthorizationStatus {
+export const enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
