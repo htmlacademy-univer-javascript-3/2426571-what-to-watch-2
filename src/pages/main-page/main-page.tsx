@@ -1,4 +1,7 @@
 import { FilmSmallCard } from '../../components/film-small-card/film-small-card';
+import { Footer } from '../../components/footer/footer';
+import { Header } from '../../components/header/header';
+import { AuthorizationStatus } from '../../types/enums';
 import './main-page.scss';
 
 interface MainPageProps {
@@ -114,26 +117,7 @@ export const MainPage = ({ promoFilmName, promoFilmGenre, promoFilmReleaseDate }
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
-        </header>
+        <Header authorizationStatus={AuthorizationStatus.Auth} headerClassName="film-card__head" />
 
         <div className="film-card__wrap">
           <div className="film-card__info">
@@ -214,19 +198,7 @@ export const MainPage = ({ promoFilmName, promoFilmGenre, promoFilmReleaseDate }
           </div>
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </div>
   );

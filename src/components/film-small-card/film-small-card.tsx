@@ -13,7 +13,7 @@ export const FilmSmallCard = ({filmName, filmImageSrc}: FilmSmallCardProps) => (
       <img src={filmImageSrc} alt={filmName} />
     </div>
     <h3 className="small-film-card__title">
-    <Link className="small-film-card__link" to={RoutePath.Film}>{filmName}</Link>
+      <Link className="small-film-card__link" to={RoutePath.Film}>{filmName}</Link>
     </h3>
   </article>
 );
