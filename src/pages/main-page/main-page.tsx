@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { FilmSmallCard } from '../../components/film-small-card/film-small-card';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
@@ -11,10 +12,14 @@ interface MainPageProps {
 }
 
 export const MainPage = ({ promoFilmName, promoFilmGenre, promoFilmReleaseDate }: MainPageProps) => {
-
   interface FilmInfo {
     filmName: string;
     filmSrc: string;
+  }
+
+  interface GenreInfo {
+    genreName: string;
+    isActive?: boolean;
   }
 
   const filmsInfo: FilmInfo[] = [
@@ -100,6 +105,37 @@ export const MainPage = ({ promoFilmName, promoFilmGenre, promoFilmReleaseDate }
     }
   ];
 
+  const genresCatalogue: GenreInfo[] = [
+    {
+      genreName: 'All genres',
+      isActive: true
+    },
+    {
+      genreName: 'Comedies',
+    },
+    {
+      genreName: 'Crime',
+    },
+    {
+      genreName: 'Documentary',
+    },
+    {
+      genreName: 'Horror',
+    },
+    {
+      genreName: 'Kids & Family',
+    },
+    {
+      genreName: 'Romance',
+    },
+    {
+      genreName: 'Sci-Fi',
+    },
+    {
+      genreName: 'Thrillers',
+    },
+  ];
+
   const filmsSmallCards = filmsInfo.map(({ filmName, filmSrc }, index) => (
     <FilmSmallCard
       key={index}
@@ -107,6 +143,16 @@ export const MainPage = ({ promoFilmName, promoFilmGenre, promoFilmReleaseDate }
       filmImageSrc={filmSrc}
     />
   ));
+
+  const genresCatalogueItems = genresCatalogue.map(({ genreName, isActive}, index) => {
+    const genreClassName = isActive === undefined ? 'catalog__genres-item' : 'catalog__genres-item catalog__genres-item--active';
+
+    return (
+      <li className={genreClassName} key={index}>
+        <Link to='#' className="catalog__genres-link">{genreName}</Link>
+      </li>
+    );
+  });
 
   return (
     <div>
@@ -157,36 +203,7 @@ export const MainPage = ({ promoFilmName, promoFilmGenre, promoFilmReleaseDate }
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">All genres</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Comedies</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Crime</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Documentary</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Dramas</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Horror</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Kids & Family</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Romance</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Sci-Fi</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Thrillers</a>
-            </li>
+            {genresCatalogueItems}
           </ul>
 
           <div className="catalog__films-list">

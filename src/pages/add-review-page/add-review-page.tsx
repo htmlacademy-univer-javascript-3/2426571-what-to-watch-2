@@ -1,7 +1,8 @@
 import React from 'react';
 import './add-review-page.scss';
 import { Header } from '../../components/header/header';
-import { AuthorizationStatus } from '../../types/enums';
+import { AuthorizationStatus, RoutePath } from '../../types/enums';
+import { Link } from 'react-router-dom';
 
 interface AddReviewPageProps { }
 
@@ -26,10 +27,10 @@ export const AddReviewPage = (props: AddReviewPageProps) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
+                <Link className="breadcrumbs__link" to={RoutePath.Film}>The Grand Budapest Hotel</Link>
               </li>
               <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link">Add review</a>
+                <Link className="breadcrumbs__link" to={RoutePath.AddReview} >Add review</Link>
               </li>
             </ul>
           </nav>
