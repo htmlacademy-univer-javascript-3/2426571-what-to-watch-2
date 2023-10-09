@@ -1,16 +1,25 @@
-import FilmSmallCard from '../../components/film-small-card/film-small-card';
-import { Genre } from '../../types/genre.enum';
+import { Link } from 'react-router-dom';
+import { FilmSmallCard } from '../../components/film-small-card/film-small-card';
+import { Footer } from '../../components/footer/footer';
+import { Header } from '../../components/header/header';
+import { AuthorizationStatus } from '../../types/enums';
+import './main-page.scss';
 
-type MainPageProps = {
+interface MainPageProps {
   promoFilmName: string;
-  promoFilmGenre: Genre;
-  promoFilmReleaseDate: string;
+  promoFilmGenre: string;
+  promoFilmReleaseDate: number;
 }
 
-function MainPage({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: MainPageProps): JSX.Element {
-  type FilmInfo = {
+export const MainPage = ({ promoFilmName, promoFilmGenre, promoFilmReleaseDate }: MainPageProps) => {
+  interface FilmInfo {
     filmName: string;
     filmSrc: string;
+  }
+
+  interface GenreInfo {
+    genreName: string;
+    isActive?: boolean;
   }
 
   const filmsInfo: FilmInfo[] = [
@@ -96,15 +105,54 @@ function MainPage({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: MainPag
     }
   ];
 
-  const filmsSmallCards = filmsInfo.map(({filmName, filmSrc}, index) =>
-    (
-      <FilmSmallCard
-        key={index}
-        filmName={filmName}
-        filmImageSrc={filmSrc}
-      />
-    )
-  );
+  const genresCatalogue: GenreInfo[] = [
+    {
+      genreName: 'All genres',
+      isActive: true
+    },
+    {
+      genreName: 'Comedies',
+    },
+    {
+      genreName: 'Crime',
+    },
+    {
+      genreName: 'Documentary',
+    },
+    {
+      genreName: 'Horror',
+    },
+    {
+      genreName: 'Kids & Family',
+    },
+    {
+      genreName: 'Romance',
+    },
+    {
+      genreName: 'Sci-Fi',
+    },
+    {
+      genreName: 'Thrillers',
+    },
+  ];
+
+  const filmsSmallCards = filmsInfo.map(({ filmName, filmSrc }, index) => (
+    <FilmSmallCard
+      key={index}
+      filmName={filmName}
+      filmImageSrc={filmSrc}
+    />
+  ));
+
+  const genresCatalogueItems = genresCatalogue.map(({ genreName, isActive}, index) => {
+    const genreClassName = isActive === undefined ? 'catalog__genres-item' : 'catalog__genres-item catalog__genres-item--active';
+
+    return (
+      <li className={genreClassName} key={index}>
+        <Link to='#' className="catalog__genres-link">{genreName}</Link>
+      </li>
+    );
+  });
 
   return (
     <div>
@@ -115,31 +163,12 @@ function MainPage({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: MainPag
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header film-card__head">
-          <div className="logo">
-            <a className="logo__link">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
-        </header>
+        <Header authorizationStatus={AuthorizationStatus.Auth} headerClassName="film-card__head" />
 
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt={`${promoFilmName} poster`} width="218" height="327" />
+              <img src="img/the-grand-budapest-hotel-poster.jpg" alt={`${promoFilmName} poster`} />
             </div>
 
             <div className="film-card__desc">
@@ -174,36 +203,7 @@ function MainPage({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: MainPag
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">All genres</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Comedies</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Crime</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Documentary</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Dramas</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Horror</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Kids & Family</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Romance</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Sci-Fi</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Thrillers</a>
-            </li>
+            {genresCatalogueItems}
           </ul>
 
           <div className="catalog__films-list">
@@ -215,22 +215,8 @@ function MainPage({promoFilmName, promoFilmGenre, promoFilmReleaseDate}: MainPag
           </div>
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </div>
   );
-}
-
-export default MainPage;
+};
