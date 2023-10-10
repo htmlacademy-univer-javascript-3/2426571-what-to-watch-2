@@ -13,18 +13,16 @@ import { AddReviewPage } from '../../pages/add-review-page/add-review-page';
 import { PlayerPage } from '../../pages/player-page/player-page';
 import { NotFoundPage } from '../../pages/not-found-page/not-found-page';
 import { IFilm } from '../../types/interfaces';
-import { films } from '../../mocks/films';
 
 interface AppProps {
   films: IFilm[];
-  promoFilmId: number;
 }
 
-export const App = (props: AppProps) => (
+export const App = ({films}: AppProps) => (
   <BrowserRouter>
     <Routes>
       <Route path={RoutePath.Main}>
-        <Route index element={<MainPage {...props} />} />
+        <Route index element={<MainPage films={films} promoFilmId={88} />} />
         <Route path={RoutePath.SignIn} element={<SignInPage />} />
         <Route path={RoutePath.MyList} element={
           <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
