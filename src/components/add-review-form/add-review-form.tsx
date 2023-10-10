@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { ChangeEvent, Fragment, MouseEvent, useState } from 'react';
 import { IReview } from '../../types/interfaces';
 
 interface AddReviewFormProps {
@@ -13,12 +13,12 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
     rating: -1,
   });
 
-  const handleTextAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = event.target;
     setReviewForm({...reviewForm, [name]: value});
   };
 
-  const handleInputChange = (event: React.MouseEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: MouseEvent<HTMLInputElement>) => {
     if (event.target instanceof HTMLInputElement) {
       const {name, value} = event.target;
       setReviewForm({...reviewForm, [name]: Number(value)});
