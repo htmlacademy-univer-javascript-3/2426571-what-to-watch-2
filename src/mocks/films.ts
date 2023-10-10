@@ -1,21 +1,6 @@
-interface FilmInfo {
-  id: number;
-  title: string;
-  year: number;
-  summary: string;
-  short_summary: string;
-  genres: string;
-  imdb_id: string;
-  runtime: number;
-  youtube_trailer: string;
-  rating: string;
-  movie_poster: string;
-  director: string;
-  writers: string;
-  cast: string;
-}
+import { IFilm } from '../types/interfaces';
 
-const films = [
+export const films: IFilm[] = [
   {
     id: 88,
     title: "The Greatest Showman",
