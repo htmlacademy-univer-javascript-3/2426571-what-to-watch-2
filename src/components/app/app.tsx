@@ -12,8 +12,10 @@ import { FilmPage } from '../../pages/film-page/film-page';
 import { AddReviewPage } from '../../pages/add-review-page/add-review-page';
 import { PlayerPage } from '../../pages/player-page/player-page';
 import { NotFoundPage } from '../../pages/not-found-page/not-found-page';
+import { IFilm } from '../../types/interfaces';
 
 interface AppProps {
+  films: IFilm[];
   promoFilmName: string;
   promoFilmGenre: string;
   promoFilmReleaseDate: number;
