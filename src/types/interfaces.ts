@@ -8,8 +8,8 @@ export interface IFilm {
   imdb_id: string;
   runtime: number;
   youtube_trailer: string;
-  rating: string;
-  movie_poster: string;
+  rating: number;
+  poster: string;
   director: string;
   writers: string;
   cast: string;
