@@ -6,6 +6,13 @@
 }
 
 .film-card__poster {
+  &.film-card__poster--big {
+    img {
+      width: 273px;
+      height: 410px;
+    }
+  }
+
   img {
     width: 218px;
     height: 327px;
