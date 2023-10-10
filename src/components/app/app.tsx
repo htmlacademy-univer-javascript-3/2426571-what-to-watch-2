@@ -13,12 +13,11 @@ import { AddReviewPage } from '../../pages/add-review-page/add-review-page';
 import { PlayerPage } from '../../pages/player-page/player-page';
 import { NotFoundPage } from '../../pages/not-found-page/not-found-page';
 import { IFilm } from '../../types/interfaces';
+import { films } from '../../mocks/films';
 
 interface AppProps {
   films: IFilm[];
-  promoFilmName: string;
-  promoFilmGenre: string;
-  promoFilmReleaseDate: number;
+  promoFilmId: number;
 }
 
 export const App = (props: AppProps) => (
@@ -29,15 +28,19 @@ export const App = (props: AppProps) => (
         <Route path={RoutePath.SignIn} element={<SignInPage />} />
         <Route path={RoutePath.MyList} element={
           <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-            <MyListPage />
+            <MyListPage films={films} />
           </PrivateRoute>
         }
         />
         <Route path={RoutePath.Films}>
-          <Route path={RoutePath.Film} element={<FilmPage />} />
-          <Route path={RoutePath.AddReview} element={<AddReviewPage />} />
+          <Route path={RoutePath.Film}>
+            <Route index element={<FilmPage films={films} />} />
+            <Route path={RoutePath.AddReview} element={<AddReviewPage films={films} />} />
+          </Route>
         </Route>
-        <Route path={RoutePath.Player} element={<PlayerPage />} />
+        <Route path={RoutePath.Player}>
+          <Route index path={RoutePath.Film} element={<PlayerPage films={films} />} />
+        </Route>
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

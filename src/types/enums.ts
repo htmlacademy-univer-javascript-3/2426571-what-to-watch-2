@@ -4,8 +4,8 @@ export const enum RoutePath {
   MyList = 'mylist',
   Films = 'films',
   Film = ':id',
-  AddReview = ':id/review',
-  Player = 'player/:id'
+  AddReview = 'review',
+  Player = 'player'
 }
 
 export const enum AuthorizationStatus {
