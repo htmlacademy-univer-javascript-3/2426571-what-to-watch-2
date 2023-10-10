@@ -14,3 +14,8 @@ export interface IFilm {
   writers: string;
   cast: string;
 }
+
+export interface IGenre {
+  id: number;
+  name: string;
+}
