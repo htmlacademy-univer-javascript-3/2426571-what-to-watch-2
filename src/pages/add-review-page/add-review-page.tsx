@@ -1,9 +1,9 @@
-import React from 'react';
 import './add-review-page.scss';
 import { Header } from '../../components/header/header';
 import { AuthorizationStatus, RoutePath } from '../../types/enums';
 import { Link, useParams } from 'react-router-dom';
 import { IFilm } from '../../types/interfaces';
+import { AddReviewForm } from '../../components/add-review-form/add-review-form';
 
 interface AddReviewPageProps {
   films: IFilm[];
@@ -12,13 +12,6 @@ interface AddReviewPageProps {
 export const AddReviewPage = ({films}: AddReviewPageProps) => {
   const { id } = useParams();
   const film = films.filter(x => x.id === Number(id))[0];
-
-  const ratingStars = [...Array(10).keys()].reverse().map((i) => (
-    <React.Fragment key={i} >
-      <input className="rating__input" id={`star-${i + 1}`} type="radio" name="rating" value={i + 1} />
-      <label className="rating__label" htmlFor={`star-${i + 1}`}>Rating {i + 1}</label>
-    </React.Fragment>
-  ));
 
   return (
     <section className="film-card film-card--full">
@@ -47,23 +40,7 @@ export const AddReviewPage = ({films}: AddReviewPageProps) => {
         </div>
       </div>
 
-      <div className="add-review">
-        <form action="#" className="add-review__form">
-          <div className="rating">
-            <div className="rating__stars">
-              {ratingStars}
-            </div>
-          </div>
-
-          <div className="add-review__text">
-            <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
-            <div className="add-review__submit">
-              <button className="add-review__btn" type="submit">Post</button>
-            </div>
-
-          </div>
-        </form>
-      </div>
+      <AddReviewForm filmId={Number(id)} />
 
     </section>
   );

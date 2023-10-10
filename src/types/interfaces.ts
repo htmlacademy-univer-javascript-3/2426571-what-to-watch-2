@@ -19,3 +19,10 @@ export interface IGenre {
   id: number;
   name: string;
 }
+
+export interface IReview {
+  id: number;
+  filmId: number;
+  text: string;
+  rating: number;
+}
