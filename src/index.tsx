@@ -11,9 +11,7 @@ root.render(
   <React.StrictMode>
     <App
       films={films}
-      promoFilmName='The Grand Budapest Hotel'
-      promoFilmGenre='Drama'
-      promoFilmReleaseDate={2014}
+      promoFilmId={88}
     />
   </React.StrictMode>
 );

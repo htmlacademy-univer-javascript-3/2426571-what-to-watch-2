@@ -10,10 +10,10 @@ interface FilmSmallCardProps {
 export const FilmSmallCard = ({film}: FilmSmallCardProps) => (
   <article className="small-film-card catalog__films-card">
     <div className="small-film-card__image">
-      <img src={film.poster} alt={film.title} />
+      <img src={film.poster} alt={`${film.title} poster`} />
     </div>
     <h3 className="small-film-card__title">
-      <Link className="small-film-card__link" to={RoutePath.Film}>{film.title}</Link>
+      <Link className="small-film-card__link" to={`/${RoutePath.Films}/${film.id}`}>{film.title}</Link>
     </h3>
   </article>
 );

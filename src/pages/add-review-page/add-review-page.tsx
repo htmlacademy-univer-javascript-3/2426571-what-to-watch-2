@@ -2,11 +2,17 @@ import React from 'react';
 import './add-review-page.scss';
 import { Header } from '../../components/header/header';
 import { AuthorizationStatus, RoutePath } from '../../types/enums';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { IFilm } from '../../types/interfaces';
 
-interface AddReviewPageProps { }
+interface AddReviewPageProps {
+  films: IFilm[];
+}
 
-export const AddReviewPage = (props: AddReviewPageProps) => {
+export const AddReviewPage = ({films}: AddReviewPageProps) => {
+  const { id } = useParams();
+  const film = films.filter(x => x.id === Number(id))[0];
+
   const ratingStars = [...Array(10).keys()].reverse().map((i) => (
     <React.Fragment key={i} >
       <input className="rating__input" id={`star-${i + 1}`} type="radio" name="rating" value={i + 1} />
@@ -18,7 +24,7 @@ export const AddReviewPage = (props: AddReviewPageProps) => {
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={film.poster} alt={`${film.title} poster`} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -27,17 +33,17 @@ export const AddReviewPage = (props: AddReviewPageProps) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to={RoutePath.Film}>The Grand Budapest Hotel</Link>
+                <Link className="breadcrumbs__link" to={`/${RoutePath.Films}/${id}`}>{film.title}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to={RoutePath.AddReview} >Add review</Link>
+                <Link className="breadcrumbs__link" to={`/${RoutePath.Films}/${id}/${RoutePath.AddReview}`}>Add review</Link>
               </li>
             </ul>
           </nav>
         </Header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" />
+          <img src={film.poster} alt={`${film.title} poster`} />
         </div>
       </div>
 
