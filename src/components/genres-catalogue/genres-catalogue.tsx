@@ -10,7 +10,7 @@ export const GenresCatalogue = ({genres}: GenresCatalogueProps) => {
   const [activeGenreId, setActiveGenreId] = useState<number>(0);
 
   const genresCatalogueItems = genres.map((genre) => {
-    const genreClassName = genre.id === activeGenreId ? 'catalog__genres-item catalog__genres-item--active' : 'catalog__genres-item';
+    const genreClassName = `catalog__genres-item ${activeGenreId ? 'catalog__genres-item--active' : ''}`;
 
     return (
       <li className={genreClassName} key={genre.id}>

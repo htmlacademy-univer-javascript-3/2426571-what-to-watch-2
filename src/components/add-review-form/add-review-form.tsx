@@ -19,8 +19,10 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
   };
 
   const handleInputChange = (event: React.MouseEvent<HTMLInputElement>) => {
-    const {name, value} = event.target as MouseEvent & HTMLInputElement;
-    setReviewForm({...reviewForm, [name]: Number(value)});
+    if (event.target instanceof HTMLInputElement) {
+      const {name, value} = event.target;
+      setReviewForm({...reviewForm, [name]: Number(value)});
+    }
   };
 
   const handleSubmitClick = (event: React.MouseEvent<HTMLButtonElement>) => {

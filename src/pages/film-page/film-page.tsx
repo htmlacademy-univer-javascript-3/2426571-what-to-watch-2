@@ -1,10 +1,11 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { AuthorizationStatus, RoutePath } from '../../types/enums';
 import './film-page.scss';
 import { IFilm } from '../../types/interfaces';
 import { FilmsList } from '../../components/films-list/films-list';
+import { Button } from '../../components/button/button';
 
 interface FilmPageProps {
   films: IFilm[];
@@ -13,7 +14,13 @@ interface FilmPageProps {
 export const FilmPage = ({films}: FilmPageProps) => {
   const params = useParams();
   const id = params.id ? Number(params.id) : -1;
-  const film = films.filter((x) => x.id === id)[0];
+
+  const filteredFilms = films.filter((x) => x.id === Number(id));
+  if (filteredFilms.length === 0) {
+    return <Navigate to={`/${RoutePath.NotFound}`} />;
+  }
+
+  const film = filteredFilms[0];
 
   interface NavInfo {
     navName: string;
@@ -64,19 +71,23 @@ export const FilmPage = ({films}: FilmPageProps) => {
               </p>
 
               <div className="film-card__buttons">
-                <Link to={`/${RoutePath.Player}/${id}`} className="btn btn--play film-card__button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
+                <Button
+                  buttonClassName="btn--play"
+                  buttonLink={`/${RoutePath.Player}/${id}`}
+                  svgHref="#play-s"
+                >
                   <span>Play</span>
-                </Link>
-                <Link to={`/${RoutePath.MyList}`} className="btn btn--list film-card__button">
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
-                </Link>
+                </Button>
+                <Button
+                  buttonClassName="btn--list"
+                  buttonLink={`/${RoutePath.MyList}`}
+                  svgHref="#add"
+                >
+                  <>
+                    <span>My list</span>
+                    <span className="film-card__count">9</span>
+                  </>
+                </Button>
                 <Link to={`/${RoutePath.Films}/${id}/${RoutePath.AddReview}`} className="btn film-card__button">
                   Add review
                 </Link>

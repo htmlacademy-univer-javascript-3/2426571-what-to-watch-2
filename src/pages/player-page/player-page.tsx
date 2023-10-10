@@ -1,13 +1,21 @@
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { IFilm } from '../../types/interfaces';
+import { RoutePath } from '../../types/enums';
 
 interface PlayerPageProps {
   films: IFilm[];
 }
 
 export const PlayerPage = ({films}: PlayerPageProps) => {
-  const { id } = useParams();
-  const film = films.filter((x) => x.id === Number(id))[0];
+  const params = useParams();
+  const id = params.id ? Number(params.id) : -1;
+
+  const filteredFilms = films.filter((x) => x.id === Number(id));
+  if (filteredFilms.length === 0) {
+    return <Navigate to={`/${RoutePath.NotFound}`} />;
+  }
+
+  const film = filteredFilms[0];
 
   return (
     <div className="player">

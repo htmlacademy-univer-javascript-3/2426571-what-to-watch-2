@@ -5,7 +5,8 @@ export const enum RoutePath {
   Films = 'films',
   Film = ':id',
   AddReview = 'review',
-  Player = 'player'
+  Player = 'player',
+  NotFound = 'notfound',
 }
 
 export const enum AuthorizationStatus {

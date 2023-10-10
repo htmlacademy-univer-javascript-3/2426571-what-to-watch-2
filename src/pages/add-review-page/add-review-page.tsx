@@ -1,7 +1,7 @@
 import './add-review-page.scss';
 import { Header } from '../../components/header/header';
 import { AuthorizationStatus, RoutePath } from '../../types/enums';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import { IFilm } from '../../types/interfaces';
 import { AddReviewForm } from '../../components/add-review-form/add-review-form';
 
@@ -12,7 +12,13 @@ interface AddReviewPageProps {
 export const AddReviewPage = ({films}: AddReviewPageProps) => {
   const params = useParams();
   const id = params.id ? Number(params.id) : -1;
-  const film = films.filter((x) => x.id === id)[0];
+
+  const filteredFilms = films.filter((x) => x.id === Number(id));
+  if (filteredFilms.length === 0) {
+    return <Navigate to={`/${RoutePath.NotFound}`} />;
+  }
+
+  const film = filteredFilms[0];
 
   return (
     <section className="film-card film-card--full">

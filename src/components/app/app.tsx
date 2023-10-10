@@ -39,6 +39,7 @@ export const App = ({films}: AppProps) => (
         <Route path={RoutePath.Player}>
           <Route index path={RoutePath.Film} element={<PlayerPage films={films} />} />
         </Route>
+        <Route path={RoutePath.NotFound} element={<NotFoundPage />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
