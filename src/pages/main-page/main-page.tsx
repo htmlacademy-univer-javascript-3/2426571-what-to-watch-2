@@ -14,7 +14,7 @@ interface MainPageProps {
 }
 
 export const MainPage = ({ films, promoFilmId }: MainPageProps) => {
-  const promoFilm = films.filter(x => x.id === Number(promoFilmId))[0];
+  const promoFilm = films.filter((x) => x.id === Number(promoFilmId))[0];
 
   return (
     <div>
@@ -77,4 +77,4 @@ export const MainPage = ({ films, promoFilmId }: MainPageProps) => {
       </div>
     </div>
   );
-}
+};

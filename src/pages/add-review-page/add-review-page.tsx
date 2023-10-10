@@ -10,8 +10,9 @@ interface AddReviewPageProps {
 }
 
 export const AddReviewPage = ({films}: AddReviewPageProps) => {
-  const { id } = useParams();
-  const film = films.filter(x => x.id === Number(id))[0];
+  const params = useParams();
+  const id = params.id ? Number(params.id) : -1;
+  const film = films.filter((x) => x.id === id)[0];
 
   return (
     <section className="film-card film-card--full">
@@ -40,7 +41,7 @@ export const AddReviewPage = ({films}: AddReviewPageProps) => {
         </div>
       </div>
 
-      <AddReviewForm filmId={Number(id)} />
+      <AddReviewForm filmId={id} />
 
     </section>
   );

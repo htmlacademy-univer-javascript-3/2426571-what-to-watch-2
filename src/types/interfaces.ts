@@ -3,11 +3,11 @@ export interface IFilm {
   title: string;
   year: number;
   summary: string;
-  short_summary: string;
+  shortSummary: string;
   genres: string;
-  imdb_id: string;
+  imdbId: string;
   runtime: number;
-  youtube_trailer: string;
+  youtubeTrailer: string;
   rating: number;
   poster: string;
   director: string;

@@ -11,8 +11,9 @@ interface FilmPageProps {
 }
 
 export const FilmPage = ({films}: FilmPageProps) => {
-  const { id } = useParams();
-  const film = films.filter(x => x.id === Number(id))[0];
+  const params = useParams();
+  const id = params.id ? Number(params.id) : -1;
+  const film = films.filter((x) => x.id === id)[0];
 
   interface NavInfo {
     navName: string;

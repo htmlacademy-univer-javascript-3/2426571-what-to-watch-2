@@ -7,11 +7,11 @@ interface PlayerPageProps {
 
 export const PlayerPage = ({films}: PlayerPageProps) => {
   const { id } = useParams();
-  const film = films.filter(x => x.id === Number(id))[0];
+  const film = films.filter((x) => x.id === Number(id))[0];
 
   return (
     <div className="player">
-      <video src={film.youtube_trailer} className="player__video" poster={film.poster}></video>
+      <video src={film.youtubeTrailer} className="player__video" poster={film.poster}></video>
 
       <button type="button" className="player__exit">Exit</button>
 

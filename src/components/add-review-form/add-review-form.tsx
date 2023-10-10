@@ -16,23 +16,22 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
   const handleTextAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = event.target;
     setReviewForm({...reviewForm, [name]: value});
-  }
+  };
 
   const handleInputChange = (event: React.MouseEvent<HTMLInputElement>) => {
     const {name, value} = event.target as MouseEvent & HTMLInputElement;
     setReviewForm({...reviewForm, [name]: Number(value)});
-  }
+  };
 
   const handleSubmitClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    console.log(reviewForm);
     setReviewForm({
       id: -1,
       filmId: filmId,
       text: '',
       rating: -1,
     });
-  }
+  };
 
   const ratingStars = [...Array(10).keys()].reverse().map((i) => (
     <Fragment key={i + 1} >
@@ -64,7 +63,8 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
             name="text"
             value={reviewForm.text}
             onChange={handleTextAreaChange}
-            placeholder="Review text">
+            placeholder="Review text"
+          >
           </textarea>
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit" onClick={handleSubmitClick}>Post</button>
@@ -74,4 +74,4 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
       </form>
     </div>
   );
-}
+};
