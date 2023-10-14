@@ -8,6 +8,7 @@ export interface IFilm {
   imdbId: string;
   runtime: number;
   youtubeTrailer: string;
+  imdbTrailer: string;
   rating: number;
   poster: string;
   director: string;

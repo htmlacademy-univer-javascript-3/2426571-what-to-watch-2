@@ -40,15 +40,11 @@ export const FilmPage = ({films}: FilmPageProps) => {
     },
   ];
 
-  const navigationItems = navsInfo.map(({ navName, isActive}, index) => {
-    const navClassName = isActive === undefined ? 'film-nav__item' : 'film-nav__item film-nav__item--active';
-
-    return (
-      <li className={navClassName} key={index}>
-        <Link to='#' className="film-nav__link">{navName}</Link>
-      </li>
-    );
-  });
+  const navigationItems = navsInfo.map(({ navName, isActive}, index) => (
+    <li className={`film-nav__item ${isActive ? 'film-nav__item--active' : ''}`} key={index}>
+      <Link to='#' className="film-nav__link">{navName}</Link>
+    </li>
+  ));
 
   return (
     <div>
