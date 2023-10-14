@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { IFilm } from '../../types/interfaces';
-import playIcon from '../../../public/img/icons/play-s.svg';
-import pauseIcon from '../../../public/img/icons/pause.svg';
-import fullscreenIcon from '../../../public/img/icons/full-screen.svg';
-import mutedIcon from '../../../public/img/icons/muted.svg';
-import unmutedIcon from '../../../public/img/icons/unmuted.svg';
+import playIcon from '/img/icons/play-s.svg';
+import pauseIcon from '/img/icons/pause.svg';
+import fullscreenIcon from '/img/icons/full-screen.svg';
+import mutedIcon from '/img/icons/muted.svg';
+import unmutedIcon from '/img/icons/unmuted.svg';
 
 interface VideoPlayerProps {
   film: IFilm;
@@ -16,11 +16,7 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => {
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, []);
+  useEffect(() => () => clearTimeout(timeout), []);
 
   useEffect(() => {
     if (videoRef.current && isMuted !== videoRef.current.muted) {
@@ -42,7 +38,7 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
       videoRef.current?.play();
       setIsPlaying(true);
     }, 1000));
-  }
+  };
 
   const handleMouseLeave = () => {
     if (timeout) {
@@ -54,7 +50,7 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
       videoRef.current.load();
       setIsPlaying(false);
     }
-  }
+  };
 
   const handlePlayIconClick = () => {
     if (isPlaying) {
@@ -63,15 +59,15 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
       videoRef.current?.play();
     }
     setIsPlaying(!isPlaying);
-  }
+  };
 
   const handleMuteIconClick = () => {
     setIsMuted(!isMuted);
-  }
+  };
 
   const handleFullscreenIconClick = () => {
     videoRef.current?.requestFullscreen();
-  }
+  };
 
   const formatDuration = (duration: number): string => {
     if (!duration) {
@@ -81,11 +77,11 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
     const minutes = Math.floor((duration - hours * 3600) / 60);
     const seconds = Math.floor(duration % 60);
     return `${hours}:${minutes}:${seconds}`;
-  }
+  };
 
   return (
     <div className="player" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <video 
+      <video
         ref={videoRef}
         src={film.imdbTrailer}
         className="player__video"
