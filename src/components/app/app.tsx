@@ -13,6 +13,7 @@ import { AddReviewPage } from '../../pages/add-review-page/add-review-page';
 import { PlayerPage } from '../../pages/player-page/player-page';
 import { NotFoundPage } from '../../pages/not-found-page/not-found-page';
 import { IFilm } from '../../types/interfaces';
+import { reviews } from '../../mocks/reviews';
 
 interface AppProps {
   films: IFilm[];
@@ -32,7 +33,7 @@ export const App = ({films}: AppProps) => (
         />
         <Route path={RoutePath.Films}>
           <Route path={RoutePath.Film}>
-            <Route index element={<FilmPage films={films} />} />
+            <Route index element={<FilmPage films={films} reviews={reviews} />} />
             <Route path={RoutePath.AddReview} element={<AddReviewPage films={films} />} />
           </Route>
         </Route>
