@@ -11,6 +11,8 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
     filmId: filmId,
     text: '',
     rating: -1,
+    date: new Date(),
+    author: ''
   });
 
   const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -32,6 +34,8 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
       filmId: filmId,
       text: '',
       rating: -1,
+      date: new Date(),
+      author: ''
     });
   };
 

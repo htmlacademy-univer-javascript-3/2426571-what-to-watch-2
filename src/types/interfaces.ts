@@ -26,4 +26,6 @@ export interface IReview {
   filmId: number;
   text: string;
   rating: number;
+  date: Date;
+  author: string;
 }
