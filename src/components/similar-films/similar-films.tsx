@@ -7,7 +7,7 @@ interface SimilarFilmsProps {
 }
 
 export const SimilarFilms = ({film, films}: SimilarFilmsProps) => {
-  var similarFilms: IFilm[] = [];
+  let similarFilms: IFilm[] = [];
   const filmGenres = film.genres.split(', ');
   if (film.genres === '' || filmGenres.length === 0) {
     return null;
@@ -31,4 +31,4 @@ export const SimilarFilms = ({film, films}: SimilarFilmsProps) => {
       <FilmsList films={similarFilms} />
     </section>
   );
-}
+};
