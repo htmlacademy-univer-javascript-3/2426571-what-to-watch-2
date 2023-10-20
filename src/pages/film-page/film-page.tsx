@@ -4,9 +4,9 @@ import { Header } from '../../components/header/header';
 import { AuthorizationStatus, RoutePath } from '../../types/enums';
 import './film-page.scss';
 import { IFilm, IReview } from '../../types/interfaces';
-import { FilmsList } from '../../components/films-list/films-list';
 import { Button } from '../../components/button/button';
 import { Tabs } from '../../components/tabs/tabs';
+import { SimilarFilms } from '../../components/similar-films/similar-films';
 
 interface FilmPageProps {
   films: IFilm[];
@@ -76,11 +76,7 @@ export const FilmPage = ({films, reviews}: FilmPageProps) => {
       </section>
 
       <div className="page-content">
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-
-          <FilmsList films={films} />
-        </section>
+        <SimilarFilms film={film} films={films} />
 
         <Footer />
       </div>
