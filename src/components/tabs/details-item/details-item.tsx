@@ -1,11 +1,11 @@
 interface DetailsItemProps {
-  itemName: string;
-  itemValue: string;
+  name: string;
+  value: string;
 }
 
-export const DetailsItem = ({itemName, itemValue}: DetailsItemProps) => (
+export const DetailsItem = ({name, value}: DetailsItemProps) => (
   <p className="film-card__details-item">
-    <strong className="film-card__details-name">{itemName}</strong>
-    <span className="film-card__details-value">{itemValue}</span>
+    <strong className="film-card__details-name">{name}</strong>
+    <span className="film-card__details-value">{value}</span>
   </p>
 );
