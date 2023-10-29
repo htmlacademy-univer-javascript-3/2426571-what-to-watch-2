@@ -39,14 +39,14 @@ export const ActiveTab = ({activeTab, film, reviews}: ActiveTabProps) => {
     return (
       <div className="film-card__text film-card__row">
         <div className="film-card__text-col">
-          <DetailsItem itemName='Director' itemValue={film.director} />
-          <DetailsItem itemName='Starring' itemValue={formatCast(film.cast)} />
+          <DetailsItem name='Director' value={film.director} />
+          <DetailsItem name='Starring' value={formatCast(film.cast)} />
         </div>
 
         <div className="film-card__text-col">
-          <DetailsItem itemName='Run Time' itemValue={formatDuration(film.runtime)} />
-          <DetailsItem itemName='Genre' itemValue={film.genres} />
-          <DetailsItem itemName='Released' itemValue={`${film.year}`} />
+          <DetailsItem name='Run Time' value={formatDuration(film.runtime)} />
+          <DetailsItem name='Genre' value={film.genres} />
+          <DetailsItem name='Released' value={`${film.year}`} />
         </div>
       </div>
     );

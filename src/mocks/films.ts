@@ -73,7 +73,7 @@ export const films: IFilm[] = [
     id: 185,
     title: 'Call Me by Your Name',
     year: 2017,
-    summary: 'CALL ME BY YOUR NAME, the new film by Luca Guadagnino, is a sensual and transcendent tale of first love, based on the acclaimed novel by Andr√© Aciman. It\'s the summer of 1983 in the north of Italy, and Elio Perlman (Timoth√©e Chalamet), a precocious 17-year-old young man, spends his days in his family\'s 17th century villa transcribing and playing classical music, reading, and flirting with his friend Marzia (Esther Garrel). Elio enjoys a close relationship with his father (Michael Stuhlbarg), an eminent professor specializing in Greco-Roman culture, and his mother Annella (Amira Casar), a translator, who favor him with the fruits of high culture in a setting that overflows with natural delights. While Elio\'s sophistication and intellectual gifts suggest he is already a fully-fledged adult, there is much that yet remains innocent and unformed about him, particularly about matters of the heart. One day, Oliver (Armie Hammer), a 24-year-old American college graduate student working on his...',
+    summary: 'CALL ME BY YOUR NAME, the new film by Luca Guadagnino, is a sensual and transcendent tale of first love, based on the acclaimed novel by Andre Aciman. It\'s the summer of 1983 in the north of Italy, and Elio Perlman (Timothee Chalamet), a precocious 17-year-old young man, spends his days in his family\'s 17th century villa transcribing and playing classical music, reading, and flirting with his friend Marzia (Esther Garrel). Elio enjoys a close relationship with his father (Michael Stuhlbarg), an eminent professor specializing in Greco-Roman culture, and his mother Annella (Amira Casar), a translator, who favor him with the fruits of high culture in a setting that overflows with natural delights. While Elio\'s sophistication and intellectual gifts suggest he is already a fully-fledged adult, there is much that yet remains innocent and unformed about him, particularly about matters of the heart. One day, Oliver (Armie Hammer), a 24-year-old American college graduate student working on his...',
     shortSummary: 'In 1980s Italy, a romance blossoms between a seventeen year-old student and the older man hired as his father\'s research assistant.',
     genres: 'Drama, Romance',
     imdbId: 'tt5726616',
@@ -84,7 +84,7 @@ export const films: IFilm[] = [
     poster: 'https://m.media-amazon.com/images/M/MV5BNDk3NTEwNjc0MV5BMl5BanBnXkFtZTgwNzYxNTMwMzI@._V1_SX300.jpg',
     director: 'Luca Guadagnino',
     writers: 'James Ivory',
-    cast: 'Armie Hammer, Michael Stuhlbarg, Timoth√©e Chalamet'
+    cast: 'Armie Hammer, Michael Stuhlbarg, Timothee Chalamet'
   },
   {
     id: 287,

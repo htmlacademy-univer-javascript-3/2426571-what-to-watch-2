@@ -8,6 +8,7 @@ import { FilmsList } from '../../components/films-list/films-list';
 import { genres } from '../../mocks/genres';
 import { Button } from '../../components/button/button';
 import { Navigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks';
 
 interface MainPageProps {
   films: IFilm[];
@@ -15,12 +16,13 @@ interface MainPageProps {
 }
 
 export const MainPage = ({ films, promoFilmId }: MainPageProps) => {
-  const filteredFilms = films.filter((x) => x.id === promoFilmId);
-  if (filteredFilms.length === 0) {
+  const activeGengreFilms = useAppSelector((state) => state.films);
+
+  const promoFilteredFilms = films.filter((x) => x.id === promoFilmId);
+  if (promoFilteredFilms.length === 0) {
     return <Navigate to={`/${RoutePath.NotFound}`} />;
   }
-
-  const promoFilm = filteredFilms[0];
+  const promoFilm = promoFilteredFilms[0];
 
   return (
     <div>
@@ -76,7 +78,7 @@ export const MainPage = ({ films, promoFilmId }: MainPageProps) => {
 
           <GenresCatalogue genres={genres} />
 
-          <FilmsList films={films} />
+          <FilmsList films={activeGengreFilms} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>

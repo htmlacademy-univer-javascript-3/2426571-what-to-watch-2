@@ -1,14 +1,11 @@
-import { useState } from 'react';
-import { IFilm } from '../../types/interfaces';
 import { FilmSmallCard } from '../film-small-card/film-small-card';
+import { IFilm } from '../../types/interfaces';
 
 interface FilmsListProps {
   films: IFilm[];
 }
 
 export const FilmsList = ({films}: FilmsListProps) => {
-  const [activeFilmCardId, setActiveFilmCardId] = useState<number>(-1);
-
   const filmsSmallCards = films.map((film) => (
     <FilmSmallCard
       key={film.id}
