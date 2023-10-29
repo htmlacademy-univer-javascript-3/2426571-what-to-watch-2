@@ -1,0 +1,11 @@
+import { Time } from '../../types/enums';
+
+export const formatDuration = (duration: number): string => {
+  if (!duration) {
+    return '';
+  }
+  const hours = Math.floor(duration / Time.HourSeconds);
+  const minutes = Math.floor((duration - hours * Time.HourSeconds) / Time.MinuteSeconds);
+  const seconds = Math.floor(duration % Time.MinuteSeconds);
+  return `${hours}:${minutes}:${seconds}`;
+};

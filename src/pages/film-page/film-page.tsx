@@ -3,15 +3,17 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { AuthorizationStatus, RoutePath } from '../../types/enums';
 import './film-page.scss';
-import { IFilm } from '../../types/interfaces';
-import { FilmsList } from '../../components/films-list/films-list';
+import { IFilm, IReview } from '../../types/interfaces';
 import { Button } from '../../components/button/button';
+import { Tabs } from '../../components/tabs/tabs';
+import { SimilarFilms } from '../../components/similar-films/similar-films';
 
 interface FilmPageProps {
   films: IFilm[];
+  reviews: IReview[];
 }
 
-export const FilmPage = ({films}: FilmPageProps) => {
+export const FilmPage = ({films, reviews}: FilmPageProps) => {
   const params = useParams();
   const id = params.id ? Number(params.id) : -1;
 
@@ -22,29 +24,7 @@ export const FilmPage = ({films}: FilmPageProps) => {
 
   const film = filteredFilms[0];
 
-  interface NavInfo {
-    navName: string;
-    isActive?: boolean;
-  }
-
-  const navsInfo: NavInfo[] = [
-    {
-      navName: 'Overview',
-      isActive: true
-    },
-    {
-      navName: 'Details',
-    },
-    {
-      navName: 'Reviews',
-    },
-  ];
-
-  const navigationItems = navsInfo.map(({ navName, isActive}, index) => (
-    <li className={`film-nav__item ${isActive ? 'film-nav__item--active' : ''}`} key={index}>
-      <Link to='#' className="film-nav__link">{navName}</Link>
-    </li>
-  ));
+  const filteredReviews = reviews.filter((x) => x.filmId === Number(id));
 
   return (
     <div>
@@ -92,45 +72,11 @@ export const FilmPage = ({films}: FilmPageProps) => {
           </div>
         </div>
 
-        <div className="film-card__wrap film-card__translate-top">
-          <div className="film-card__info">
-            <div className="film-card__poster film-card__poster--big">
-              <img src={film.poster} alt={`${film.title} poster`} />
-            </div>
-
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  {navigationItems}
-                </ul>
-              </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{film.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{film.summary}</p>
-
-                <p className="film-card__director"><strong>Director: {film.director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {film.cast}</strong></p>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Tabs film={film} reviews={filteredReviews} />
       </section>
 
       <div className="page-content">
-        <section className="catalog catalog--like-this">
-          <h2 className="catalog__title">More like this</h2>
-
-          <FilmsList films={films} />
-        </section>
+        <SimilarFilms film={film} films={films} />
 
         <Footer />
       </div>

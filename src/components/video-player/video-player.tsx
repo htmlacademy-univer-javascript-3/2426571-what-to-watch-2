@@ -5,13 +5,16 @@ import pauseIcon from '/img/icons/pause.svg';
 import fullscreenIcon from '/img/icons/full-screen.svg';
 import mutedIcon from '/img/icons/muted.svg';
 import unmutedIcon from '/img/icons/unmuted.svg';
+import { formatDuration } from './utils';
 
 interface VideoPlayerProps {
   film: IFilm;
 }
 
+const TIMEOUT_SEC = 1000;
+
 export const VideoPlayer = ({film}: VideoPlayerProps) => {
-  const [timeout, setModalTimeout] = useState<NodeJS.Timeout>();
+  const [timeout, setModalTimeout] = useState<ReturnType<typeof setTimeout>>();
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -25,7 +28,7 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
   }, [videoRef.current?.muted]);
 
   useEffect(() => {
-    if (videoRef.current && videoRef.current?.paused !== !isPlaying) {
+    if (videoRef.current?.paused === isPlaying) {
       setIsPlaying(!isPlaying);
     }
   }, [videoRef.current?.paused]);
@@ -37,7 +40,7 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
     setModalTimeout(setTimeout(() => {
       videoRef.current?.play();
       setIsPlaying(true);
-    }, 1000));
+    }, TIMEOUT_SEC));
   };
 
   const handleMouseLeave = () => {
@@ -67,16 +70,6 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
 
   const handleFullscreenIconClick = () => {
     videoRef.current?.requestFullscreen();
-  };
-
-  const formatDuration = (duration: number): string => {
-    if (!duration) {
-      return '';
-    }
-    const hours = Math.floor(duration / 3600);
-    const minutes = Math.floor((duration - hours * 3600) / 60);
-    const seconds = Math.floor(duration % 60);
-    return `${hours}:${minutes}:${seconds}`;
   };
 
   return (
