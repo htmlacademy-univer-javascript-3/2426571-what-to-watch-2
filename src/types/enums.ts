@@ -14,3 +14,9 @@ export const enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+export const enum Time {
+  MinuteSeconds = 60,
+  HourSeconds = 3600,
+  HourMinutes = 60,
+}
