@@ -81,10 +81,6 @@ export const MainPage = ({ films, promoFilmId }: MainPageProps) => {
           <GenresCatalogue genres={genres} />
 
           <FilmsList films={activeGenreFilms} amountToShow={FILMS_TO_SHOW_AMOUNT} />
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
         </section>
 
         <Footer />
