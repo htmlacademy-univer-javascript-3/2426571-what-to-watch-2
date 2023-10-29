@@ -16,12 +16,13 @@ interface MainPageProps {
 }
 
 export const MainPage = ({ films, promoFilmId }: MainPageProps) => {
+  const activeGengreFilms = useAppSelector((state) => state.films);
+
   const promoFilteredFilms = films.filter((x) => x.id === promoFilmId);
   if (promoFilteredFilms.length === 0) {
     return <Navigate to={`/${RoutePath.NotFound}`} />;
   }
   const promoFilm = promoFilteredFilms[0];
-  const activeGengreFilms = useAppSelector((state) => state.films);
 
   return (
     <div>

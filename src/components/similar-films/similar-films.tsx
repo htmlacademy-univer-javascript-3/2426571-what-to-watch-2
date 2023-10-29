@@ -7,13 +7,10 @@ interface SimilarFilmsProps {
   films: IFilm[];
 }
 
-export const SimilarFilms = ({film, films}: SimilarFilmsProps) => {
+export const SimilarFilms = ({film, films}: SimilarFilmsProps) => (
+  <section className="catalog catalog--like-this">
+    <h2 className="catalog__title">More like this</h2>
 
-  return (
-    <section className="catalog catalog--like-this">
-      <h2 className="catalog__title">More like this</h2>
-
-      <FilmsList films={similarFilms(film, films)} />
-    </section>
-  );
-};
+    <FilmsList films={similarFilms(film, films)} />
+  </section>
+);

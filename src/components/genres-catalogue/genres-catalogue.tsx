@@ -14,7 +14,7 @@ export const GenresCatalogue = ({genres}: GenresCatalogueProps) => {
   const handleGenresCatalogueItemClick = (genre: IGenre) => {
     dispatch(setActiveGenre({genre}));
     dispatch(getFilmsByGenre());
-  }
+  };
 
   const genresCatalogueItems = genres.map((genre) => (
     <GenresCatalogueItem

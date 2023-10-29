@@ -2,9 +2,7 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { AuthorizationStatus } from '../../types/enums';
 
-interface SignInPageProps { }
-
-export const SignInPage = (props: SignInPageProps) => (
+export const SignInPage = () => (
   <div className="user-page">
     <Header authorizationStatus={AuthorizationStatus.NoAuth} headerClassName="user-page__head">
       <h1 className="page-title user-page__title">Sign in</h1>
