@@ -3,9 +3,10 @@ import { IFilm } from '../../types/interfaces';
 
 interface FilmsListProps {
   films: IFilm[];
+  amountToShow?: number;
 }
 
-export const FilmsList = ({films}: FilmsListProps) => {
+export const FilmsList = ({films, amountToShow}: FilmsListProps) => {
   const filmsSmallCards = films.map((film) => (
     <FilmSmallCard
       key={film.id}
@@ -15,7 +16,7 @@ export const FilmsList = ({films}: FilmsListProps) => {
 
   return (
     <div className="catalog__films-list">
-      {filmsSmallCards}
+      {filmsSmallCards.slice(0, amountToShow ?? filmsSmallCards.length)}
     </div>
   );
 };

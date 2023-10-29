@@ -7,11 +7,11 @@ import mutedIcon from '/img/icons/muted.svg';
 import unmutedIcon from '/img/icons/unmuted.svg';
 import { formatDuration } from './utils';
 
+const TIMEOUT_SEC = 1000;
+
 interface VideoPlayerProps {
   film: IFilm;
 }
-
-const TIMEOUT_SEC = 1000;
 
 export const VideoPlayer = ({film}: VideoPlayerProps) => {
   const [timeout, setModalTimeout] = useState<ReturnType<typeof setTimeout>>();
