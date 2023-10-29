@@ -16,7 +16,7 @@ interface MainPageProps {
 }
 
 export const MainPage = ({ films, promoFilmId }: MainPageProps) => {
-  const activeGengreFilms = useAppSelector((state) => state.films);
+  const activeGenreFilms = useAppSelector((state) => state.films);
 
   const promoFilteredFilms = films.filter((x) => x.id === promoFilmId);
   if (promoFilteredFilms.length === 0) {
@@ -78,7 +78,7 @@ export const MainPage = ({ films, promoFilmId }: MainPageProps) => {
 
           <GenresCatalogue genres={genres} />
 
-          <FilmsList films={activeGengreFilms} />
+          <FilmsList films={activeGenreFilms} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">Show more</button>
