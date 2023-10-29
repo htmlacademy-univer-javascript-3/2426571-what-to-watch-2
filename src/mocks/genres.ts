@@ -1,11 +1,12 @@
 import { ALL_GENRES } from '../types/consts';
 import { IGenre } from '../types/interfaces';
+import { convertFilmGenresStringToStringArray } from '../utils/utils';
 import { films } from './films';
 
 const genresNames: string[] = [];
 films.forEach((film) => {
   if (film.genres && film.genres !== '') {
-    genresNames.push(...film.genres.split(', '));
+    genresNames.push(...convertFilmGenresStringToStringArray(film.genres));
   }
 });
 

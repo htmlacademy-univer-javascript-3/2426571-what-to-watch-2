@@ -1,18 +1,28 @@
-import { useState } from 'react';
 import { IGenre } from '../../types/interfaces';
-import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { GenresCatalogueItem } from './genres-catalogue-item/genres-catalogue-item';
+import { getFilmsByGenre, setActiveGenre } from '../../store/action';
 
 interface GenresCatalogueProps {
   genres: IGenre[];
 }
 
 export const GenresCatalogue = ({genres}: GenresCatalogueProps) => {
-  const [activeGenreId, setActiveGenreId] = useState<number>(0);
+  const activeGenre = useAppSelector((state) => state.activeGenre);
+  const dispatch = useAppDispatch();
+
+  const handleGenresCatalogueItemClick = (genre: IGenre) => {
+    dispatch(setActiveGenre({genre}));
+    dispatch(getFilmsByGenre());
+  }
 
   const genresCatalogueItems = genres.map((genre) => (
-    <li className={`catalog__genres-item ${activeGenreId ? 'catalog__genres-item--active' : ''}`} key={genre.id}>
-      <Link to='#' className="catalog__genres-link">{genre.name}</Link>
-    </li>
+    <GenresCatalogueItem
+      key={genre.id}
+      genre={genre}
+      isActive={genre.id === activeGenre.id}
+      handleGenresCatalogueItemClick={handleGenresCatalogueItemClick}
+    />
   ));
 
   return (
