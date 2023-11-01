@@ -10,13 +10,15 @@ import { Button } from '../../components/button/button';
 import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 
+const FILMS_TO_SHOW_AMOUNT = 8;
+
 interface MainPageProps {
   films: IFilm[];
   promoFilmId: number;
 }
 
 export const MainPage = ({ films, promoFilmId }: MainPageProps) => {
-  const activeGengreFilms = useAppSelector((state) => state.films);
+  const activeGenreFilms = useAppSelector((state) => state.films);
 
   const promoFilteredFilms = films.filter((x) => x.id === promoFilmId);
   if (promoFilteredFilms.length === 0) {
@@ -78,11 +80,7 @@ export const MainPage = ({ films, promoFilmId }: MainPageProps) => {
 
           <GenresCatalogue genres={genres} />
 
-          <FilmsList films={activeGengreFilms} />
-
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <FilmsList films={activeGenreFilms} amountToShow={FILMS_TO_SHOW_AMOUNT} />
         </section>
 
         <Footer />
