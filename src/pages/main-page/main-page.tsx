@@ -2,35 +2,31 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { AuthorizationStatus, RoutePath } from '../../types/enums';
 import './main-page.scss';
-import { IFilm } from '../../types/interfaces';
 import { GenresCatalogue } from '../../components/genres-catalogue/genres-catalogue';
 import { FilmsList } from '../../components/films-list/films-list';
 import { genres } from '../../mocks/genres';
 import { Button } from '../../components/button/button';
-import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
+import { LoadingScreen } from '../../components/loading-screen/loading-screen';
+import { getPromoFilmAction } from '../../store/api-actions';
 
 const FILMS_TO_SHOW_AMOUNT = 8;
+store.dispatch(getPromoFilmAction());
 
-interface MainPageProps {
-  films: IFilm[];
-  promoFilmId: number;
-}
+export const MainPage = () => {
+  const activeGenreFilms = useAppSelector((state) => state.currentFilms);
+  const promoFilm = useAppSelector((state) => state.promoFilm);
 
-export const MainPage = ({ films, promoFilmId }: MainPageProps) => {
-  const activeGenreFilms = useAppSelector((state) => state.films);
-
-  const promoFilteredFilms = films.filter((x) => x.id === promoFilmId);
-  if (promoFilteredFilms.length === 0) {
-    return <Navigate to={`/${RoutePath.NotFound}`} />;
+  if (!promoFilm) {
+    return <LoadingScreen />;
   }
-  const promoFilm = promoFilteredFilms[0];
 
   return (
     <div>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src={promoFilm.poster} alt={`${promoFilm.title} poster`} />
+          <img src={promoFilm.posterImage} alt={`${promoFilm.name} poster`} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -40,20 +36,20 @@ export const MainPage = ({ films, promoFilmId }: MainPageProps) => {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={promoFilm.poster} alt={`${promoFilm.title} poster`} />
+              <img src={promoFilm.posterImage} alt={`${promoFilm.name} poster`} />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{promoFilm.title}</h2>
+              <h2 className="film-card__title">{promoFilm.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{promoFilm.genres}</span>
-                <span className="film-card__year">{promoFilm.year}</span>
+                <span className="film-card__genre">{promoFilm.genre}</span>
+                <span className="film-card__year">{promoFilm.released}</span>
               </p>
 
               <div className="film-card__buttons">
                 <Button
                   buttonClassName="btn--play"
-                  buttonLink={`/${RoutePath.Player}/${promoFilmId}`}
+                  buttonLink={`/${RoutePath.Player}/${promoFilm.id}`}
                   svgHref="#play-s"
                 >
                   <span>Play</span>

@@ -6,4 +6,4 @@ export const formatDuration = (duration: number): string => {
   return `${hours}h ${minutes}m`;
 };
 
-export const formatCast = (cast: string): string => cast.replace(/, /gi, ', \n');
+export const formatCast = (cast: [string]): string => cast.join(', \n');
