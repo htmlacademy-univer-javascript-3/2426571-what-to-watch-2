@@ -22,4 +22,4 @@ export const genres: IGenre[] = [
     id: 4,
     name: 'Drama',
   },
-]
+];
