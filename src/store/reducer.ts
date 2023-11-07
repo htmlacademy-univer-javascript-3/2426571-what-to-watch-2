@@ -1,12 +1,25 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { getFilmsByGenre, setActiveGenre } from './action';
-import { genres } from '../mocks/genres';
+import { getFilmsByGenre, setActiveGenre, setFilms, setFilmsLoadingStatus, setPromoFilm } from './action';
 import { ALL_GENRES } from '../types/consts';
-import { films } from '../mocks/films';
+import { AuthorizationStatus } from '../types/enums';
+import { IFilmPreview, IFilmPromo, IGenre } from '../types/interfaces';
 
-const initialState = {
-  activeGenre: genres.filter((currentGenre) => currentGenre.name === ALL_GENRES)[0],
-  films,
+interface InitialState {
+  activeGenre: IGenre;
+  currentFilms: IFilmPreview[];
+  films: IFilmPreview[];
+  promoFilm: IFilmPromo | null;
+  authorizationStatus: AuthorizationStatus;
+  filmsLoadingStatus: boolean;
+}
+
+const initialState: InitialState = {
+  activeGenre: {id: 0, name: ALL_GENRES},
+  currentFilms: [],
+  films: [],
+  promoFilm: null,
+  authorizationStatus: AuthorizationStatus.Auth,
+  filmsLoadingStatus: false
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -17,9 +30,22 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(getFilmsByGenre, (state) => {
       if (state.activeGenre.name === ALL_GENRES) {
-        state.films = films;
+        state.currentFilms = state.films;
       } else {
-        state.films = films.filter((film) => film.genres.includes(state.activeGenre.name));
+        state.currentFilms = state.films.filter((film) => film.genre === state.activeGenre.name);
       }
+    })
+    .addCase(setFilms, (state, action) => {
+      const films = action.payload;
+      state.films = films;
+      state.currentFilms = state.films;
+    })
+    .addCase(setPromoFilm, (state, action) => {
+      const promoFilm = action.payload;
+      state.promoFilm = promoFilm;
+    })
+    .addCase(setFilmsLoadingStatus, (state, action) => {
+      const filmsLoadingStatus = action.payload;
+      state.filmsLoadingStatus = filmsLoadingStatus;
     });
 });

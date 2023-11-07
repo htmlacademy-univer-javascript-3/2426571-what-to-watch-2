@@ -1,11 +1,11 @@
 import { FilmSmallCard } from '../film-small-card/film-small-card';
-import { IFilm } from '../../types/interfaces';
+import { IFilmPreview } from '../../types/interfaces';
 import { ShowMoreButton } from '../show-more-button/show-more-button';
 import { useState } from 'react';
 
 
 interface FilmsListProps {
-  films: IFilm[];
+  films: IFilmPreview[];
   amountToShow?: number;
 }
 

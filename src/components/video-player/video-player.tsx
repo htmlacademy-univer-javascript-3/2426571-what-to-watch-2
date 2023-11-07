@@ -76,9 +76,9 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
     <div className="player" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <video
         ref={videoRef}
-        src={film.imdbTrailer}
+        src={film.videoLink}
         className="player__video"
-        poster={film.poster}
+        poster={film.posterImage}
         muted={isMuted}
       >
       </video>
@@ -97,7 +97,7 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
           <button type="button" className="player__play">
             <img onClick={handlePlayIconClick} src={isPlaying ? pauseIcon : playIcon} alt='Play/pause icon' />
           </button>
-          <div className="player__name">{film.title}</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__play">
             <img onClick={handleMuteIconClick} src={isMuted ? mutedIcon : unmutedIcon} alt='Mute/unmute icon' />

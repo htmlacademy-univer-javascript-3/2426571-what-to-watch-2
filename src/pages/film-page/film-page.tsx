@@ -3,35 +3,36 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { AuthorizationStatus, RoutePath } from '../../types/enums';
 import './film-page.scss';
-import { IFilm, IReview } from '../../types/interfaces';
+import { IReview } from '../../types/interfaces';
 import { Button } from '../../components/button/button';
 import { Tabs } from '../../components/tabs/tabs';
 import { SimilarFilms } from '../../components/similar-films/similar-films';
+import { useAppSelector } from '../../hooks';
 
 interface FilmPageProps {
-  films: IFilm[];
   reviews: IReview[];
 }
 
-export const FilmPage = ({films, reviews}: FilmPageProps) => {
+export const FilmPage = ({reviews}: FilmPageProps) => {
+  const films = useAppSelector((state) => state.films);
   const params = useParams();
-  const id = params.id ? Number(params.id) : -1;
+  const id = params.id ?? '-1';
 
-  const filteredFilms = films.filter((x) => x.id === Number(id));
+  const filteredFilms = films.filter((x) => x.id === id);
   if (filteredFilms.length === 0) {
     return <Navigate to={`/${RoutePath.NotFound}`} />;
   }
 
   const film = filteredFilms[0];
 
-  const filteredReviews = reviews.filter((x) => x.filmId === Number(id));
+  const filteredReviews = reviews.filter((x) => x.filmId === id);
 
   return (
     <div>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={film.poster} alt={`${film.title} poster`} />
+            <img src={film.posterImage} alt={`${film.name} poster`} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -40,10 +41,10 @@ export const FilmPage = ({films, reviews}: FilmPageProps) => {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{film.title}</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{film.genres}</span>
-                <span className="film-card__year">{film.year}</span>
+                <span className="film-card__genre">{film.genre}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
 
               <div className="film-card__buttons">

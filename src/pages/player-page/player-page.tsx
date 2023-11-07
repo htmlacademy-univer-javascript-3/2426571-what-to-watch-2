@@ -9,9 +9,9 @@ interface PlayerPageProps {
 
 export const PlayerPage = ({films}: PlayerPageProps) => {
   const params = useParams();
-  const id = params.id ? Number(params.id) : -1;
+  const id = params.id ?? '-1';
 
-  const filteredFilms = films.filter((x) => x.id === Number(id));
+  const filteredFilms = films.filter((x) => x.id === id);
   if (filteredFilms.length === 0) {
     return <Navigate to={`/${RoutePath.NotFound}`} />;
   }

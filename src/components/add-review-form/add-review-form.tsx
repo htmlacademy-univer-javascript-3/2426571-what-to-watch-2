@@ -2,12 +2,12 @@ import { ChangeEvent, Fragment, MouseEvent, useState } from 'react';
 import { IReview } from '../../types/interfaces';
 
 interface AddReviewFormProps {
-  filmId: number;
+  filmId: string;
 }
 
 export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
   const [reviewForm, setReviewForm] = useState<IReview>({
-    id: -1,
+    id: '-1',
     filmId: filmId,
     text: '',
     rating: -1,
@@ -30,7 +30,7 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
   const handleSubmitClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setReviewForm({
-      id: -1,
+      id: '-1',
       filmId: filmId,
       text: '',
       rating: -1,
