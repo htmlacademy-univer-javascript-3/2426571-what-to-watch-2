@@ -20,3 +20,8 @@ export const enum Time {
   HourSeconds = 3600,
   HourMinutes = 60,
 }
+
+export enum APIRoute {
+  Films = '/films',
+  PromoFilm = '/promo',
+}

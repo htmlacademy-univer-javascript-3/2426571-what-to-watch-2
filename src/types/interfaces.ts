@@ -1,19 +1,49 @@
 export interface IFilm {
-  id: number;
-  title: string;
-  year: number;
-  summary: string;
-  shortSummary: string;
-  genres: string;
-  imdbId: string;
-  runtime: number;
-  youtubeTrailer: string;
-  imdbTrailer: string;
-  rating: number;
-  poster: string;
-  director: string;
-  writers: string;
-  cast: string;
+  id: string
+  name: string
+  posterImage: string
+  backgroundImage: string
+  backgroundColor: string
+  videoLink: string
+  description: string
+  rating: number
+  scoresCount: number
+  director: string
+  starring: [string]
+  runTime: number
+  genre: string
+  released: number
+  isFavorite: boolean
+}
+
+export interface IFilmShort {
+  id: string
+  name: string
+  posterImage: string
+  backgroundImage: string
+  videoLink: string
+  genre: string
+  released: number
+  isFavorite: boolean
+}
+
+export interface IFilmPreview {
+  id: string
+  name: string
+  previewImage: string
+  previewVideoLink: string
+  genre: string
+}
+
+export interface IFilmPromo {
+  id: string
+  name: string
+  posterImage: string
+  backgroundImage: string
+  videoLink: string
+  genre: string
+  released: number
+  isFavorite: boolean
 }
 
 export interface IGenre {
@@ -22,8 +52,8 @@ export interface IGenre {
 }
 
 export interface IReview {
-  id: number;
-  filmId: number;
+  id: string;
+  filmId: string;
   text: string;
   rating: number;
   date: Date;
