@@ -3,7 +3,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/types';
 import { IFilmPreview, IFilmPromo } from '../types/interfaces';
 import { APIRoute } from '../types/enums';
-import { setFilmsLoadingStatus, setFilms, setPromoFilm } from './action';
+import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres } from './action';
 
 export const getFilmsAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -28,6 +28,20 @@ export const getPromoFilmAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<IFilmPromo>(APIRoute.PromoFilm);
     dispatch(setPromoFilm(data));
+  },
+);
+
+export const getGenresAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'genres/getGenres',
+  async (_arg, {dispatch, extra: api}) => {
+    dispatch(setFilmsLoadingStatus(true));
+    const {data} = await api.get<IFilmPreview[]>(APIRoute.Films);
+    dispatch(setFilmsLoadingStatus(false));
+    dispatch(setGenres(data));
   },
 );
 

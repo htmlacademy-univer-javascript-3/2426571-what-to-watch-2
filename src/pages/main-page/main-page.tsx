@@ -4,19 +4,20 @@ import { AuthorizationStatus, RoutePath } from '../../types/enums';
 import './main-page.scss';
 import { GenresCatalogue } from '../../components/genres-catalogue/genres-catalogue';
 import { FilmsList } from '../../components/films-list/films-list';
-import { genres } from '../../mocks/genres';
 import { Button } from '../../components/button/button';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
-import { getPromoFilmAction } from '../../store/api-actions';
+import { getGenresAction, getPromoFilmAction } from '../../store/api-actions';
 
 const FILMS_TO_SHOW_AMOUNT = 8;
 store.dispatch(getPromoFilmAction());
+store.dispatch(getGenresAction());
 
 export const MainPage = () => {
   const activeGenreFilms = useAppSelector((state) => state.currentFilms);
   const promoFilm = useAppSelector((state) => state.promoFilm);
+  const genres = useAppSelector((state) => state.genres);
 
   if (!promoFilm) {
     return <LoadingScreen />;

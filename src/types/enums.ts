@@ -23,5 +23,7 @@ export const enum Time {
 
 export enum APIRoute {
   Films = '/films',
+  Film = 'films/:filmId',
+  SimilarFilms = '/films/:filmId/similar',
   PromoFilm = '/promo',
 }
