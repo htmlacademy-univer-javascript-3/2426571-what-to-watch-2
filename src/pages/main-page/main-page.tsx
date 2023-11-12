@@ -1,6 +1,6 @@
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
-import { AuthorizationStatus, RoutePath } from '../../types/enums';
+import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
 import './main-page.scss';
 import { GenresCatalogue } from '../../components/genres-catalogue/genres-catalogue';
 import { FilmsList } from '../../components/films-list/films-list';
@@ -15,9 +15,9 @@ store.dispatch(getPromoFilmAction());
 store.dispatch(getGenresAction());
 
 export const MainPage = () => {
-  const activeGenreFilms = useAppSelector((state) => state.currentFilms);
-  const promoFilm = useAppSelector((state) => state.promoFilm);
-  const genres = useAppSelector((state) => state.genres);
+  const activeGenreFilms = useAppSelector((state) => state[ReducerName.Films].currentFilms);
+  const promoFilm = useAppSelector((state) => state[ReducerName.Films].promoFilm);
+  const genres = useAppSelector((state) => state[ReducerName.Films].genres);
 
   if (!promoFilm) {
     return <LoadingScreen />;

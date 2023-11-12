@@ -1,7 +1,7 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
-import { AuthorizationStatus, RoutePath } from '../../types/enums';
+import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
 import './film-page.scss';
 import { IReview } from '../../types/interfaces';
 import { Button } from '../../components/button/button';
@@ -14,7 +14,7 @@ interface FilmPageProps {
 }
 
 export const FilmPage = ({reviews}: FilmPageProps) => {
-  const films = useAppSelector((state) => state.films);
+  const films = useAppSelector((state) => state[ReducerName.Films].films);
   const params = useParams();
   const id = params.id ?? '-1';
 

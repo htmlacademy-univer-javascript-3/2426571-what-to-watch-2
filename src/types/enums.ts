@@ -21,9 +21,16 @@ export const enum Time {
   HourMinutes = 60,
 }
 
-export enum APIRoute {
+export const enum APIRoute {
   Films = '/films',
   Film = 'films/:filmId',
   SimilarFilms = '/films/:filmId/similar',
   PromoFilm = '/promo',
+  Login = 'login',
+  Logout = 'logout',
+}
+
+export const enum ReducerName {
+  Films = 'filmsReducer',
+  Authorization = 'authorizationReducer',
 }

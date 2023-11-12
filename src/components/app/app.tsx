@@ -3,7 +3,7 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
-import { RoutePath, AuthorizationStatus } from '../../types/enums';
+import { RoutePath, AuthorizationStatus, ReducerName } from '../../types/enums';
 import { PrivateRoute } from '../private-route/private-route';
 import { MainPage } from '../../pages/main-page/main-page';
 import { SignInPage } from '../../pages/sign-in-page/sign-in-page';
@@ -17,8 +17,8 @@ import { useAppSelector } from '../../hooks';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 
 export const App = () => {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const filmsLoadingStatus = useAppSelector((state) => state.filmsLoadingStatus);
+  const authorizationStatus = useAppSelector((state) => state[ReducerName.Authorization].authorizationStatus);
+  const filmsLoadingStatus = useAppSelector((state) => state[ReducerName.Films].filmsLoadingStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || filmsLoadingStatus) {
     return (
