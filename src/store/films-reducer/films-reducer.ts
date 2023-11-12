@@ -14,7 +14,7 @@ const initialState: IFilmsReducer = {
   filmsLoadingStatus: false
 };
 
-export const filmsReducer  = createSlice({
+export const filmsReducer = createSlice({
   name: ReducerName.Films,
   initialState,
   reducers: {},

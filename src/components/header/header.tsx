@@ -15,7 +15,7 @@ export const Header = ({ headerClassName, children }: HeaderProps) => {
 
   const handleSignOutClick = () => {
     dispatch(logoutAction());
-  }
+  };
 
   return (
     <header className={`page-header ${headerClassName ?? ''}`}>
@@ -41,4 +41,4 @@ export const Header = ({ headerClassName, children }: HeaderProps) => {
         </div>}
     </header>
   );
-}
+};

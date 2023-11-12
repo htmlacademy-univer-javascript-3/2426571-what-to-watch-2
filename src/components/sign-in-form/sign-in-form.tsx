@@ -29,10 +29,10 @@ export const SignInForm = () => {
     <div className="sign-in user-page__content">
       <form action="#" className="sign-in__form">
         {authorizationErrors.length !== 0 ?
-        <div className="sign-in__message">
-          {authorizationErrors.map((property) => property.messages.map((message) => <p>{capitalize(message)}</p>))}
-        </div> :
-        null}
+          <div className="sign-in__message">
+            {authorizationErrors.map((property) => property.messages.map((message) => <p key={message}>{capitalize(message)}</p>))}
+          </div> :
+          null}
         <div className="sign-in__fields">
           <div className={`sign-in__field ${propertyHasError('email') ? 'sign-in__field--error' : ''}`}>
             <input
@@ -42,7 +42,8 @@ export const SignInForm = () => {
               name="email"
               id="user-email"
               value={signInForm.email}
-              onChange={handleInputChange} />
+              onChange={handleInputChange}
+            />
             <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
           </div>
           <div className={`sign-in__field ${propertyHasError('password') ? 'sign-in__field--error' : ''}`}>
@@ -53,7 +54,8 @@ export const SignInForm = () => {
               name="password"
               id="user-password"
               value={signInForm.password}
-              onChange={handleInputChange} />
+              onChange={handleInputChange}
+            />
             <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
           </div>
         </div>

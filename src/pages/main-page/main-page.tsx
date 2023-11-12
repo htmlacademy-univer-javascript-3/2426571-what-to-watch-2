@@ -1,6 +1,6 @@
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
-import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
+import { ReducerName, RoutePath } from '../../types/enums';
 import './main-page.scss';
 import { GenresCatalogue } from '../../components/genres-catalogue/genres-catalogue';
 import { FilmsList } from '../../components/films-list/films-list';
@@ -32,7 +32,7 @@ export const MainPage = () => {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header authorizationStatus={AuthorizationStatus.Auth} headerClassName="film-card__head" />
+        <Header headerClassName="film-card__head" />
 
         <div className="film-card__wrap">
           <div className="film-card__info">

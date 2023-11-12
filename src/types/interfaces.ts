@@ -1,4 +1,4 @@
-import { AuthorizationStatus } from "./enums";
+import { AuthorizationStatus } from './enums';
 
 export interface IFilm {
   id: string;

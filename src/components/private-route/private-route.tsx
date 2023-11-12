@@ -14,4 +14,4 @@ export const PrivateRoute = ({ children }: PrivateRouteProps) => {
       ? children
       : <Navigate to={RoutePath.Main + RoutePath.SignIn} />
   );
-}
+};

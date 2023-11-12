@@ -23,4 +23,4 @@ export const SignInPage = () => {
       <Footer />
     </div>
   );
-}
+};

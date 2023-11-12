@@ -75,7 +75,7 @@ export const loginAction = createAsyncThunk<void, IAuth, {
       dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     } catch (error) {
       if (error instanceof AxiosError) {
-        let errors: IAuthorizationError[] = [];
+        const errors: IAuthorizationError[] = [];
         error.response?.data?.details?.forEach((errorDetail: IErrorDetail) => {
           errors.push({'property': errorDetail.property, 'messages': errorDetail.messages});
         });

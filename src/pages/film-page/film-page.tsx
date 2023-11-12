@@ -1,7 +1,7 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
-import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
+import { ReducerName, RoutePath } from '../../types/enums';
 import './film-page.scss';
 import { IReview } from '../../types/interfaces';
 import { Button } from '../../components/button/button';
@@ -37,7 +37,7 @@ export const FilmPage = ({reviews}: FilmPageProps) => {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header authorizationStatus={AuthorizationStatus.Auth} headerClassName="film-card__head" />
+          <Header headerClassName="film-card__head" />
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
