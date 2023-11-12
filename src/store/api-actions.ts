@@ -76,10 +76,16 @@ export const loginAction = createAsyncThunk<void, IAuth, {
     } catch (error) {
       if (error instanceof AxiosError) {
         const errors: IAuthorizationError[] = [];
-        error.response?.data?.details?.forEach((errorDetail: IErrorDetail) => {
-          errors.push({'property': errorDetail.property, 'messages': errorDetail.messages});
-        });
-        dispatch(setAuthorizationErrors(errors));
+        if (!error?.response) {
+          errors.push({'property': 'server', messages: ['Server unavailable']});
+        } else if (error.response?.status === 400) {
+          error.response?.data?.details?.forEach((errorDetail: IErrorDetail) => {
+            errors.push({property: errorDetail.property, messages: errorDetail.messages});
+          });
+          dispatch(setAuthorizationErrors(errors));
+        } else {
+          errors.push({'property': 'app', messages: ['Sign in failed']});
+        }
       }
     }
   },
