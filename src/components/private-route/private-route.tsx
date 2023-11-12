@@ -1,13 +1,17 @@
 import { Navigate } from 'react-router-dom';
-import { RoutePath, AuthorizationStatus } from '../../types/enums';
+import { RoutePath, AuthorizationStatus, ReducerName } from '../../types/enums';
+import { useAppSelector } from '../../hooks';
 
 interface PrivateRouteProps {
-  authorizationStatus: AuthorizationStatus;
   children: JSX.Element;
 }
 
-export const PrivateRoute = ({ authorizationStatus, children }: PrivateRouteProps) => (
-  authorizationStatus === AuthorizationStatus.Auth
-    ? children
-    : <Navigate to={RoutePath.Main + RoutePath.SignIn} />
-);
+export const PrivateRoute = ({ children }: PrivateRouteProps) => {
+  const authorizationStatus = useAppSelector((state) => state[ReducerName.Authorization].authorizationStatus);
+
+  return (
+    authorizationStatus === AuthorizationStatus.Auth
+      ? children
+      : <Navigate to={RoutePath.Main + RoutePath.SignIn} />
+  );
+};

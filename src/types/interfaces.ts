@@ -1,3 +1,5 @@
+import { AuthorizationStatus } from './enums';
+
 export interface IFilm {
   id: string;
   name: string;
@@ -58,4 +60,40 @@ export interface IReview {
   rating: number;
   date: Date;
   author: string;
+}
+
+export interface IUser {
+  id: string;
+  token: string;
+  email: string;
+}
+
+export interface IAuth {
+  email: string;
+  password: string;
+}
+
+export interface IAuthorizationReducer {
+  authorizationStatus: AuthorizationStatus;
+  authorizationErrors: IAuthorizationError[];
+}
+
+export interface IFilmsReducer {
+  activeGenre: IGenre;
+  currentFilms: IFilmPreview[];
+  films: IFilmPreview[];
+  genres: IGenre[];
+  promoFilm: IFilmPromo | null;
+  filmsLoadingStatus: boolean;
+}
+
+export interface IAuthorizationError {
+  property: string;
+  messages: string[];
+}
+
+export interface IErrorDetail {
+  messages: string[];
+  property: string;
+  value: string;
 }

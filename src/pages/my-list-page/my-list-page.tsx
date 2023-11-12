@@ -1,7 +1,6 @@
 import { FilmsList } from '../../components/films-list/films-list';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
-import { AuthorizationStatus } from '../../types/enums';
 import { IFilm } from '../../types/interfaces';
 import './my-list-page.scss';
 
@@ -11,7 +10,7 @@ interface MyListPageProps {
 
 export const MyListPage = ({films}: MyListPageProps) => (
   <div className="user-page">
-    <Header authorizationStatus={AuthorizationStatus.Auth} headerClassName="user-page__head">
+    <Header headerClassName="user-page__head">
       <h1 className="page-title user-page__title">My list <span className="user-page__film-count">9</span></h1>
     </Header>
 

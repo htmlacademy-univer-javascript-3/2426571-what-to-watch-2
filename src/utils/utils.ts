@@ -1,1 +1,1 @@
-export const convertFilmGenresStringToStringArray = (filmGenres: string): string[] => filmGenres.split(', ');
+export const capitalize = (s: string) => s[0].toUpperCase() + s.slice(1);

@@ -1,12 +1,12 @@
 import './add-review-page.scss';
 import { Header } from '../../components/header/header';
-import { AuthorizationStatus, RoutePath } from '../../types/enums';
+import { ReducerName, RoutePath } from '../../types/enums';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { AddReviewForm } from '../../components/add-review-form/add-review-form';
 import { useAppSelector } from '../../hooks';
 
 export const AddReviewPage = () => {
-  const films = useAppSelector((state) => state.films);
+  const films = useAppSelector((state) => state[ReducerName.Films].films);
   const params = useParams();
   const id = params.id ?? '-1';
 
@@ -26,7 +26,7 @@ export const AddReviewPage = () => {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header authorizationStatus={AuthorizationStatus.Auth}>
+        <Header>
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">

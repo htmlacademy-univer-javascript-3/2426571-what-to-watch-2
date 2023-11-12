@@ -2,13 +2,14 @@ import { IGenre } from '../../types/interfaces';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { GenresCatalogueItem } from './genres-catalogue-item/genres-catalogue-item';
 import { getFilmsByGenre, setActiveGenre } from '../../store/action';
+import { ReducerName } from '../../types/enums';
 
 interface GenresCatalogueProps {
   genres: IGenre[];
 }
 
 export const GenresCatalogue = ({genres}: GenresCatalogueProps) => {
-  const activeGenre = useAppSelector((state) => state.activeGenre);
+  const activeGenre = useAppSelector((state) => state[ReducerName.Films].activeGenre);
   const dispatch = useAppDispatch();
 
   const handleGenresCatalogueItemClick = (genre: IGenre) => {

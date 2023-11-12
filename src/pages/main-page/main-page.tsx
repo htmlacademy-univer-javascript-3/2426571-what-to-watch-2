@@ -1,22 +1,23 @@
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
-import { AuthorizationStatus, RoutePath } from '../../types/enums';
+import { ReducerName, RoutePath } from '../../types/enums';
 import './main-page.scss';
 import { GenresCatalogue } from '../../components/genres-catalogue/genres-catalogue';
 import { FilmsList } from '../../components/films-list/films-list';
-import { genres } from '../../mocks/genres';
 import { Button } from '../../components/button/button';
 import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
-import { getPromoFilmAction } from '../../store/api-actions';
+import { getGenresAction, getPromoFilmAction } from '../../store/api-actions';
 
 const FILMS_TO_SHOW_AMOUNT = 8;
 store.dispatch(getPromoFilmAction());
+store.dispatch(getGenresAction());
 
 export const MainPage = () => {
-  const activeGenreFilms = useAppSelector((state) => state.currentFilms);
-  const promoFilm = useAppSelector((state) => state.promoFilm);
+  const activeGenreFilms = useAppSelector((state) => state[ReducerName.Films].currentFilms);
+  const promoFilm = useAppSelector((state) => state[ReducerName.Films].promoFilm);
+  const genres = useAppSelector((state) => state[ReducerName.Films].genres);
 
   if (!promoFilm) {
     return <LoadingScreen />;
@@ -31,7 +32,7 @@ export const MainPage = () => {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header authorizationStatus={AuthorizationStatus.Auth} headerClassName="film-card__head" />
+        <Header headerClassName="film-card__head" />
 
         <div className="film-card__wrap">
           <div className="film-card__info">
