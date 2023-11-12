@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom/client';
 import { App } from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './store';
-import { getFilmsAction } from './store/api-actions';
+import { checkAuthAction, getFilmsAction } from './store/api-actions';
 
 store.dispatch(getFilmsAction());
+store.dispatch(checkAuthAction());
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

@@ -33,7 +33,7 @@ export const App = () => {
           <Route index element={<MainPage />} />
           <Route path={RoutePath.SignIn} element={<SignInPage />} />
           <Route path={RoutePath.MyList} element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+            <PrivateRoute>
               <MyListPage />
             </PrivateRoute>
           }
