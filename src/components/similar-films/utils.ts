@@ -1,15 +1,13 @@
 import { IFilm } from '../../types/interfaces';
-import { convertFilmGenresStringToStringArray } from '../../utils/utils';
 
 export const similarFilms = (film: IFilm, films: IFilm[]): IFilm[] => {
   let currentSimilarFilms: IFilm[] = [];
-  const filmGenres = convertFilmGenresStringToStringArray(film.genres);
-  if (film.genres === '' || filmGenres.length === 0) {
+  if (film.genre === '') {
     return [];
   }
 
   films.forEach((currentFilm) => {
-    if (currentFilm.id !== film.id && filmGenres.filter((genre) => currentFilm.genres.includes(genre)).length > 0) {
+    if (currentFilm.id !== film.id && film.genre === currentFilm.genre) {
       currentSimilarFilms.push(currentFilm);
     }
   });
