@@ -1,9 +1,9 @@
-import {AxiosInstance} from 'axios';
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import {AppDispatch, State} from '../types/types';
-import { IAuth, IFilmPreview, IFilmPromo, IUser } from '../types/interfaces';
+import { AxiosError, AxiosInstance } from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { AppDispatch, State } from '../types/types';
+import { IAuth, IAuthorizationError, IErrorDetail, IFilmPreview, IFilmPromo, IUser } from '../types/interfaces';
 import { APIRoute, AuthorizationStatus } from '../types/enums';
-import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres, setAuthorizationStatus } from './action';
+import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres, setAuthorizationStatus, setAuthorizationErrors } from './action';
 import { dropToken, saveToken } from '../services/token';
 
 export const getFilmsAction = createAsyncThunk<void, undefined, {
@@ -37,7 +37,7 @@ export const getGenresAction = createAsyncThunk<void, undefined, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'genres/getGenres',
+  'films/getGenres',
   async (_arg, {dispatch, extra: api}) => {
     dispatch(setFilmsLoadingStatus(true));
     const {data} = await api.get<IFilmPreview[]>(APIRoute.Films);
@@ -68,10 +68,20 @@ export const loginAction = createAsyncThunk<void, IAuth, {
   extra: AxiosInstance;
 }>(
   'user/login',
-  async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<IUser>(APIRoute.Login, {email, password});
-    saveToken(token);
-    dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+  async ({email, password}, {dispatch, extra: api}) => {
+    try {
+      const {data: {token}} = await api.post<IUser>(APIRoute.Login, {email, password});
+      saveToken(token);
+      dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        let errors: IAuthorizationError[] = [];
+        error.response?.data?.details?.forEach((errorDetail: IErrorDetail) => {
+          errors.push({'property': errorDetail.property, 'messages': errorDetail.messages});
+        });
+        dispatch(setAuthorizationErrors(errors));
+      }
+    }
   },
 );
 
@@ -82,8 +92,14 @@ export const logoutAction = createAsyncThunk<void, undefined, {
 }>(
   'user/logout',
   async (_arg, {dispatch, extra: api}) => {
-    await api.delete(APIRoute.Logout);
-    dropToken();
-    dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    try {
+      await api.delete(APIRoute.Logout);
+      dropToken();
+      dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response?.data);
+      }
+    }
   },
 );

@@ -69,12 +69,13 @@ export interface IUser {
 }
 
 export interface IAuth {
-  login: string;
+  email: string;
   password: string;
 }
 
 export interface IAuthorizationReducer {
   authorizationStatus: AuthorizationStatus;
+  authorizationErrors: IAuthorizationError[];
 }
 
 export interface IFilmsReducer {
@@ -84,4 +85,15 @@ export interface IFilmsReducer {
   genres: IGenre[];
   promoFilm: IFilmPromo | null;
   filmsLoadingStatus: boolean;
+}
+
+export interface IAuthorizationError {
+  property: string;
+  messages: string[];
+}
+
+export interface IErrorDetail {
+  messages: string[];
+  property: string;
+  value: string;
 }

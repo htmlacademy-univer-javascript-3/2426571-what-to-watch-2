@@ -1,31 +1,26 @@
+import { Navigate } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
-import { AuthorizationStatus } from '../../types/enums';
+import { SignInForm } from '../../components/sign-in-form/sign-in-form';
+import { useAppSelector } from '../../hooks';
+import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
 
-export const SignInPage = () => (
-  <div className="user-page">
-    <Header authorizationStatus={AuthorizationStatus.NoAuth} headerClassName="user-page__head">
-      <h1 className="page-title user-page__title">Sign in</h1>
-    </Header>
+export const SignInPage = () => {
+  const authorizationStatus = useAppSelector((state) => state[ReducerName.Authorization].authorizationStatus);
 
-    <div className="sign-in user-page__content">
-      <form action="#" className="sign-in__form">
-        <div className="sign-in__fields">
-          <div className="sign-in__field">
-            <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email" />
-            <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
-          </div>
-          <div className="sign-in__field">
-            <input className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password" />
-            <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
-          </div>
-        </div>
-        <div className="sign-in__submit">
-          <button className="sign-in__btn" type="submit">Sign in</button>
-        </div>
-      </form>
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    return <Navigate to={RoutePath.Main} />;
+  }
+
+  return (
+    <div className="user-page">
+      <Header headerClassName="user-page__head">
+        <h1 className="page-title user-page__title">Sign in</h1>
+      </Header>
+
+      <SignInForm />
+
+      <Footer />
     </div>
-
-    <Footer />
-  </div>
-);
+  );
+}

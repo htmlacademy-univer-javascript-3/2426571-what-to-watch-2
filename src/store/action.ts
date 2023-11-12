@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { IFilmPreview, IFilmPromo, IGenre } from '../types/interfaces';
+import { IAuthorizationError, IFilmPreview, IFilmPromo, IGenre } from '../types/interfaces';
 import { AuthorizationStatus } from '../types/enums';
 
 export const setActiveGenre = createAction<{genre: IGenre}>('film/setActiveGenre');
@@ -22,10 +22,10 @@ export const setFilmsLoadingStatus = createAction<boolean>('films/setFilmsLoadin
 
 export const setAuthorizationStatus = createAction<AuthorizationStatus>('user/setAuthorizationStatus');
 
-export const getAuthorizationStatus = createAction('user/getAuthorizationStatus');
+export const setAuthorizationErrors = createAction<IAuthorizationError[]>('user/setAuthorizationErrors');
 
 export const checkAuth = createAction('user/checkAuth');
 
 export const login = createAction('user/login');
 
-export const logout = createAction('user/checkAuth');
+export const logout = createAction('user/logout');
