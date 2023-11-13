@@ -18,15 +18,19 @@ export const getPromoFilm = createAction('films/getPromoFilm');
 
 export const setPromoFilm = createAction<IFilmPromo>('films/setPromoFilm');
 
-export const setGenres = createAction<IFilmShort[]>('films/setGenres');
+export const clearPromoFilm = createAction('films/clearPromoFilm');
 
 export const getGenres = createAction('films/getGenres');
+
+export const setGenres = createAction<IFilmShort[]>('films/setGenres');
 
 export const setFilmsLoadingStatus = createAction<boolean>('films/setFilmsLoadingStatus');
 
 export const getFilm = createAction('films/getFilm');
 
 export const setFilm = createAction<IFilm>('films/setFilm');
+
+export const clearFilm = createAction('films/clearFilm');
 
 
 export const setAuthorizationStatus = createAction<AuthorizationStatus>('user/setAuthorizationStatus');

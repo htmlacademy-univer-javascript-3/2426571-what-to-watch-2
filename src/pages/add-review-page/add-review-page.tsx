@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { getFilmAction } from '../../store/api-actions';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
+import { clearFilm } from '../../store/action';
 
 export const AddReviewPage = () => {
   const params = useParams();
@@ -23,6 +24,10 @@ export const AddReviewPage = () => {
     if (!film) {
       dispatch(getFilmAction(id));
     }
+
+    return (() => {
+      dispatch(clearFilm());
+    });
   }, []);
 
   if (!film) {

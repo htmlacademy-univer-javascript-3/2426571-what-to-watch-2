@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 import { getGenresAction, getPromoFilmAction } from '../../store/api-actions';
 import { useEffect } from 'react';
+import { clearPromoFilm, setGenres } from '../../store/action';
 
 const FILMS_TO_SHOW_AMOUNT = 8;
 
@@ -21,6 +22,11 @@ export const MainPage = () => {
   useEffect(() => {
     dispatch(getPromoFilmAction());
     dispatch(getGenresAction());
+
+    return (() => {
+      dispatch(clearPromoFilm());
+      dispatch(setGenres([]));
+    });
   }, []);
 
   if (!promoFilm) {

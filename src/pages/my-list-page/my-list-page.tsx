@@ -7,6 +7,7 @@ import { getFavoritesAction } from '../../store/api-actions';
 import { ReducerName } from '../../types/enums';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
+import { setFavorites } from '../../store/action';
 
 export const MyListPage = () => {
   const favorites = useAppSelector((state) => state[ReducerName.Favorites].favorites);
@@ -15,6 +16,10 @@ export const MyListPage = () => {
 
   useEffect(() => {
     dispatch(getFavoritesAction());
+
+    return (() => {
+      dispatch(setFavorites([]));
+    });
   }, []);
 
   if (favorites.length === 0 && favoritesLoadingStatus) {

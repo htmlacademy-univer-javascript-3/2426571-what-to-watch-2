@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 import { useEffect } from 'react';
 import { getFilmAction } from '../../store/api-actions';
+import { clearFilm } from '../../store/action';
 
 export const PlayerPage = () => {
   const params = useParams();
@@ -21,6 +22,10 @@ export const PlayerPage = () => {
     if (!film) {
       dispatch(getFilmAction(id));
     }
+
+    return (() => {
+      dispatch(clearFilm());
+    });
   }, []);
 
   if (!film) {

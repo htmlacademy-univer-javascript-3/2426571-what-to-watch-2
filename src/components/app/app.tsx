@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import { useEffect } from 'react';
 import { getAuthorizationStatusAction, getFilmsAction } from '../../store/api-actions';
+import { setAuthorizationStatus, setFilms } from '../../store/action';
 
 export const App = () => {
   const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
@@ -25,6 +26,11 @@ export const App = () => {
   useEffect(() => {
     dispatch(getFilmsAction());
     dispatch(getAuthorizationStatusAction());
+
+    return (() => {
+      dispatch(setFilms([]));
+      dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    });
   }, []);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || filmsLoadingStatus) {

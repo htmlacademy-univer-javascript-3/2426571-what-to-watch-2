@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilmAction, getFilmCommentsAction, getSimilarFilmsAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
+import { clearFilm, setFilmComments, setSimilarFilms } from '../../store/action';
 
 export const FilmPage = () => {
   const params = useParams();
@@ -29,6 +30,12 @@ export const FilmPage = () => {
     dispatch(getFilmAction(id));
     dispatch(getSimilarFilmsAction(id));
     dispatch(getFilmCommentsAction(id));
+
+    return (() => {
+      dispatch(clearFilm());
+      dispatch(setSimilarFilms([]));
+      dispatch(setFilmComments([]));
+    });
   }, []);
 
   if (!film) {
