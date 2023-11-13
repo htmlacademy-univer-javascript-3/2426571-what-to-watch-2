@@ -68,7 +68,7 @@ export const getGenresAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'films/getGenres',
-  async (_arg, {dispatch, getState}) => {
+  (_arg, {dispatch, getState}) => {
     try {
       dispatch(setGenres(getState()[ReducerName.Films].films));
     } catch (error) {

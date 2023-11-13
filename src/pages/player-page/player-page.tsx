@@ -1,4 +1,4 @@
-import { Navigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ReducerName, RoutePath } from '../../types/enums';
 import { VideoPlayer } from '../../components/video-player/video-player';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -12,12 +12,12 @@ export const PlayerPage = () => {
   const film = useAppSelector((state) => state[ReducerName.Films].film);
   const films = useAppSelector((state) => state[ReducerName.Films].films);
   const dispatch = useAppDispatch();
-
-  if (!films.find((currentFilm) => currentFilm.id === id)) {
-    return <Navigate to={`/${RoutePath.NotFound}`} />;
-  }
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!films.find((currentFilm) => currentFilm.id === id)) {
+      navigate(`/${RoutePath.NotFound}`);
+    }
     if (!film) {
       dispatch(getFilmAction(id));
     }

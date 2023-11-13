@@ -45,7 +45,7 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
       if (!commentAddErrors) {
         navigate(`/${RoutePath.Films}/${filmId}`);
       }
-    });;
+    });
   };
 
   const ratingStars = [...Array(10).keys()].reverse().map((i) => (

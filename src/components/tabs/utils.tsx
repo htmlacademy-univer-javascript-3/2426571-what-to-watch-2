@@ -22,5 +22,5 @@ export const formatRating = (rating: number) => {
   if (rating < 10) {
     return 'Very good';
   }
-  return 'Awesome'
+  return 'Awesome';
 };

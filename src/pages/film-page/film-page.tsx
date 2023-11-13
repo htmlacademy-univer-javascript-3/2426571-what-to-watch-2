@@ -1,4 +1,4 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
@@ -20,12 +20,12 @@ export const FilmPage = () => {
   const comments = useAppSelector((state) => state[ReducerName.Comments].comments);
   const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
   const dispatch = useAppDispatch();
-
-  if (!films.find((currentFilm) => currentFilm.id === id)) {
-    return <Navigate to={`/${RoutePath.NotFound}`} />;
-  }
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!films.find((currentFilm) => currentFilm.id === id)) {
+      navigate(`/${RoutePath.NotFound}`);
+    }
     dispatch(getFilmAction(id));
     dispatch(getSimilarFilmsAction(id));
     dispatch(getFilmCommentsAction(id));
@@ -74,10 +74,10 @@ export const FilmPage = () => {
                   </>
                 </Button>
                 {authorizationStatus === AuthorizationStatus.Auth ?
-                <Link to={`/${RoutePath.Films}/${id}/${RoutePath.AddReview}`} className="btn film-card__button">
-                  Add review
-                </Link> :
-                null}
+                  <Link to={`/${RoutePath.Films}/${id}/${RoutePath.AddReview}`} className="btn film-card__button">
+                    Add review
+                  </Link> :
+                  null}
               </div>
             </div>
           </div>

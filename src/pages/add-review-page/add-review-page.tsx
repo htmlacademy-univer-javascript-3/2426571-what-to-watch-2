@@ -1,7 +1,7 @@
 import './add-review-page.scss';
 import { Header } from '../../components/header/header';
 import { ReducerName, RoutePath } from '../../types/enums';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AddReviewForm } from '../../components/add-review-form/add-review-form';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
@@ -14,12 +14,12 @@ export const AddReviewPage = () => {
   const film = useAppSelector((state) => state[ReducerName.Films].film);
   const films = useAppSelector((state) => state[ReducerName.Films].films);
   const dispatch = useAppDispatch();
-
-  if (!films.find((currentFilm) => currentFilm.id === id)) {
-    return <Navigate to={`/${RoutePath.NotFound}`} />;
-  }
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!films.find((currentFilm) => currentFilm.id === id)) {
+      navigate(`/${RoutePath.NotFound}`);
+    }
     if (!film) {
       dispatch(getFilmAction(id));
     }
