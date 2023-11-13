@@ -1,7 +1,7 @@
 import { IFilm, IReview } from '../../../types/interfaces';
 import { Review } from '../../review/review';
 import { DetailsItem } from '../details-item/details-item';
-import { formatCast, formatDuration } from '../utils';
+import { formatCastWithComma, formatCastWithNextLine, formatDuration, formatRating } from '../utils';
 
 interface ActiveTabProps {
   activeTab: string;
@@ -20,7 +20,7 @@ export const ActiveTab = ({activeTab, film, reviews}: ActiveTabProps) => {
         <div className="film-rating">
           <div className="film-rating__score">{film.rating}</div>
           <p className="film-rating__meta">
-            <span className="film-rating__level">Very good</span>
+            <span className="film-rating__level">{formatRating(film.rating)}</span>
             <span className="film-rating__count">{reviews.length} ratings</span>
           </p>
         </div>
@@ -30,7 +30,7 @@ export const ActiveTab = ({activeTab, film, reviews}: ActiveTabProps) => {
 
           <p className="film-card__director"><strong>Director: {film.director}</strong></p>
 
-          <p className="film-card__starring"><strong>Starring: {film.starring}</strong></p>
+          <p className="film-card__starring"><strong>Starring: {formatCastWithComma(film.starring)}</strong></p>
         </div>
       </>
     );
@@ -40,7 +40,7 @@ export const ActiveTab = ({activeTab, film, reviews}: ActiveTabProps) => {
       <div className="film-card__text film-card__row">
         <div className="film-card__text-col">
           <DetailsItem name='Director' value={film.director} />
-          <DetailsItem name='Starring' value={formatCast(film.starring)} />
+          <DetailsItem name='Starring' value={formatCastWithNextLine(film.starring)} />
         </div>
 
         <div className="film-card__text-col">

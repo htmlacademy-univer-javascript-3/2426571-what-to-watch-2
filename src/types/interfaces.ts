@@ -21,17 +21,6 @@ export interface IFilm {
 export interface IFilmShort {
   id: string;
   name: string;
-  posterImage: string;
-  backgroundImage: string;
-  videoLink: string;
-  genre: string;
-  released: number;
-  isFavorite: boolean;
-}
-
-export interface IFilmPreview {
-  id: string;
-  name: string;
   previewImage: string;
   previewVideoLink: string;
   genre: string;
@@ -79,13 +68,13 @@ export interface IUserReducer {
 
 export interface IFilmsReducer {
   activeGenre: IGenre;
-  currentFilms: IFilmPreview[];
-  films: IFilmPreview[];
+  currentFilms: IFilmShort[];
+  films: IFilmShort[];
   genres: IGenre[];
   promoFilm: IFilmPromo | null;
   filmsLoadingStatus: boolean;
   film: IFilm | null;
-  similarFilms: IFilmPreview[];
+  similarFilms: IFilmShort[];
 }
 
 export interface ICommentsReducer {
@@ -93,7 +82,7 @@ export interface ICommentsReducer {
 }
 
 export interface IFavoritesReducer {
-  favorites: IFilmPreview[];
+  favorites: IFilmShort[];
 }
 
 export interface IAuthorizationError {

@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { RoutePath } from '../../types/enums';
 import './film-small-card.scss';
-import { IFilmPreview } from '../../types/interfaces';
+import { IFilmShort } from '../../types/interfaces';
 
 interface FilmSmallCardProps {
-  film: IFilmPreview;
+  film: IFilmShort;
 }
 
 export const FilmSmallCard = ({film}: FilmSmallCardProps) => (

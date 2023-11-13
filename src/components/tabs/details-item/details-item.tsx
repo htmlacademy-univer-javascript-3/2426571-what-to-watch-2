@@ -1,6 +1,6 @@
 interface DetailsItemProps {
   name: string;
-  value: string;
+  value: string | JSX.Element[];
 }
 
 export const DetailsItem = ({name, value}: DetailsItemProps) => (

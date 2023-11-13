@@ -1,8 +1,8 @@
-import { IFilmPreview } from '../../types/interfaces';
+import { IFilmShort } from '../../types/interfaces';
 import { FilmsList } from '../films-list/films-list';
 
 interface SimilarFilmsProps {
-  films: IFilmPreview[];
+  films: IFilmShort[];
 }
 
 export const SimilarFilms = ({films}: SimilarFilmsProps) => (
