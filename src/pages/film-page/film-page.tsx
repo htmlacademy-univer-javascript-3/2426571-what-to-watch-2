@@ -1,7 +1,7 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
-import { ReducerName, RoutePath } from '../../types/enums';
+import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
 import './film-page.scss';
 import { Button } from '../../components/button/button';
 import { Tabs } from '../../components/tabs/tabs';
@@ -20,6 +20,7 @@ export const FilmPage = () => {
   const films = useAppSelector((state) => state[ReducerName.Films].films);
   const similarFilms = useAppSelector((state) => state[ReducerName.Films].similarFilms);
   const comments = useAppSelector((state) => state[ReducerName.Comments].comments);
+  const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
 
   useEffect(() => {
     store.dispatch(getFilmAction(id));
@@ -79,9 +80,11 @@ export const FilmPage = () => {
                     <span className="film-card__count">9</span>
                   </>
                 </Button>
+                {authorizationStatus === AuthorizationStatus.Auth ?
                 <Link to={`/${RoutePath.Films}/${id}/${RoutePath.AddReview}`} className="btn film-card__button">
                   Add review
-                </Link>
+                </Link> :
+                null}
               </div>
             </div>
           </div>
