@@ -6,7 +6,7 @@ import { ReducerName } from '../../types/enums';
 import { capitalize } from '../../utils/utils';
 
 export const SignInForm = () => {
-  const authorizationErrors = useAppSelector((state) => state[ReducerName.Authorization].authorizationErrors);
+  const authorizationErrors = useAppSelector((state) => state[ReducerName.User].authorizationErrors);
   const dispatch = useAppDispatch();
   const [signInForm, setSignInForm] = useState<IAuth>({
     email: '',

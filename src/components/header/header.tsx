@@ -10,7 +10,7 @@ interface HeaderProps {
 }
 
 export const Header = ({ headerClassName, children }: HeaderProps) => {
-  const authorizationStatus = useAppSelector((state) => state[ReducerName.Authorization].authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
   const dispatch = useAppDispatch();
 
   const handleSignOutClick = () => {

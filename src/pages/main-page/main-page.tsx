@@ -9,15 +9,24 @@ import { useAppSelector } from '../../hooks';
 import { store } from '../../store';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 import { getGenresAction, getPromoFilmAction } from '../../store/api-actions';
+import { useEffect } from 'react';
+import { setGenres, setPromoFilm } from '../../store/action';
 
 const FILMS_TO_SHOW_AMOUNT = 8;
-store.dispatch(getPromoFilmAction());
-store.dispatch(getGenresAction());
 
 export const MainPage = () => {
   const activeGenreFilms = useAppSelector((state) => state[ReducerName.Films].currentFilms);
   const promoFilm = useAppSelector((state) => state[ReducerName.Films].promoFilm);
   const genres = useAppSelector((state) => state[ReducerName.Films].genres);
+
+  useEffect(() => {
+    store.dispatch(getPromoFilmAction());
+    store.dispatch(getGenresAction());
+    return () => {
+      store.dispatch(setPromoFilm(null));
+      store.dispatch(setGenres([]));
+    };
+  }, []);
 
   if (!promoFilm) {
     return <LoadingScreen />;

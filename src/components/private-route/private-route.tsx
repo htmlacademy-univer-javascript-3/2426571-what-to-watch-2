@@ -7,7 +7,7 @@ interface PrivateRouteProps {
 }
 
 export const PrivateRoute = ({ children }: PrivateRouteProps) => {
-  const authorizationStatus = useAppSelector((state) => state[ReducerName.Authorization].authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
 
   return (
     authorizationStatus === AuthorizationStatus.Auth

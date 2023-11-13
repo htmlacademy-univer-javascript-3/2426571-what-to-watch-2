@@ -3,29 +3,42 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { ReducerName, RoutePath } from '../../types/enums';
 import './film-page.scss';
-import { IReview } from '../../types/interfaces';
 import { Button } from '../../components/button/button';
 import { Tabs } from '../../components/tabs/tabs';
 import { SimilarFilms } from '../../components/similar-films/similar-films';
 import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
+import { getFilmAction, getFilmCommentsAction, getSimilarFilmsAction } from '../../store/api-actions';
+import { useEffect } from 'react';
+import { setFilm, setFilmComments, setSimilarFilms } from '../../store/action';
+import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 
-interface FilmPageProps {
-  reviews: IReview[];
-}
-
-export const FilmPage = ({reviews}: FilmPageProps) => {
-  const films = useAppSelector((state) => state[ReducerName.Films].films);
+export const FilmPage = () => {
   const params = useParams();
   const id = params.id ?? '-1';
+  const film = useAppSelector((state) => state[ReducerName.Films].film);
+  const films = useAppSelector((state) => state[ReducerName.Films].films);
+  const similarFilms = useAppSelector((state) => state[ReducerName.Films].similarFilms);
+  const comments = useAppSelector((state) => state[ReducerName.Comments].comments);
 
-  const filteredFilms = films.filter((x) => x.id === id);
-  if (filteredFilms.length === 0) {
+  useEffect(() => {
+    store.dispatch(getFilmAction(id));
+    store.dispatch(getSimilarFilmsAction(id));
+    store.dispatch(getFilmCommentsAction(id));
+    return () => {
+      store.dispatch(setFilm(null));
+      store.dispatch(setSimilarFilms([]));
+      store.dispatch(setFilmComments([]));
+    };
+  }, []);
+
+  if (!films.find((currentFilm) => currentFilm.id === id)) {
     return <Navigate to={`/${RoutePath.NotFound}`} />;
   }
 
-  const film = filteredFilms[0];
-
-  const filteredReviews = reviews.filter((x) => x.filmId === id);
+  if (!film) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div>
@@ -73,11 +86,11 @@ export const FilmPage = ({reviews}: FilmPageProps) => {
           </div>
         </div>
 
-        <Tabs film={film} reviews={filteredReviews} />
+        <Tabs film={film} reviews={comments} />
       </section>
 
       <div className="page-content">
-        <SimilarFilms film={film} films={films} />
+        <SimilarFilms films={similarFilms} />
 
         <Footer />
       </div>

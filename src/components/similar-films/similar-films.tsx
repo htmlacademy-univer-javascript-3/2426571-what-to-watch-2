@@ -1,16 +1,14 @@
-import { IFilm } from '../../types/interfaces';
+import { IFilmPreview } from '../../types/interfaces';
 import { FilmsList } from '../films-list/films-list';
-import { similarFilms } from './utils';
 
 interface SimilarFilmsProps {
-  film: IFilm;
-  films: IFilm[];
+  films: IFilmPreview[];
 }
 
-export const SimilarFilms = ({film, films}: SimilarFilmsProps) => (
+export const SimilarFilms = ({films}: SimilarFilmsProps) => (
   <section className="catalog catalog--like-this">
     <h2 className="catalog__title">More like this</h2>
 
-    <FilmsList films={similarFilms(film, films)} />
+    <FilmsList films={films} />
   </section>
 );

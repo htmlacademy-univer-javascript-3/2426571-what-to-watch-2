@@ -12,12 +12,11 @@ import { FilmPage } from '../../pages/film-page/film-page';
 import { AddReviewPage } from '../../pages/add-review-page/add-review-page';
 import { PlayerPage } from '../../pages/player-page/player-page';
 import { NotFoundPage } from '../../pages/not-found-page/not-found-page';
-import { reviews } from '../../mocks/reviews';
 import { useAppSelector } from '../../hooks';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 
 export const App = () => {
-  const authorizationStatus = useAppSelector((state) => state[ReducerName.Authorization].authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
   const filmsLoadingStatus = useAppSelector((state) => state[ReducerName.Films].filmsLoadingStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || filmsLoadingStatus) {
@@ -40,7 +39,7 @@ export const App = () => {
           />
           <Route path={RoutePath.Films}>
             <Route path={RoutePath.Film}>
-              <Route index element={<FilmPage reviews={reviews} />} />
+              <Route index element={<FilmPage />} />
               <Route path={RoutePath.AddReview} element={<AddReviewPage />} />
             </Route>
           </Route>

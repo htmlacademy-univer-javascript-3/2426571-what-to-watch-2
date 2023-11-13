@@ -6,7 +6,7 @@ import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
 
 export const SignInPage = () => {
-  const authorizationStatus = useAppSelector((state) => state[ReducerName.Authorization].authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return <Navigate to={RoutePath.Main} />;

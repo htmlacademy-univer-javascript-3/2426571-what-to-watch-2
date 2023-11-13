@@ -1,9 +1,9 @@
 import { AxiosError, AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/types';
-import { IAuth, IAuthorizationError, IErrorDetail, IFilmPreview, IFilmPromo, IUser } from '../types/interfaces';
-import { APIRoute, AuthorizationStatus } from '../types/enums';
-import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres, setAuthorizationStatus, setAuthorizationErrors } from './action';
+import { IAuth, IAuthorizationError, IErrorDetail, IFilm, IFilmShort, IFilmPromo, IReview, IUser } from '../types/interfaces';
+import { APIRoute, AuthorizationStatus, ReducerName } from '../types/enums';
+import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres, setAuthorizationStatus, setAuthorizationErrors, setFilm, setFilmComments, setFavorites, setSimilarFilms } from './action';
 import { dropToken, saveToken } from '../services/token';
 
 export const getFilmsAction = createAsyncThunk<void, undefined, {
@@ -13,10 +13,34 @@ export const getFilmsAction = createAsyncThunk<void, undefined, {
 }>(
   'films/getFilms',
   async (_arg, {dispatch, extra: api}) => {
-    dispatch(setFilmsLoadingStatus(true));
-    const {data} = await api.get<IFilmPreview[]>(APIRoute.Films);
-    dispatch(setFilmsLoadingStatus(false));
-    dispatch(setFilms(data));
+    try {
+      dispatch(setFilmsLoadingStatus(true));
+      const {data} = await api.get<IFilmShort[]>(APIRoute.Films);
+      dispatch(setFilmsLoadingStatus(false));
+      dispatch(setFilms(data));
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response?.data);
+      }
+    }
+  },
+);
+
+export const getSimilarFilmsAction = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'films/getSimilarFilms',
+  async (filmId, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<IFilmShort[]>(`${APIRoute.Films}/${filmId}/${APIRoute.SimilarFilms}`);
+      dispatch(setSimilarFilms(data));
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response?.data);
+      }
+    }
   },
 );
 
@@ -27,8 +51,14 @@ export const getPromoFilmAction = createAsyncThunk<void, undefined, {
 }>(
   'films/getPromoFilm',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<IFilmPromo>(APIRoute.PromoFilm);
-    dispatch(setPromoFilm(data));
+    try {
+      const {data} = await api.get<IFilmPromo>(APIRoute.PromoFilm);
+      dispatch(setPromoFilm(data));
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response?.data);
+      }
+    }
   },
 );
 
@@ -38,11 +68,15 @@ export const getGenresAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'films/getGenres',
-  async (_arg, {dispatch, extra: api}) => {
-    dispatch(setFilmsLoadingStatus(true));
-    const {data} = await api.get<IFilmPreview[]>(APIRoute.Films);
-    dispatch(setFilmsLoadingStatus(false));
-    dispatch(setGenres(data));
+  async (_arg, {dispatch, getState}) => {
+    try {
+      const state = getState();
+      dispatch(setGenres(state[ReducerName.Films].films));
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response?.data);
+      }
+    }
   },
 );
 
@@ -102,6 +136,60 @@ export const logoutAction = createAsyncThunk<void, undefined, {
       await api.delete(APIRoute.Logout);
       dropToken();
       dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response?.data);
+      }
+    }
+  },
+);
+
+export const getFilmAction = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'films/getFilm',
+  async (filmId, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<IFilm>(`${APIRoute.Films}/${filmId}`);
+      dispatch(setFilm(data));
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response?.data);
+      }
+    }
+  },
+);
+
+export const getFilmCommentsAction = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'comments/getFilmComments',
+  async (filmId, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<IReview[]>(`${APIRoute.Comments}/${filmId}`);
+      dispatch(setFilmComments(data));
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response?.data);
+      }
+    }
+  },
+);
+
+export const getFavoritesAction = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'favorites/getFavorites',
+  async (_arg, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<IFilmShort[]>(APIRoute.Favorites);
+      dispatch(setFavorites(data));
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error.response?.data);

@@ -55,11 +55,10 @@ export interface IGenre {
 
 export interface IReview {
   id: string;
-  filmId: string;
-  text: string;
+  date: string;
+  user: string;
+  comment: string;
   rating: number;
-  date: Date;
-  author: string;
 }
 
 export interface IUser {
@@ -73,7 +72,7 @@ export interface IAuth {
   password: string;
 }
 
-export interface IAuthorizationReducer {
+export interface IUserReducer {
   authorizationStatus: AuthorizationStatus;
   authorizationErrors: IAuthorizationError[];
 }
@@ -85,6 +84,16 @@ export interface IFilmsReducer {
   genres: IGenre[];
   promoFilm: IFilmPromo | null;
   filmsLoadingStatus: boolean;
+  film: IFilm | null;
+  similarFilms: IFilmPreview[];
+}
+
+export interface ICommentsReducer {
+  comments: IReview[];
+}
+
+export interface IFavoritesReducer {
+  favorites: IFilmPreview[];
 }
 
 export interface IAuthorizationError {

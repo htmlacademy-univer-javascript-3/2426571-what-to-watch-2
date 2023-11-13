@@ -3,7 +3,6 @@ import { IFilmPreview } from '../../types/interfaces';
 import { ShowMoreButton } from '../show-more-button/show-more-button';
 import { useState } from 'react';
 
-
 interface FilmsListProps {
   films: IFilmPreview[];
   amountToShow?: number;

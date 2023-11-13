@@ -22,15 +22,18 @@ export const enum Time {
 }
 
 export const enum APIRoute {
-  Films = '/films',
-  Film = 'films/:filmId',
-  SimilarFilms = '/films/:filmId/similar',
-  PromoFilm = '/promo',
+  Films = 'films',
+  SimilarFilms = 'similar',
+  PromoFilm = 'promo',
   Login = 'login',
   Logout = 'logout',
+  Favorites = 'favorites',
+  Comments = 'comments',
 }
 
 export const enum ReducerName {
   Films = 'filmsReducer',
-  Authorization = 'authorizationReducer',
+  Comments = 'commentsReducer',
+  Favorites = 'favoritesReducer',
+  User = 'userReducer',
 }
