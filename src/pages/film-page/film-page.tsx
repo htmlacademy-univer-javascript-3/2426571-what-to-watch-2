@@ -25,6 +25,7 @@ export const FilmPage = () => {
     store.dispatch(getFilmAction(id));
     store.dispatch(getSimilarFilmsAction(id));
     store.dispatch(getFilmCommentsAction(id));
+
     return () => {
       store.dispatch(setFilm(null));
       store.dispatch(setSimilarFilms([]));

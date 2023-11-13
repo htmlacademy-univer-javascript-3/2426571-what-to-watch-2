@@ -28,7 +28,7 @@ export const setAuthorizationStatus = createAction<AuthorizationStatus>('user/se
 
 export const setAuthorizationErrors = createAction<IAuthorizationError[]>('user/setAuthorizationErrors');
 
-export const checkAuth = createAction('user/checkAuth');
+export const getAuthorizationStatus = createAction('user/getAuthorizationStatus');
 
 export const login = createAction('user/login');
 
@@ -45,3 +45,5 @@ export const setFilmComments = createAction<IReview[]>('comments/setFilmComments
 export const getFavorites = createAction('favorites/getFavorites');
 
 export const setFavorites = createAction<IFilmShort[]>('favorites/setFavorites');
+
+export const setFavoritesLoadingStatus = createAction<boolean>('favorites/setFavoritesLoadingStatus');

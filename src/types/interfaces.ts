@@ -83,6 +83,7 @@ export interface ICommentsReducer {
 
 export interface IFavoritesReducer {
   favorites: IFilmShort[];
+  favoritesLoadingStatus: boolean;
 }
 
 export interface IAuthorizationError {

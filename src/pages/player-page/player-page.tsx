@@ -19,8 +19,10 @@ export const PlayerPage = () => {
   }
 
   useEffect(() => {
-    if (!film )
-    store.dispatch(getFilmAction(id));
+    if (!film) {
+      store.dispatch(getFilmAction(id));
+    }
+
     return () => {
       store.dispatch(setFilm(null));
     };

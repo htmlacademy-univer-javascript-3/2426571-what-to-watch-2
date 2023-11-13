@@ -27,7 +27,7 @@ export const enum APIRoute {
   PromoFilm = 'promo',
   Login = 'login',
   Logout = 'logout',
-  Favorites = 'favorites',
+  Favorites = 'favorite',
   Comments = 'comments',
 }
 

@@ -22,6 +22,7 @@ export const MainPage = () => {
   useEffect(() => {
     store.dispatch(getPromoFilmAction());
     store.dispatch(getGenresAction());
+
     return () => {
       store.dispatch(setPromoFilm(null));
       store.dispatch(setGenres([]));

@@ -6,6 +6,7 @@ import { ReducerName } from '../../types/enums';
 
 const initialState: IFavoritesReducer = {
   favorites: [],
+  favoritesLoadingStatus: false,
 };
 
 export const favoritesReducer = createSlice({

@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/types';
 import { IAuth, IAuthorizationError, IErrorDetail, IFilm, IFilmShort, IFilmPromo, IReview, IUser } from '../types/interfaces';
 import { APIRoute, AuthorizationStatus, ReducerName } from '../types/enums';
-import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres, setAuthorizationStatus, setAuthorizationErrors, setFilm, setFilmComments, setFavorites, setSimilarFilms } from './action';
+import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres, setAuthorizationStatus, setAuthorizationErrors, setFilm, setFilmComments, setFavorites, setSimilarFilms, setFavoritesLoadingStatus } from './action';
 import { dropToken, saveToken } from '../services/token';
 
 export const getFilmsAction = createAsyncThunk<void, undefined, {
@@ -80,12 +80,12 @@ export const getGenresAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const getAuthorizationStatusAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
-  'user/checkAuth',
+  'user/getAuthorizationStatus',
   async (_arg, {dispatch, extra: api}) => {
     try {
       await api.get(APIRoute.Login);
@@ -188,7 +188,9 @@ export const getFavoritesAction = createAsyncThunk<void, undefined, {
   'favorites/getFavorites',
   async (_arg, {dispatch, extra: api}) => {
     try {
+      dispatch(setFavoritesLoadingStatus(true));
       const {data} = await api.get<IFilmShort[]>(APIRoute.Favorites);
+      dispatch(setFavoritesLoadingStatus(false));
       dispatch(setFavorites(data));
     } catch (error) {
       if (error instanceof AxiosError) {
