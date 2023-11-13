@@ -3,25 +3,37 @@ import { Header } from '../../components/header/header';
 import { ReducerName, RoutePath } from '../../types/enums';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { AddReviewForm } from '../../components/add-review-form/add-review-form';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect } from 'react';
+import { getFilmAction } from '../../store/api-actions';
+import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 
 export const AddReviewPage = () => {
-  const films = useAppSelector((state) => state[ReducerName.Films].films);
   const params = useParams();
   const id = params.id ?? '-1';
+  const film = useAppSelector((state) => state[ReducerName.Films].film);
+  const films = useAppSelector((state) => state[ReducerName.Films].films);
+  const dispatch = useAppDispatch();
 
-  const filteredFilms = films.filter((x) => x.id === id);
-  if (filteredFilms.length === 0) {
+  if (!films.find((currentFilm) => currentFilm.id === id)) {
     return <Navigate to={`/${RoutePath.NotFound}`} />;
   }
 
-  const film = filteredFilms[0];
+  useEffect(() => {
+    if (!film) {
+      dispatch(getFilmAction(id));
+    }
+  }, []);
+
+  if (!film) {
+    return <LoadingScreen />;
+  }
 
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src={film.previewImage} alt={`${film.name} poster`} />
+          <img src={film.posterImage} alt={`${film.name} poster`} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -40,7 +52,7 @@ export const AddReviewPage = () => {
         </Header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={film.previewImage} alt={`${film.name} poster`} />
+          <img src={film.posterImage} alt={`${film.name} poster`} />
         </div>
       </div>
 

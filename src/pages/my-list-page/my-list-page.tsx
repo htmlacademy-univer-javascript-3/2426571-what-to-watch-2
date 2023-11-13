@@ -3,23 +3,18 @@ import { FilmsList } from '../../components/films-list/films-list';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import './my-list-page.scss';
-import { store } from '../../store';
 import { getFavoritesAction } from '../../store/api-actions';
-import { setFavorites } from '../../store/action';
 import { ReducerName } from '../../types/enums';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 
 export const MyListPage = () => {
   const favorites = useAppSelector((state) => state[ReducerName.Favorites].favorites);
   const favoritesLoadingStatus = useAppSelector((state) => state[ReducerName.Favorites].favoritesLoadingStatus);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    store.dispatch(getFavoritesAction());
-
-    return () => {
-      store.dispatch(setFavorites([]));
-    };
+    dispatch(getFavoritesAction());
   }, []);
 
   if (favorites.length === 0 && favoritesLoadingStatus) {

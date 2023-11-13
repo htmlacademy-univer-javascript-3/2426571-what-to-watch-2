@@ -6,11 +6,9 @@ import './film-page.scss';
 import { Button } from '../../components/button/button';
 import { Tabs } from '../../components/tabs/tabs';
 import { SimilarFilms } from '../../components/similar-films/similar-films';
-import { useAppSelector } from '../../hooks';
-import { store } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilmAction, getFilmCommentsAction, getSimilarFilmsAction } from '../../store/api-actions';
 import { useEffect } from 'react';
-import { setFilm, setFilmComments, setSimilarFilms } from '../../store/action';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 
 export const FilmPage = () => {
@@ -21,22 +19,17 @@ export const FilmPage = () => {
   const similarFilms = useAppSelector((state) => state[ReducerName.Films].similarFilms);
   const comments = useAppSelector((state) => state[ReducerName.Comments].comments);
   const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
-
-  useEffect(() => {
-    store.dispatch(getFilmAction(id));
-    store.dispatch(getSimilarFilmsAction(id));
-    store.dispatch(getFilmCommentsAction(id));
-
-    return () => {
-      store.dispatch(setFilm(null));
-      store.dispatch(setSimilarFilms([]));
-      store.dispatch(setFilmComments([]));
-    };
-  }, []);
+  const dispatch = useAppDispatch();
 
   if (!films.find((currentFilm) => currentFilm.id === id)) {
     return <Navigate to={`/${RoutePath.NotFound}`} />;
   }
+
+  useEffect(() => {
+    dispatch(getFilmAction(id));
+    dispatch(getSimilarFilmsAction(id));
+    dispatch(getFilmCommentsAction(id));
+  }, []);
 
   if (!film) {
     return <LoadingScreen />;

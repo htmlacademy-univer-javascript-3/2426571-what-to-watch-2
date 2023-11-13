@@ -1,10 +1,10 @@
 import { createAction } from '@reduxjs/toolkit';
-import { IAuthorizationError, IFilm, IFilmShort, IFilmPromo, IGenre, IReview } from '../types/interfaces';
+import { IResponseError, IFilm, IFilmShort, IFilmPromo, IGenre, IReview } from '../types/interfaces';
 import { AuthorizationStatus } from '../types/enums';
 
-export const setActiveGenre = createAction<{genre: IGenre}>('film/setActiveGenre');
+export const setActiveGenre = createAction<{genre: IGenre}>('films/setActiveGenre');
 
-export const getFilmsByGenre = createAction('film/getFilmsByGenre');
+export const getFilmsByGenre = createAction('films/getFilmsByGenre');
 
 export const getFilms = createAction('films/getFilms');
 
@@ -16,7 +16,7 @@ export const setSimilarFilms = createAction<IFilmShort[]>('films/setSimilarFilms
 
 export const getPromoFilm = createAction('films/getPromoFilm');
 
-export const setPromoFilm = createAction<IFilmPromo | null>('films/setPromoFilm');
+export const setPromoFilm = createAction<IFilmPromo>('films/setPromoFilm');
 
 export const setGenres = createAction<IFilmShort[]>('films/setGenres');
 
@@ -24,9 +24,14 @@ export const getGenres = createAction('films/getGenres');
 
 export const setFilmsLoadingStatus = createAction<boolean>('films/setFilmsLoadingStatus');
 
+export const getFilm = createAction('films/getFilm');
+
+export const setFilm = createAction<IFilm>('films/setFilm');
+
+
 export const setAuthorizationStatus = createAction<AuthorizationStatus>('user/setAuthorizationStatus');
 
-export const setAuthorizationErrors = createAction<IAuthorizationError[]>('user/setAuthorizationErrors');
+export const setAuthorizationErrors = createAction<IResponseError[]>('user/setAuthorizationErrors');
 
 export const getAuthorizationStatus = createAction('user/getAuthorizationStatus');
 
@@ -34,13 +39,17 @@ export const login = createAction('user/login');
 
 export const logout = createAction('user/logout');
 
-export const getFilm = createAction('films/getFilm');
-
-export const setFilm = createAction<IFilm | null>('films/setFilm');
 
 export const getFilmComments = createAction('comments/getFilmComments');
 
 export const setFilmComments = createAction<IReview[]>('comments/setFilmComments');
+
+export const addFilmComment = createAction<IReview[]>('comments/addFilmComment');
+
+export const setCommentUploadingStatus = createAction<boolean>('comments/setCommentUploadingStatus');
+
+export const setCommentAddErrors = createAction<IResponseError[]>('comments/setCommentAddErrors');
+
 
 export const getFavorites = createAction('favorites/getFavorites');
 

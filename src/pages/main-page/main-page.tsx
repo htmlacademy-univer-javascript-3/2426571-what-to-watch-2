@@ -5,12 +5,10 @@ import './main-page.scss';
 import { GenresCatalogue } from '../../components/genres-catalogue/genres-catalogue';
 import { FilmsList } from '../../components/films-list/films-list';
 import { Button } from '../../components/button/button';
-import { useAppSelector } from '../../hooks';
-import { store } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 import { getGenresAction, getPromoFilmAction } from '../../store/api-actions';
 import { useEffect } from 'react';
-import { setGenres, setPromoFilm } from '../../store/action';
 
 const FILMS_TO_SHOW_AMOUNT = 8;
 
@@ -18,15 +16,11 @@ export const MainPage = () => {
   const activeGenreFilms = useAppSelector((state) => state[ReducerName.Films].currentFilms);
   const promoFilm = useAppSelector((state) => state[ReducerName.Films].promoFilm);
   const genres = useAppSelector((state) => state[ReducerName.Films].genres);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    store.dispatch(getPromoFilmAction());
-    store.dispatch(getGenresAction());
-
-    return () => {
-      store.dispatch(setPromoFilm(null));
-      store.dispatch(setGenres([]));
-    };
+    dispatch(getPromoFilmAction());
+    dispatch(getGenresAction());
   }, []);
 
   if (!promoFilm) {

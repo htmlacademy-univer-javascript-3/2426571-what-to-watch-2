@@ -1,9 +1,9 @@
 import { AxiosError, AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/types';
-import { IAuth, IAuthorizationError, IErrorDetail, IFilm, IFilmShort, IFilmPromo, IReview, IUser } from '../types/interfaces';
+import { IAuth, IResponseError, IErrorDetail, IFilm, IFilmShort, IFilmPromo, IReview, IUser, IReviewData } from '../types/interfaces';
 import { APIRoute, AuthorizationStatus, ReducerName } from '../types/enums';
-import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres, setAuthorizationStatus, setAuthorizationErrors, setFilm, setFilmComments, setFavorites, setSimilarFilms, setFavoritesLoadingStatus } from './action';
+import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres, setAuthorizationStatus, setAuthorizationErrors, setFilm, setFilmComments, setFavorites, setSimilarFilms, setFavoritesLoadingStatus, setCommentUploadingStatus, setCommentAddErrors } from './action';
 import { dropToken, saveToken } from '../services/token';
 
 export const getFilmsAction = createAsyncThunk<void, undefined, {
@@ -70,8 +70,7 @@ export const getGenresAction = createAsyncThunk<void, undefined, {
   'films/getGenres',
   async (_arg, {dispatch, getState}) => {
     try {
-      const state = getState();
-      dispatch(setGenres(state[ReducerName.Films].films));
+      dispatch(setGenres(getState()[ReducerName.Films].films));
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error.response?.data);
@@ -109,7 +108,7 @@ export const loginAction = createAsyncThunk<void, IAuth, {
       dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     } catch (error) {
       if (error instanceof AxiosError) {
-        const errors: IAuthorizationError[] = [];
+        const errors: IResponseError[] = [];
         if (!error?.response) {
           errors.push({'property': 'server', messages: ['Server unavailable']});
         } else if (error.response?.status === 400) {
@@ -175,6 +174,37 @@ export const getFilmCommentsAction = createAsyncThunk<void, string, {
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error.response?.data);
+      }
+    }
+  },
+);
+
+export const addFilmCommentAction = createAsyncThunk<void, IReviewData, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'comments/addFilmComment',
+  async ({filmId, comment, rating}, {dispatch, getState, extra: api}) => {
+    try {
+      dispatch(setCommentUploadingStatus(true));
+      const {data} = await api.post<IReview>(`${APIRoute.Comments}/${filmId}`, {comment, rating});
+      dispatch(setCommentUploadingStatus(false));
+      dispatch(setFilmComments(getState()[ReducerName.Comments].comments.concat([data])));
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        dispatch(setCommentUploadingStatus(false));
+        const errors: IResponseError[] = [];
+        if (!error?.response) {
+          errors.push({'property': 'server', messages: ['Server unavailable']});
+        } else if (error.response?.status === 400) {
+          error.response?.data?.details?.forEach((errorDetail: IErrorDetail) => {
+            errors.push({property: errorDetail.property, messages: errorDetail.messages});
+          });
+          dispatch(setCommentAddErrors(errors));
+        } else {
+          errors.push({'property': 'app', messages: ['Comment add failed']});
+        }
       }
     }
   },

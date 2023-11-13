@@ -18,9 +18,9 @@ export const ActiveTab = ({activeTab, film, reviews}: ActiveTabProps) => {
     return (
       <>
         <div className="film-rating">
-          <div className="film-rating__score">{film.rating}</div>
+          <div className="film-rating__score">{reviews.length > 0 ? film.rating : 'N/A'}</div>
           <p className="film-rating__meta">
-            <span className="film-rating__level">{formatRating(film.rating)}</span>
+            <span className="film-rating__level">{reviews.length > 0 ? formatRating(film.rating) : ''}</span>
             <span className="film-rating__count">{reviews.length} ratings</span>
           </p>
         </div>

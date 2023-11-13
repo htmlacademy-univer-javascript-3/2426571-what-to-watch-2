@@ -12,25 +12,19 @@ import { FilmPage } from '../../pages/film-page/film-page';
 import { AddReviewPage } from '../../pages/add-review-page/add-review-page';
 import { PlayerPage } from '../../pages/player-page/player-page';
 import { NotFoundPage } from '../../pages/not-found-page/not-found-page';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { LoadingScreen } from '../loading-screen/loading-screen';
 import { useEffect } from 'react';
-import { store } from '../../store';
 import { getAuthorizationStatusAction, getFilmsAction } from '../../store/api-actions';
-import { setAuthorizationStatus, setFilms } from '../../store/action';
 
 export const App = () => {
   const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
   const filmsLoadingStatus = useAppSelector((state) => state[ReducerName.Films].filmsLoadingStatus);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    store.dispatch(getFilmsAction());
-    store.dispatch(getAuthorizationStatusAction());
-
-    return () => {
-      store.dispatch(setFilms([]));
-      store.dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
-    };
+    dispatch(getFilmsAction());
+    dispatch(getAuthorizationStatusAction());
   }, []);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || filmsLoadingStatus) {

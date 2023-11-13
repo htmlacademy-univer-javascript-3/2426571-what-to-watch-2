@@ -1,19 +1,29 @@
-import { ChangeEvent, Fragment, MouseEvent, useState } from 'react';
-import { IReview } from '../../types/interfaces';
+import { ChangeEvent, Fragment, MouseEvent, useEffect, useState } from 'react';
+import { IReviewData } from '../../types/interfaces';
+import { addFilmCommentAction } from '../../store/api-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { ReducerName } from '../../types/enums';
+import { capitalize } from '../../utils/utils';
+import './add-review-form.scss';
+import { setCommentAddErrors } from '../../store/action';
 
 interface AddReviewFormProps {
   filmId: string;
 }
 
 export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
-  const [reviewForm, setReviewForm] = useState<IReview>({
-    id: '-1',
+  const commentUploadingStatus = useAppSelector((state) => state[ReducerName.Comments].commentUploadingStatus);
+  const commentAddErrors = useAppSelector((state) => state[ReducerName.Comments].commentAddErrors);
+  const dispatch = useAppDispatch();
+  const [reviewForm, setReviewForm] = useState<IReviewData>({
     filmId: filmId,
-    text: '',
+    comment: '',
     rating: -1,
-    date: new Date(),
-    author: ''
   });
+
+  useEffect(() => () => {
+    dispatch(setCommentAddErrors([]));
+  }, []);
 
   const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = event.target;
@@ -29,14 +39,7 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
 
   const handleSubmitClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    setReviewForm({
-      id: '-1',
-      filmId: filmId,
-      text: '',
-      rating: -1,
-      date: new Date(),
-      author: ''
-    });
+    dispatch(addFilmCommentAction(reviewForm));
   };
 
   const ratingStars = [...Array(10).keys()].reverse().map((i) => (
@@ -56,6 +59,11 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
   return (
     <div className="add-review">
       <form action="#" className="add-review__form">
+        {commentAddErrors.length !== 0 ?
+          <div className="add-review__message">
+            {commentAddErrors.map((property) => property.messages.map((message) => <p key={message}>{capitalize(message)}</p>))}
+          </div> :
+          null}
         <div className="rating">
           <div className="rating__stars">
             {ratingStars}
@@ -66,14 +74,21 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
           <textarea
             className="add-review__textarea"
             id="review-text"
-            name="text"
-            value={reviewForm.text}
+            name="comment"
+            value={reviewForm.comment}
             onChange={handleTextAreaChange}
             placeholder="Review text"
           >
           </textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit" onClick={handleSubmitClick}>Post</button>
+            <button
+              className="add-review__btn"
+              type="submit"
+              onClick={handleSubmitClick}
+              disabled={reviewForm.comment.length < 50 || reviewForm.comment.length > 400 || commentUploadingStatus}
+            >
+              Post
+            </button>
           </div>
 
         </div>

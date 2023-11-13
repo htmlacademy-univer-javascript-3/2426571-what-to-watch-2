@@ -50,6 +50,12 @@ export interface IReview {
   rating: number;
 }
 
+export interface IReviewData {
+  filmId: string;
+  comment: string;
+  rating: number;
+}
+
 export interface IUser {
   id: string;
   token: string;
@@ -63,7 +69,7 @@ export interface IAuth {
 
 export interface IUserReducer {
   authorizationStatus: AuthorizationStatus;
-  authorizationErrors: IAuthorizationError[];
+  authorizationErrors: IResponseError[];
 }
 
 export interface IFilmsReducer {
@@ -79,6 +85,8 @@ export interface IFilmsReducer {
 
 export interface ICommentsReducer {
   comments: IReview[];
+  commentUploadingStatus: boolean;
+  commentAddErrors: IResponseError[];
 }
 
 export interface IFavoritesReducer {
@@ -86,7 +94,7 @@ export interface IFavoritesReducer {
   favoritesLoadingStatus: boolean;
 }
 
-export interface IAuthorizationError {
+export interface IResponseError {
   property: string;
   messages: string[];
 }
