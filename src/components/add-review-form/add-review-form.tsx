@@ -2,10 +2,11 @@ import { ChangeEvent, Fragment, MouseEvent, useEffect, useState } from 'react';
 import { IReviewData } from '../../types/interfaces';
 import { addFilmCommentAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { ReducerName } from '../../types/enums';
+import { ReducerName, RoutePath } from '../../types/enums';
 import { capitalize } from '../../utils/utils';
 import './add-review-form.scss';
 import { setCommentAddErrors } from '../../store/action';
+import { useNavigate } from 'react-router-dom';
 
 interface AddReviewFormProps {
   filmId: string;
@@ -20,6 +21,7 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
     comment: '',
     rating: -1,
   });
+  const navigate = useNavigate();
 
   useEffect(() => () => {
     dispatch(setCommentAddErrors([]));
@@ -39,7 +41,11 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
 
   const handleSubmitClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    dispatch(addFilmCommentAction(reviewForm));
+    dispatch(addFilmCommentAction(reviewForm)).then(() => {
+      if (!commentAddErrors) {
+        navigate(`/${RoutePath.Films}/${filmId}`);
+      }
+    });;
   };
 
   const ratingStars = [...Array(10).keys()].reverse().map((i) => (
