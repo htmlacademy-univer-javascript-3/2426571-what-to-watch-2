@@ -1,4 +1,4 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
@@ -10,21 +10,29 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilmAction, getFilmCommentsAction, getSimilarFilmsAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
-import { clearFilm, setFilmComments, setSimilarFilms } from '../../store/action';
+import { clearFilm, setFilmComments, setFilmLoadingError, setSimilarFilms } from '../../store/action';
 
 export const FilmPage = () => {
   const params = useParams();
+  const id = params.id ?? '';
   const film = useAppSelector((state) => state[ReducerName.Films].film);
   const similarFilms = useAppSelector((state) => state[ReducerName.Films].similarFilms);
   const comments = useAppSelector((state) => state[ReducerName.Comments].comments);
   const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
   const filmLoadingStatus = useAppSelector((state) => state[ReducerName.Films].filmLoadingStatus);
   const similarFilmsLoadingStatus = useAppSelector((state) => state[ReducerName.Films].similarFilmsLoadingStatus);
+  const filmLoadingError = useAppSelector((state) => state[ReducerName.Films].filmLoadingError);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (params.id) {
-      dispatch(getFilmAction(params.id)).catch(() => <Navigate to={`/${RoutePath.NotFound}`} />);
+      dispatch(getFilmAction(params.id)).then(() => {
+        if (filmLoadingError) {
+          dispatch(setFilmLoadingError(''));
+          navigate(`/${RoutePath.NotFound}`);
+        }
+      });
       dispatch(getSimilarFilmsAction(params.id));
       dispatch(getFilmCommentsAction(params.id));
     }
@@ -33,6 +41,7 @@ export const FilmPage = () => {
       dispatch(clearFilm());
       dispatch(setSimilarFilms([]));
       dispatch(setFilmComments([]));
+      dispatch(setFilmLoadingError(''));
     });
   }, [params.id, dispatch]);
 
@@ -63,7 +72,7 @@ export const FilmPage = () => {
               <div className="film-card__buttons">
                 <Button
                   buttonClassName="btn--play"
-                  buttonLink={`/${RoutePath.Player}/${params.id}`}
+                  buttonLink={`/${RoutePath.Player}/${id}`}
                   svgHref="#play-s"
                 >
                   <span>Play</span>
@@ -79,7 +88,7 @@ export const FilmPage = () => {
                   </>
                 </Button>
                 {authorizationStatus === AuthorizationStatus.Auth ?
-                  <Link to={`/${RoutePath.Films}/${params.id}/${RoutePath.AddReview}`} className="btn film-card__button">
+                  <Link to={`/${RoutePath.Films}/${id}/${RoutePath.AddReview}`} className="btn film-card__button">
                     Add review
                   </Link> :
                   null}

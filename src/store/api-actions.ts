@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/types';
 import { IAuth, IResponseError, IErrorDetail, IFilm, IFilmShort, IFilmPromo, IReview, IUser, IReviewData } from '../types/interfaces';
 import { APIRoute, AuthorizationStatus, ReducerName } from '../types/enums';
-import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres, setAuthorizationStatus, setAuthorizationErrors, setFilm, setFilmComments, setFavorites, setSimilarFilms, setFavoritesLoadingStatus, setCommentUploadingStatus, setCommentAddErrors, setFilmLoadingStatus, setSimilarFilmsLoadingStatus } from './action';
+import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres, setAuthorizationStatus, setAuthorizationErrors, setFilm, setFilmComments, setFavorites, setSimilarFilms, setFavoritesLoadingStatus, setCommentUploadingStatus, setCommentAddErrors, setFilmLoadingStatus, setSimilarFilmsLoadingStatus, setFilmLoadingError } from './action';
 import { dropToken, saveToken } from '../services/token';
 
 export const getFilmsAction = createAsyncThunk<void, undefined, {
@@ -95,7 +95,14 @@ export const getFilmAction = createAsyncThunk<void, string, {
       dispatch(setFilmLoadingStatus(false));
     } catch (error) {
       if (error instanceof AxiosError) {
-        console.log(error.response?.data);
+        const errors: IResponseError[] = [];
+        if (!error?.response) {
+          errors.push({'property': 'server', messages: ['Server unavailable']});
+        } else if (`${error.response?.status}`.startsWith('4')) {
+          dispatch(setFilmLoadingError(error.response?.data?.message));
+        } else {
+          errors.push({'property': 'app', messages: ['Sign in failed']});
+        }
       }
     }
   },

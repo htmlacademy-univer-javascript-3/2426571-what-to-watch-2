@@ -16,7 +16,7 @@ export const SignInForm = () => {
 
   useEffect(() => () => {
     dispatch(setAuthorizationErrors([]));
-  }, []);
+  }, [dispatch]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target;

@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ALL_GENRES } from '../../types/consts';
 import { IFilmsReducer, IGenre } from '../../types/interfaces';
-import { setActiveGenre, getFilmsByGenre, setFilms, setPromoFilm, setGenres, setFilmsLoadingStatus, setFilm, setSimilarFilms, clearFilm, clearPromoFilm, setFilmLoadingStatus, setSimilarFilmsLoadingStatus } from '../action';
+import { setActiveGenre, getFilmsByGenre, setFilms, setPromoFilm, setGenres, setFilmsLoadingStatus, setFilm, setSimilarFilms, clearFilm, clearPromoFilm, setFilmLoadingStatus, setSimilarFilmsLoadingStatus, setFilmLoadingError } from '../action';
 import { ReducerName } from '../../types/enums';
 
 const initialState: IFilmsReducer = {
@@ -14,6 +14,7 @@ const initialState: IFilmsReducer = {
   filmsLoadingStatus: false,
   filmLoadingStatus: false,
   similarFilmsLoadingStatus: false,
+  filmLoadingError: '',
   film: null,
   similarFilms: [],
 };
@@ -72,6 +73,9 @@ export const filmsReducer = createSlice({
       })
       .addCase(setSimilarFilmsLoadingStatus, (state, action) => {
         state.similarFilmsLoadingStatus = action.payload;
+      })
+      .addCase(setFilmLoadingError, (state, action) => {
+        state.filmLoadingError = action.payload;
       })
       .addCase(setFilm, (state, action) => {
         state.film = action.payload;

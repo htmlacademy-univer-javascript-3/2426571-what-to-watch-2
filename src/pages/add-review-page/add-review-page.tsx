@@ -1,27 +1,40 @@
 import './add-review-page.scss';
 import { Header } from '../../components/header/header';
-import { ReducerName, RoutePath } from '../../types/enums';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { AddReviewForm } from '../../components/add-review-form/add-review-form';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
 import { getFilmAction } from '../../store/api-actions';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
-import { clearFilm } from '../../store/action';
+import { clearFilm, setFilmLoadingError } from '../../store/action';
 
 export const AddReviewPage = () => {
   const params = useParams();
+  const id = params.id ?? '';
   const film = useAppSelector((state) => state[ReducerName.Films].film);
   const filmLoadingStatus = useAppSelector((state) => state[ReducerName.Films].filmLoadingStatus);
+  const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
+  const filmLoadingError = useAppSelector((state) => state[ReducerName.Films].filmLoadingError);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(`/${RoutePath.SignIn}`);
+    }
     if (params.id) {
-      dispatch(getFilmAction(params.id)).catch(() => <Navigate to={`/${RoutePath.NotFound}`} />);;
+      dispatch(getFilmAction(params.id)).then(() => {
+        if (filmLoadingError) {
+          dispatch(setFilmLoadingError(''));
+          navigate(`/${RoutePath.NotFound}`);
+        }
+      });
     }
 
     return (() => {
       dispatch(clearFilm());
+      dispatch(setFilmLoadingError(''));
     });
   }, [params.id, dispatch]);
 
@@ -42,10 +55,10 @@ export const AddReviewPage = () => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to={`/${RoutePath.Films}/${params.id}`}>{film.name}</Link>
+                <Link className="breadcrumbs__link" to={`/${RoutePath.Films}/${id}`}>{film.name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to={`/${RoutePath.Films}/${params.id}/${RoutePath.AddReview}`}>Add review</Link>
+                <Link className="breadcrumbs__link" to={`/${RoutePath.Films}/${id}/${RoutePath.AddReview}`}>Add review</Link>
               </li>
             </ul>
           </nav>
@@ -56,7 +69,7 @@ export const AddReviewPage = () => {
         </div>
       </div>
 
-      <AddReviewForm filmId={params.id ?? ''} />
+      <AddReviewForm filmId={id} />
 
     </section>
   );

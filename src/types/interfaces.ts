@@ -81,6 +81,7 @@ export interface IFilmsReducer {
   filmsLoadingStatus: boolean;
   filmLoadingStatus: boolean;
   similarFilmsLoadingStatus: boolean;
+  filmLoadingError: string;
   film: IFilm | null;
   similarFilms: IFilmShort[];
 }
