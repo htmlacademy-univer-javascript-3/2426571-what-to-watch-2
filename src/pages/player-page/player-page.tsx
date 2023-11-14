@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { ReducerName, RoutePath } from '../../types/enums';
 import { VideoPlayer } from '../../components/video-player/video-player';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -9,26 +9,21 @@ import { clearFilm } from '../../store/action';
 
 export const PlayerPage = () => {
   const params = useParams();
-  const id = params.id ?? '-1';
   const film = useAppSelector((state) => state[ReducerName.Films].film);
-  const films = useAppSelector((state) => state[ReducerName.Films].films);
+  const filmLoadingStatus = useAppSelector((state) => state[ReducerName.Films].filmLoadingStatus);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!films.find((currentFilm) => currentFilm.id === id)) {
-      navigate(`/${RoutePath.NotFound}`);
-    }
-    if (!film) {
-      dispatch(getFilmAction(id));
+    if (params.id) {
+      dispatch(getFilmAction(params.id)).catch(() => <Navigate to={`/${RoutePath.NotFound}`} />);;
     }
 
     return (() => {
       dispatch(clearFilm());
     });
-  }, []);
+  }, [params.id, dispatch]);
 
-  if (!film) {
+  if (!film || filmLoadingStatus) {
     return <LoadingScreen />;
   }
 

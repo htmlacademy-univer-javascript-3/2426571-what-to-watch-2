@@ -31,7 +31,7 @@ export const App = () => {
       dispatch(setFilms([]));
       dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
     });
-  }, []);
+  }, [dispatch]);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || filmsLoadingStatus) {
     return (

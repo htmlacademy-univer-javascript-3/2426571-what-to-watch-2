@@ -26,6 +26,10 @@ export const setGenres = createAction<IFilmShort[]>('films/setGenres');
 
 export const setFilmsLoadingStatus = createAction<boolean>('films/setFilmsLoadingStatus');
 
+export const setFilmLoadingStatus = createAction<boolean>('films/setFilmLoadingStatus');
+
+export const setSimilarFilmsLoadingStatus = createAction<boolean>('films/setSimilarFilmsLoadingStatus');
+
 export const getFilm = createAction('films/getFilm');
 
 export const setFilm = createAction<IFilm>('films/setFilm');

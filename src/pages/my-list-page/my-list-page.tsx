@@ -20,7 +20,7 @@ export const MyListPage = () => {
     return (() => {
       dispatch(setFavorites([]));
     });
-  }, []);
+  }, [dispatch]);
 
   if (favorites.length === 0 && favoritesLoadingStatus) {
     return <LoadingScreen />;

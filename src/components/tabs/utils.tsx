@@ -7,7 +7,7 @@ export const formatDuration = (duration: number): string => {
 };
 
 export const formatCastWithComma = (cast: string[]) => cast.join(', ');
-export const formatCastWithNextLine = (cast: string[]) => cast.map((actor) => <>{actor}<br /></>);
+export const formatCastWithNextLine = (cast: string[]) => cast.map((actor) => <span key={actor}>{actor}<br /></span>);
 
 export const formatRating = (rating: number) => {
   if (rating < 3) {

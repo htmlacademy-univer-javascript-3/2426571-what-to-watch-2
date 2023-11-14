@@ -25,7 +25,7 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
 
   useEffect(() => () => {
     dispatch(setCommentAddErrors([]));
-  }, []);
+  }, [dispatch]);
 
   const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const {name, value} = event.target;
@@ -42,7 +42,7 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
   const handleSubmitClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     dispatch(addFilmCommentAction(reviewForm)).then(() => {
-      if (!commentAddErrors) {
+      if (commentAddErrors.length === 0) {
         navigate(`/${RoutePath.Films}/${filmId}`);
       }
     });

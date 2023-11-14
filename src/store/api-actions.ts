@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/types';
 import { IAuth, IResponseError, IErrorDetail, IFilm, IFilmShort, IFilmPromo, IReview, IUser, IReviewData } from '../types/interfaces';
 import { APIRoute, AuthorizationStatus, ReducerName } from '../types/enums';
-import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres, setAuthorizationStatus, setAuthorizationErrors, setFilm, setFilmComments, setFavorites, setSimilarFilms, setFavoritesLoadingStatus, setCommentUploadingStatus, setCommentAddErrors } from './action';
+import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres, setAuthorizationStatus, setAuthorizationErrors, setFilm, setFilmComments, setFavorites, setSimilarFilms, setFavoritesLoadingStatus, setCommentUploadingStatus, setCommentAddErrors, setFilmLoadingStatus, setSimilarFilmsLoadingStatus } from './action';
 import { dropToken, saveToken } from '../services/token';
 
 export const getFilmsAction = createAsyncThunk<void, undefined, {
@@ -16,8 +16,8 @@ export const getFilmsAction = createAsyncThunk<void, undefined, {
     try {
       dispatch(setFilmsLoadingStatus(true));
       const {data} = await api.get<IFilmShort[]>(APIRoute.Films);
-      dispatch(setFilmsLoadingStatus(false));
       dispatch(setFilms(data));
+      dispatch(setFilmsLoadingStatus(false));
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error.response?.data);
@@ -34,8 +34,10 @@ export const getSimilarFilmsAction = createAsyncThunk<void, string, {
   'films/getSimilarFilms',
   async (filmId, {dispatch, extra: api}) => {
     try {
+      dispatch(setSimilarFilmsLoadingStatus(true));
       const {data} = await api.get<IFilmShort[]>(`${APIRoute.Films}/${filmId}/${APIRoute.SimilarFilms}`);
       dispatch(setSimilarFilms(data));
+      dispatch(setSimilarFilmsLoadingStatus(false));
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error.response?.data);
@@ -71,6 +73,26 @@ export const getGenresAction = createAsyncThunk<void, undefined, {
   (_arg, {dispatch, getState}) => {
     try {
       dispatch(setGenres(getState()[ReducerName.Films].films));
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.log(error.response?.data);
+      }
+    }
+  },
+);
+
+export const getFilmAction = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'films/getFilm',
+  async (filmId, {dispatch, extra: api}) => {
+    try {
+      dispatch(setFilmLoadingStatus(true));
+      const {data} = await api.get<IFilm>(`${APIRoute.Films}/${filmId}`);
+      dispatch(setFilm(data));
+      dispatch(setFilmLoadingStatus(false));
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error.response?.data);
@@ -143,24 +165,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const getFilmAction = createAsyncThunk<void, string, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  'films/getFilm',
-  async (filmId, {dispatch, extra: api}) => {
-    try {
-      const {data} = await api.get<IFilm>(`${APIRoute.Films}/${filmId}`);
-      dispatch(setFilm(data));
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.log(error.response?.data);
-      }
-    }
-  },
-);
-
 export const getFilmCommentsAction = createAsyncThunk<void, string, {
   dispatch: AppDispatch;
   state: State;
@@ -189,8 +193,8 @@ export const addFilmCommentAction = createAsyncThunk<void, IReviewData, {
     try {
       dispatch(setCommentUploadingStatus(true));
       const {data} = await api.post<IReview>(`${APIRoute.Comments}/${filmId}`, {comment, rating});
-      dispatch(setCommentUploadingStatus(false));
       dispatch(setFilmComments(getState()[ReducerName.Comments].comments.concat([data])));
+      dispatch(setCommentUploadingStatus(false));
     } catch (error) {
       if (error instanceof AxiosError) {
         dispatch(setCommentUploadingStatus(false));
@@ -220,8 +224,8 @@ export const getFavoritesAction = createAsyncThunk<void, undefined, {
     try {
       dispatch(setFavoritesLoadingStatus(true));
       const {data} = await api.get<IFilmShort[]>(APIRoute.Favorites);
-      dispatch(setFavoritesLoadingStatus(false));
       dispatch(setFavorites(data));
+      dispatch(setFavoritesLoadingStatus(false));
     } catch (error) {
       if (error instanceof AxiosError) {
         console.log(error.response?.data);

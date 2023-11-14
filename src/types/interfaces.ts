@@ -79,6 +79,8 @@ export interface IFilmsReducer {
   genres: IGenre[];
   promoFilm: IFilmPromo | null;
   filmsLoadingStatus: boolean;
+  filmLoadingStatus: boolean;
+  similarFilmsLoadingStatus: boolean;
   film: IFilm | null;
   similarFilms: IFilmShort[];
 }

@@ -27,7 +27,7 @@ export const MainPage = () => {
       dispatch(clearPromoFilm());
       dispatch(setGenres([]));
     });
-  }, []);
+  }, [dispatch]);
 
   if (!promoFilm) {
     return <LoadingScreen />;

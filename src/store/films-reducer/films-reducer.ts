@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ALL_GENRES } from '../../types/consts';
 import { IFilmsReducer, IGenre } from '../../types/interfaces';
-import { setActiveGenre, getFilmsByGenre, setFilms, setPromoFilm, setGenres, setFilmsLoadingStatus, setFilm, setSimilarFilms, clearFilm, clearPromoFilm } from '../action';
+import { setActiveGenre, getFilmsByGenre, setFilms, setPromoFilm, setGenres, setFilmsLoadingStatus, setFilm, setSimilarFilms, clearFilm, clearPromoFilm, setFilmLoadingStatus, setSimilarFilmsLoadingStatus } from '../action';
 import { ReducerName } from '../../types/enums';
 
 const initialState: IFilmsReducer = {
@@ -12,6 +12,8 @@ const initialState: IFilmsReducer = {
   genres: [],
   promoFilm: null,
   filmsLoadingStatus: false,
+  filmLoadingStatus: false,
+  similarFilmsLoadingStatus: false,
   film: null,
   similarFilms: [],
 };
@@ -55,17 +57,21 @@ export const filmsReducer = createSlice({
               genresNames.push(film.genre);
             }
           });
-          const genres: IGenre[] = [...new Set([ALL_GENRES, ...genresNames])].map((genre, index) => (
-            <IGenre>{
-              id: index,
-              name: genre,
-            }
-          ));
+          const genres: IGenre[] = [...new Set([ALL_GENRES, ...genresNames])].map<IGenre>((genre, index) => ({
+            id: index,
+            name: genre,
+          }));
           state.genres = genres;
         }
       })
       .addCase(setFilmsLoadingStatus, (state, action) => {
         state.filmsLoadingStatus = action.payload;
+      })
+      .addCase(setFilmLoadingStatus, (state, action) => {
+        state.filmLoadingStatus = action.payload;
+      })
+      .addCase(setSimilarFilmsLoadingStatus, (state, action) => {
+        state.similarFilmsLoadingStatus = action.payload;
       })
       .addCase(setFilm, (state, action) => {
         state.film = action.payload;

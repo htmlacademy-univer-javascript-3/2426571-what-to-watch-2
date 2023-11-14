@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
@@ -14,31 +14,29 @@ import { clearFilm, setFilmComments, setSimilarFilms } from '../../store/action'
 
 export const FilmPage = () => {
   const params = useParams();
-  const id = params.id ?? '-1';
   const film = useAppSelector((state) => state[ReducerName.Films].film);
-  const films = useAppSelector((state) => state[ReducerName.Films].films);
   const similarFilms = useAppSelector((state) => state[ReducerName.Films].similarFilms);
   const comments = useAppSelector((state) => state[ReducerName.Comments].comments);
   const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
+  const filmLoadingStatus = useAppSelector((state) => state[ReducerName.Films].filmLoadingStatus);
+  const similarFilmsLoadingStatus = useAppSelector((state) => state[ReducerName.Films].similarFilmsLoadingStatus);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (!films.find((currentFilm) => currentFilm.id === id)) {
-      navigate(`/${RoutePath.NotFound}`);
+    if (params.id) {
+      dispatch(getFilmAction(params.id)).catch(() => <Navigate to={`/${RoutePath.NotFound}`} />);
+      dispatch(getSimilarFilmsAction(params.id));
+      dispatch(getFilmCommentsAction(params.id));
     }
-    dispatch(getFilmAction(id));
-    dispatch(getSimilarFilmsAction(id));
-    dispatch(getFilmCommentsAction(id));
 
     return (() => {
       dispatch(clearFilm());
       dispatch(setSimilarFilms([]));
       dispatch(setFilmComments([]));
     });
-  }, []);
+  }, [params.id, dispatch]);
 
-  if (!film) {
+  if (!film || filmLoadingStatus || similarFilmsLoadingStatus) {
     return <LoadingScreen />;
   }
 
@@ -65,7 +63,7 @@ export const FilmPage = () => {
               <div className="film-card__buttons">
                 <Button
                   buttonClassName="btn--play"
-                  buttonLink={`/${RoutePath.Player}/${id}`}
+                  buttonLink={`/${RoutePath.Player}/${params.id}`}
                   svgHref="#play-s"
                 >
                   <span>Play</span>
@@ -81,7 +79,7 @@ export const FilmPage = () => {
                   </>
                 </Button>
                 {authorizationStatus === AuthorizationStatus.Auth ?
-                  <Link to={`/${RoutePath.Films}/${id}/${RoutePath.AddReview}`} className="btn film-card__button">
+                  <Link to={`/${RoutePath.Films}/${params.id}/${RoutePath.AddReview}`} className="btn film-card__button">
                     Add review
                   </Link> :
                   null}
