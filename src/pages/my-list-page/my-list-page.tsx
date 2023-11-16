@@ -1,25 +1,44 @@
+import { useEffect } from 'react';
 import { FilmsList } from '../../components/films-list/films-list';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
-import { IFilm } from '../../types/interfaces';
 import './my-list-page.scss';
+import { getFavoritesAction } from '../../store/api-actions';
+import { ReducerName } from '../../types/enums';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { LoadingScreen } from '../../components/loading-screen/loading-screen';
+import { setFavorites } from '../../store/action';
 
-interface MyListPageProps {
-  films: IFilm[];
-}
+export const MyListPage = () => {
+  const favorites = useAppSelector((state) => state[ReducerName.Favorites].favorites);
+  const favoritesLoadingStatus = useAppSelector((state) => state[ReducerName.Favorites].favoritesLoadingStatus);
+  const dispatch = useAppDispatch();
 
-export const MyListPage = ({films}: MyListPageProps) => (
-  <div className="user-page">
-    <Header headerClassName="user-page__head">
-      <h1 className="page-title user-page__title">My list <span className="user-page__film-count">9</span></h1>
-    </Header>
+  useEffect(() => {
+    dispatch(getFavoritesAction());
 
-    <section className="catalog">
-      <h2 className="catalog__title visually-hidden">Catalog</h2>
+    return (() => {
+      dispatch(setFavorites([]));
+    });
+  }, [dispatch]);
 
-      <FilmsList films={films} />
-    </section>
+  if (favorites.length === 0 && favoritesLoadingStatus) {
+    return <LoadingScreen />;
+  }
 
-    <Footer />
-  </div>
-);
+  return (
+    <div className="user-page">
+      <Header headerClassName="user-page__head">
+        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">9</span></h1>
+      </Header>
+
+      <section className="catalog">
+        <h2 className="catalog__title visually-hidden">Catalog</h2>
+
+        <FilmsList films={favorites} />
+      </section>
+
+      <Footer />
+    </div>
+  );
+};

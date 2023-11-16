@@ -1,9 +1,9 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 import { ALL_GENRES } from '../../types/consts';
-import { IFilmsReducer, IGenre } from '../../types/interfaces';
-import { setActiveGenre, getFilmsByGenre, setFilms, setPromoFilm, setGenres, setFilmsLoadingStatus } from '../action';
 import { ReducerName } from '../../types/enums';
+import { IFilmsReducer, IGenre } from '../../types/interfaces';
+import { clearFilm, clearPromoFilm, getFilmsByGenre, setActiveGenre, setFilm, setFilmLoadingError, setFilmLoadingStatus, setFilms, setFilmsLoadingStatus, setGenres, setPromoFilm, setSimilarFilms, setSimilarFilmsLoadingStatus } from '../action';
 
 const initialState: IFilmsReducer = {
   activeGenre: {id: 0, name: ALL_GENRES},
@@ -11,7 +11,12 @@ const initialState: IFilmsReducer = {
   films: [],
   genres: [],
   promoFilm: null,
-  filmsLoadingStatus: false
+  filmsLoadingStatus: false,
+  filmLoadingStatus: false,
+  similarFilmsLoadingStatus: false,
+  filmLoadingError: '',
+  film: null,
+  similarFilms: [],
 };
 
 export const filmsReducer = createSlice({
@@ -35,8 +40,14 @@ export const filmsReducer = createSlice({
         state.films = action.payload;
         state.currentFilms = action.payload;
       })
+      .addCase(setSimilarFilms, (state, action) => {
+        state.similarFilms = action.payload;
+      })
       .addCase(setPromoFilm, (state, action) => {
         state.promoFilm = action.payload;
+      })
+      .addCase(clearPromoFilm, (state) => {
+        state.promoFilm = null;
       })
       .addCase(setGenres, (state, action) => {
         if (state.genres.length === 0) {
@@ -47,17 +58,30 @@ export const filmsReducer = createSlice({
               genresNames.push(film.genre);
             }
           });
-          const genres: IGenre[] = [...new Set([ALL_GENRES, ...genresNames])].map((genre, index) => (
-            <IGenre>{
-              id: index,
-              name: genre,
-            }
-          ));
+          const genres: IGenre[] = [...new Set([ALL_GENRES, ...genresNames])].map<IGenre>((genre, index) => ({
+            id: index,
+            name: genre,
+          }));
           state.genres = genres;
         }
       })
       .addCase(setFilmsLoadingStatus, (state, action) => {
         state.filmsLoadingStatus = action.payload;
+      })
+      .addCase(setFilmLoadingStatus, (state, action) => {
+        state.filmLoadingStatus = action.payload;
+      })
+      .addCase(setSimilarFilmsLoadingStatus, (state, action) => {
+        state.similarFilmsLoadingStatus = action.payload;
+      })
+      .addCase(setFilmLoadingError, (state, action) => {
+        state.filmLoadingError = action.payload;
+      })
+      .addCase(setFilm, (state, action) => {
+        state.film = action.payload;
+      })
+      .addCase(clearFilm, (state) => {
+        state.film = null;
       });
   },
 });

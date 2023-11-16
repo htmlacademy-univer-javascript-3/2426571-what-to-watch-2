@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { IFilm } from '../../types/interfaces';
-import playIcon from '/img/icons/play-s.svg';
-import pauseIcon from '/img/icons/pause.svg';
+import { formatDuration } from './utils';
 import fullscreenIcon from '/img/icons/full-screen.svg';
 import mutedIcon from '/img/icons/muted.svg';
+import pauseIcon from '/img/icons/pause.svg';
+import playIcon from '/img/icons/play-s.svg';
 import unmutedIcon from '/img/icons/unmuted.svg';
-import { formatDuration } from './utils';
 
 const TIMEOUT_SEC = 1000;
 
@@ -19,19 +19,19 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => () => clearTimeout(timeout), []);
+  useEffect(() => () => clearTimeout(timeout), [timeout]);
 
   useEffect(() => {
     if (videoRef.current && isMuted !== videoRef.current.muted) {
       setIsMuted(videoRef.current.muted);
     }
-  }, [videoRef.current?.muted]);
+  }, [videoRef.current?.muted, isMuted]);
 
   useEffect(() => {
     if (videoRef.current?.paused === isPlaying) {
       setIsPlaying(!isPlaying);
     }
-  }, [videoRef.current?.paused]);
+  }, [videoRef.current?.paused, isPlaying]);
 
   const handleMouseEnter = () => {
     if (timeout) {

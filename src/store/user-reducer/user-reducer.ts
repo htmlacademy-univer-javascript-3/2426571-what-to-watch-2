@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthorizationStatus, ReducerName } from '../../types/enums';
+import { IUserReducer } from '../../types/interfaces';
 import { setAuthorizationErrors, setAuthorizationStatus } from '../action';
-import { IAuthorizationReducer } from '../../types/interfaces';
 
-const initialState: IAuthorizationReducer = {
+const initialState: IUserReducer = {
   authorizationStatus: AuthorizationStatus.NoAuth,
   authorizationErrors: [],
 };
 
 export const authorizationReducer = createSlice({
-  name: ReducerName.Authorization,
+  name: ReducerName.User,
   initialState,
   reducers: {},
   extraReducers: (builder) => {

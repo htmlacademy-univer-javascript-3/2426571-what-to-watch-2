@@ -1,24 +1,37 @@
+import { useEffect } from 'react';
 import {
   BrowserRouter,
-  Routes,
-  Route
+  Route,
+  Routes
 } from 'react-router-dom';
-import { RoutePath, AuthorizationStatus, ReducerName } from '../../types/enums';
-import { PrivateRoute } from '../private-route/private-route';
-import { MainPage } from '../../pages/main-page/main-page';
-import { SignInPage } from '../../pages/sign-in-page/sign-in-page';
-import { MyListPage } from '../../pages/my-list-page/my-list-page';
-import { FilmPage } from '../../pages/film-page/film-page';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AddReviewPage } from '../../pages/add-review-page/add-review-page';
-import { PlayerPage } from '../../pages/player-page/player-page';
+import { FilmPage } from '../../pages/film-page/film-page';
+import { MainPage } from '../../pages/main-page/main-page';
+import { MyListPage } from '../../pages/my-list-page/my-list-page';
 import { NotFoundPage } from '../../pages/not-found-page/not-found-page';
-import { reviews } from '../../mocks/reviews';
-import { useAppSelector } from '../../hooks';
+import { PlayerPage } from '../../pages/player-page/player-page';
+import { SignInPage } from '../../pages/sign-in-page/sign-in-page';
+import { setAuthorizationStatus, setFilms } from '../../store/action';
+import { getAuthorizationStatusAction, getFilmsAction } from '../../store/api-actions';
+import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
 import { LoadingScreen } from '../loading-screen/loading-screen';
+import { PrivateRoute } from '../private-route/private-route';
 
 export const App = () => {
-  const authorizationStatus = useAppSelector((state) => state[ReducerName.Authorization].authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
   const filmsLoadingStatus = useAppSelector((state) => state[ReducerName.Films].filmsLoadingStatus);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getFilmsAction());
+    dispatch(getAuthorizationStatusAction());
+
+    return (() => {
+      dispatch(setFilms([]));
+      dispatch(setAuthorizationStatus(AuthorizationStatus.NoAuth));
+    });
+  }, [dispatch]);
 
   if (authorizationStatus === AuthorizationStatus.Unknown || filmsLoadingStatus) {
     return (
@@ -40,7 +53,7 @@ export const App = () => {
           />
           <Route path={RoutePath.Films}>
             <Route path={RoutePath.Film}>
-              <Route index element={<FilmPage reviews={reviews} />} />
+              <Route index element={<FilmPage />} />
               <Route path={RoutePath.AddReview} element={<AddReviewPage />} />
             </Route>
           </Route>

@@ -1,8 +1,8 @@
-import { IGenre } from '../../types/interfaces';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { GenresCatalogueItem } from './genres-catalogue-item/genres-catalogue-item';
 import { getFilmsByGenre, setActiveGenre } from '../../store/action';
 import { ReducerName } from '../../types/enums';
+import { IGenre } from '../../types/interfaces';
+import { GenresCatalogueItem } from './genres-catalogue-item/genres-catalogue-item';
 
 interface GenresCatalogueProps {
   genres: IGenre[];

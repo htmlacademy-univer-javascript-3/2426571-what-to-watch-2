@@ -21,17 +21,6 @@ export interface IFilm {
 export interface IFilmShort {
   id: string;
   name: string;
-  posterImage: string;
-  backgroundImage: string;
-  videoLink: string;
-  genre: string;
-  released: number;
-  isFavorite: boolean;
-}
-
-export interface IFilmPreview {
-  id: string;
-  name: string;
   previewImage: string;
   previewVideoLink: string;
   genre: string;
@@ -55,11 +44,16 @@ export interface IGenre {
 
 export interface IReview {
   id: string;
-  filmId: string;
-  text: string;
+  date: string;
+  user: string;
+  comment: string;
   rating: number;
-  date: Date;
-  author: string;
+}
+
+export interface IReviewData {
+  filmId: string;
+  comment: string;
+  rating: number;
 }
 
 export interface IUser {
@@ -73,21 +67,37 @@ export interface IAuth {
   password: string;
 }
 
-export interface IAuthorizationReducer {
+export interface IUserReducer {
   authorizationStatus: AuthorizationStatus;
-  authorizationErrors: IAuthorizationError[];
+  authorizationErrors: IResponseError[];
 }
 
 export interface IFilmsReducer {
   activeGenre: IGenre;
-  currentFilms: IFilmPreview[];
-  films: IFilmPreview[];
+  currentFilms: IFilmShort[];
+  films: IFilmShort[];
   genres: IGenre[];
   promoFilm: IFilmPromo | null;
   filmsLoadingStatus: boolean;
+  filmLoadingStatus: boolean;
+  similarFilmsLoadingStatus: boolean;
+  filmLoadingError: string;
+  film: IFilm | null;
+  similarFilms: IFilmShort[];
 }
 
-export interface IAuthorizationError {
+export interface ICommentsReducer {
+  comments: IReview[];
+  commentUploadingStatus: boolean;
+  commentAddErrors: IResponseError[];
+}
+
+export interface IFavoritesReducer {
+  favorites: IFilmShort[];
+  favoritesLoadingStatus: boolean;
+}
+
+export interface IResponseError {
   property: string;
   messages: string[];
 }

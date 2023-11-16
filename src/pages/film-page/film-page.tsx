@@ -1,31 +1,53 @@
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
-import { ReducerName, RoutePath } from '../../types/enums';
+import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
 import './film-page.scss';
-import { IReview } from '../../types/interfaces';
 import { Button } from '../../components/button/button';
 import { Tabs } from '../../components/tabs/tabs';
 import { SimilarFilms } from '../../components/similar-films/similar-films';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getFilmAction, getFilmCommentsAction, getSimilarFilmsAction } from '../../store/api-actions';
+import { useEffect } from 'react';
+import { LoadingScreen } from '../../components/loading-screen/loading-screen';
+import { clearFilm, setFilmComments, setFilmLoadingError, setSimilarFilms } from '../../store/action';
 
-interface FilmPageProps {
-  reviews: IReview[];
-}
-
-export const FilmPage = ({reviews}: FilmPageProps) => {
-  const films = useAppSelector((state) => state[ReducerName.Films].films);
+export const FilmPage = () => {
   const params = useParams();
-  const id = params.id ?? '-1';
+  const { id = '' } = params;
+  const film = useAppSelector((state) => state[ReducerName.Films].film);
+  const similarFilms = useAppSelector((state) => state[ReducerName.Films].similarFilms);
+  const comments = useAppSelector((state) => state[ReducerName.Comments].comments);
+  const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
+  const filmLoadingStatus = useAppSelector((state) => state[ReducerName.Films].filmLoadingStatus);
+  const similarFilmsLoadingStatus = useAppSelector((state) => state[ReducerName.Films].similarFilmsLoadingStatus);
+  const filmLoadingError = useAppSelector((state) => state[ReducerName.Films].filmLoadingError);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const filteredFilms = films.filter((x) => x.id === id);
-  if (filteredFilms.length === 0) {
-    return <Navigate to={`/${RoutePath.NotFound}`} />;
+  useEffect(() => {
+    if (params.id) {
+      dispatch(getFilmAction(params.id)).then(() => {
+        if (filmLoadingError) {
+          dispatch(setFilmLoadingError(''));
+          navigate(`/${RoutePath.NotFound}`);
+        }
+      });
+      dispatch(getSimilarFilmsAction(params.id));
+      dispatch(getFilmCommentsAction(params.id));
+    }
+
+    return (() => {
+      dispatch(clearFilm());
+      dispatch(setSimilarFilms([]));
+      dispatch(setFilmComments([]));
+      dispatch(setFilmLoadingError(''));
+    });
+  }, [params.id, dispatch, navigate, filmLoadingError]);
+
+  if (!film || filmLoadingStatus || similarFilmsLoadingStatus) {
+    return <LoadingScreen />;
   }
-
-  const film = filteredFilms[0];
-
-  const filteredReviews = reviews.filter((x) => x.filmId === id);
 
   return (
     <div>
@@ -65,19 +87,21 @@ export const FilmPage = ({reviews}: FilmPageProps) => {
                     <span className="film-card__count">9</span>
                   </>
                 </Button>
-                <Link to={`/${RoutePath.Films}/${id}/${RoutePath.AddReview}`} className="btn film-card__button">
-                  Add review
-                </Link>
+                {authorizationStatus === AuthorizationStatus.Auth ?
+                  <Link to={`/${RoutePath.Films}/${id}/${RoutePath.AddReview}`} className="btn film-card__button">
+                    Add review
+                  </Link> :
+                  null}
               </div>
             </div>
           </div>
         </div>
 
-        <Tabs film={film} reviews={filteredReviews} />
+        <Tabs film={film} reviews={comments} />
       </section>
 
       <div className="page-content">
-        <SimilarFilms film={film} films={films} />
+        <SimilarFilms films={similarFilms} />
 
         <Footer />
       </div>

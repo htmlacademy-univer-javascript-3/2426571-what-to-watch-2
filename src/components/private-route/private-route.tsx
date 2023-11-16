@@ -1,13 +1,13 @@
 import { Navigate } from 'react-router-dom';
-import { RoutePath, AuthorizationStatus, ReducerName } from '../../types/enums';
 import { useAppSelector } from '../../hooks';
+import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
 
 interface PrivateRouteProps {
   children: JSX.Element;
 }
 
 export const PrivateRoute = ({ children }: PrivateRouteProps) => {
-  const authorizationStatus = useAppSelector((state) => state[ReducerName.Authorization].authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
 
   return (
     authorizationStatus === AuthorizationStatus.Auth

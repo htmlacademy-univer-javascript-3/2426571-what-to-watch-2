@@ -2,13 +2,16 @@ import { Navigate } from 'react-router-dom';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { SignInForm } from '../../components/sign-in-form/sign-in-form';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setAuthorizationErrors } from '../../store/action';
 import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
 
 export const SignInPage = () => {
-  const authorizationStatus = useAppSelector((state) => state[ReducerName.Authorization].authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
+  const dispatch = useAppDispatch();
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
+    dispatch(setAuthorizationErrors([]));
     return <Navigate to={RoutePath.Main} />;
   }
 

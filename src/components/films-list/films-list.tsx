@@ -1,20 +1,20 @@
-import { FilmSmallCard } from '../film-small-card/film-small-card';
-import { IFilmPreview } from '../../types/interfaces';
-import { ShowMoreButton } from '../show-more-button/show-more-button';
 import { useState } from 'react';
-
+import { IFilmShort } from '../../types/interfaces';
+import { FilmSmallCard } from '../film-small-card/film-small-card';
+import { ShowMoreButton } from '../show-more-button/show-more-button';
 
 interface FilmsListProps {
-  films: IFilmPreview[];
+  films: IFilmShort[];
   amountToShow?: number;
 }
 
 export const FilmsList = ({films, amountToShow}: FilmsListProps) => {
-  const [shownFilmsAmount, setShownFilmsAmount] = useState(amountToShow ?? -1);
+  const [shownFilmsAmount, setShownFilmsAmount] = useState(amountToShow ?? films.length);
 
   const handleShowMoreButtonClick = () => {
     if (amountToShow) {
-      setShownFilmsAmount(shownFilmsAmount + amountToShow);
+      const newAmountToShow = shownFilmsAmount + amountToShow < films.length ? shownFilmsAmount + amountToShow : films.length;
+      setShownFilmsAmount(newAmountToShow);
     }
   };
 
@@ -28,7 +28,7 @@ export const FilmsList = ({films, amountToShow}: FilmsListProps) => {
   return (
     <>
       <div className="catalog__films-list">
-        {filmsSmallCards.slice(0, amountToShow ?? filmsSmallCards.length)}
+        {filmsSmallCards.slice(0, shownFilmsAmount)}
       </div>
 
       {amountToShow ?

@@ -1,17 +1,22 @@
-import { ChangeEvent, useState } from 'react';
-import { IAuth } from '../../types/interfaces';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setAuthorizationErrors } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
 import { ReducerName } from '../../types/enums';
+import { IAuth } from '../../types/interfaces';
 import { capitalize } from '../../utils/utils';
 
 export const SignInForm = () => {
-  const authorizationErrors = useAppSelector((state) => state[ReducerName.Authorization].authorizationErrors);
+  const authorizationErrors = useAppSelector((state) => state[ReducerName.User].authorizationErrors);
   const dispatch = useAppDispatch();
   const [signInForm, setSignInForm] = useState<IAuth>({
     email: '',
     password: '',
   });
+
+  useEffect(() => () => {
+    dispatch(setAuthorizationErrors([]));
+  }, [dispatch]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const {name, value} = event.target;
