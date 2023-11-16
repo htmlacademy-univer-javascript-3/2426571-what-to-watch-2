@@ -8,6 +8,9 @@ import { IReviewData } from '../../types/interfaces';
 import { capitalize } from '../../utils/utils';
 import './add-review-form.scss';
 
+const COMMENT_MIN_LENGTH = 50;
+const COMMENT_MAX_LENGTH = 400;
+
 interface AddReviewFormProps {
   filmId: string;
 }
@@ -91,7 +94,7 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
               className="add-review__btn"
               type="submit"
               onClick={handleSubmitClick}
-              disabled={reviewForm.comment.length < 50 || reviewForm.comment.length > 400 || commentUploadingStatus}
+              disabled={reviewForm.comment.length < COMMENT_MIN_LENGTH || reviewForm.comment.length > COMMENT_MAX_LENGTH || commentUploadingStatus}
             >
               Post
             </button>

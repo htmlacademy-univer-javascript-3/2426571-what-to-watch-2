@@ -11,7 +11,7 @@ import { clearFilm, setFilmLoadingError } from '../../store/action';
 
 export const AddReviewPage = () => {
   const params = useParams();
-  const id = params.id ?? '';
+  const { id = '' } = params;
   const film = useAppSelector((state) => state[ReducerName.Films].film);
   const filmLoadingStatus = useAppSelector((state) => state[ReducerName.Films].filmLoadingStatus);
   const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
@@ -36,7 +36,7 @@ export const AddReviewPage = () => {
       dispatch(clearFilm());
       dispatch(setFilmLoadingError(''));
     });
-  }, [params.id, dispatch]);
+  }, [params.id, dispatch, navigate, authorizationStatus, filmLoadingError]);
 
   if (!film || filmLoadingStatus) {
     return <LoadingScreen />;

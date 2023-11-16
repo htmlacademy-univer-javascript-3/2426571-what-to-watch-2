@@ -19,19 +19,19 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  useEffect(() => () => clearTimeout(timeout), []);
+  useEffect(() => () => clearTimeout(timeout), [timeout]);
 
   useEffect(() => {
     if (videoRef.current && isMuted !== videoRef.current.muted) {
       setIsMuted(videoRef.current.muted);
     }
-  }, [videoRef.current?.muted]);
+  }, [videoRef.current?.muted, isMuted]);
 
   useEffect(() => {
     if (videoRef.current?.paused === isPlaying) {
       setIsPlaying(!isPlaying);
     }
-  }, [videoRef.current?.paused]);
+  }, [videoRef.current?.paused, isPlaying]);
 
   const handleMouseEnter = () => {
     if (timeout) {

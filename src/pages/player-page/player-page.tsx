@@ -29,7 +29,7 @@ export const PlayerPage = () => {
       dispatch(clearFilm());
       dispatch(setFilmLoadingError(''));
     });
-  }, [params.id, dispatch]);
+  }, [params.id, dispatch, navigate, filmLoadingError]);
 
   if (!film || filmLoadingStatus) {
     return <LoadingScreen />;

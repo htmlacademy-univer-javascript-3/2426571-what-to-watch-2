@@ -14,7 +14,7 @@ import { clearFilm, setFilmComments, setFilmLoadingError, setSimilarFilms } from
 
 export const FilmPage = () => {
   const params = useParams();
-  const id = params.id ?? '';
+  const { id = '' } = params;
   const film = useAppSelector((state) => state[ReducerName.Films].film);
   const similarFilms = useAppSelector((state) => state[ReducerName.Films].similarFilms);
   const comments = useAppSelector((state) => state[ReducerName.Comments].comments);
@@ -43,7 +43,7 @@ export const FilmPage = () => {
       dispatch(setFilmComments([]));
       dispatch(setFilmLoadingError(''));
     });
-  }, [params.id, dispatch]);
+  }, [params.id, dispatch, navigate, filmLoadingError]);
 
   if (!film || filmLoadingStatus || similarFilmsLoadingStatus) {
     return <LoadingScreen />;
