@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { RoutePath, AuthorizationStatus, ReducerName } from '../../types/enums';
-import { Logo } from '../logo/logo';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
+import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
+import { Logo } from '../logo/logo';
 
 interface HeaderProps {
   headerClassName?: string;

@@ -1,7 +1,7 @@
-import { FilmSmallCard } from '../film-small-card/film-small-card';
-import { IFilmShort } from '../../types/interfaces';
-import { ShowMoreButton } from '../show-more-button/show-more-button';
 import { useState } from 'react';
+import { IFilmShort } from '../../types/interfaces';
+import { FilmSmallCard } from '../film-small-card/film-small-card';
+import { ShowMoreButton } from '../show-more-button/show-more-button';
 
 interface FilmsListProps {
   films: IFilmShort[];

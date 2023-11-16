@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { RoutePath } from '../../types/enums';
-import './film-small-card.scss';
 import { IFilmShort } from '../../types/interfaces';
+import './film-small-card.scss';
 
 interface FilmSmallCardProps {
   film: IFilmShort;

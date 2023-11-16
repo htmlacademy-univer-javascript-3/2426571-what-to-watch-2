@@ -1,12 +1,12 @@
 import { ChangeEvent, Fragment, MouseEvent, useEffect, useState } from 'react';
-import { IReviewData } from '../../types/interfaces';
-import { addFilmCommentAction } from '../../store/api-actions';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setCommentAddErrors } from '../../store/action';
+import { addFilmCommentAction } from '../../store/api-actions';
 import { ReducerName, RoutePath } from '../../types/enums';
+import { IReviewData } from '../../types/interfaces';
 import { capitalize } from '../../utils/utils';
 import './add-review-form.scss';
-import { setCommentAddErrors } from '../../store/action';
-import { useNavigate } from 'react-router-dom';
 
 interface AddReviewFormProps {
   filmId: string;

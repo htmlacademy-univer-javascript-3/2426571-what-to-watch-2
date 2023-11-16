@@ -1,22 +1,22 @@
+import { useEffect } from 'react';
 import {
   BrowserRouter,
-  Routes,
-  Route
+  Route,
+  Routes
 } from 'react-router-dom';
-import { RoutePath, AuthorizationStatus, ReducerName } from '../../types/enums';
-import { PrivateRoute } from '../private-route/private-route';
-import { MainPage } from '../../pages/main-page/main-page';
-import { SignInPage } from '../../pages/sign-in-page/sign-in-page';
-import { MyListPage } from '../../pages/my-list-page/my-list-page';
-import { FilmPage } from '../../pages/film-page/film-page';
-import { AddReviewPage } from '../../pages/add-review-page/add-review-page';
-import { PlayerPage } from '../../pages/player-page/player-page';
-import { NotFoundPage } from '../../pages/not-found-page/not-found-page';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { LoadingScreen } from '../loading-screen/loading-screen';
-import { useEffect } from 'react';
-import { getAuthorizationStatusAction, getFilmsAction } from '../../store/api-actions';
+import { AddReviewPage } from '../../pages/add-review-page/add-review-page';
+import { FilmPage } from '../../pages/film-page/film-page';
+import { MainPage } from '../../pages/main-page/main-page';
+import { MyListPage } from '../../pages/my-list-page/my-list-page';
+import { NotFoundPage } from '../../pages/not-found-page/not-found-page';
+import { PlayerPage } from '../../pages/player-page/player-page';
+import { SignInPage } from '../../pages/sign-in-page/sign-in-page';
 import { setAuthorizationStatus, setFilms } from '../../store/action';
+import { getAuthorizationStatusAction, getFilmsAction } from '../../store/api-actions';
+import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
+import { LoadingScreen } from '../loading-screen/loading-screen';
+import { PrivateRoute } from '../private-route/private-route';
 
 export const App = () => {
   const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { AuthorizationStatus, ReducerName } from '../../types/enums';
-import { setAuthorizationErrors, setAuthorizationStatus } from '../action';
 import { IUserReducer } from '../../types/interfaces';
+import { setAuthorizationErrors, setAuthorizationStatus } from '../action';
 
 const initialState: IUserReducer = {
   authorizationStatus: AuthorizationStatus.NoAuth,

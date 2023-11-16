@@ -1,9 +1,9 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 import { ALL_GENRES } from '../../types/consts';
-import { IFilmsReducer, IGenre } from '../../types/interfaces';
-import { setActiveGenre, getFilmsByGenre, setFilms, setPromoFilm, setGenres, setFilmsLoadingStatus, setFilm, setSimilarFilms, clearFilm, clearPromoFilm, setFilmLoadingStatus, setSimilarFilmsLoadingStatus, setFilmLoadingError } from '../action';
 import { ReducerName } from '../../types/enums';
+import { IFilmsReducer, IGenre } from '../../types/interfaces';
+import { clearFilm, clearPromoFilm, getFilmsByGenre, setActiveGenre, setFilm, setFilmLoadingError, setFilmLoadingStatus, setFilms, setFilmsLoadingStatus, setGenres, setPromoFilm, setSimilarFilms, setSimilarFilmsLoadingStatus } from '../action';
 
 const initialState: IFilmsReducer = {
   activeGenre: {id: 0, name: ALL_GENRES},

@@ -3,8 +3,8 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { SignInForm } from '../../components/sign-in-form/sign-in-form';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
 import { setAuthorizationErrors } from '../../store/action';
+import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
 
 export const SignInPage = () => {
   const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);

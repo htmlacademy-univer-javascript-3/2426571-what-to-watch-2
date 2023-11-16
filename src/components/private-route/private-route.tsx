@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
-import { RoutePath, AuthorizationStatus, ReducerName } from '../../types/enums';
 import { useAppSelector } from '../../hooks';
+import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
 
 interface PrivateRouteProps {
   children: JSX.Element;

@@ -1,10 +1,10 @@
-import { AxiosError, AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, State } from '../types/types';
-import { IAuth, IResponseError, IErrorDetail, IFilm, IFilmShort, IFilmPromo, IReview, IUser, IReviewData } from '../types/interfaces';
-import { APIRoute, AuthorizationStatus, ReducerName } from '../types/enums';
-import { setFilmsLoadingStatus, setFilms, setPromoFilm, setGenres, setAuthorizationStatus, setAuthorizationErrors, setFilm, setFilmComments, setFavorites, setSimilarFilms, setFavoritesLoadingStatus, setCommentUploadingStatus, setCommentAddErrors, setFilmLoadingStatus, setSimilarFilmsLoadingStatus, setFilmLoadingError } from './action';
+import { AxiosError, AxiosInstance } from 'axios';
 import { dropToken, saveToken } from '../services/token';
+import { APIRoute, AuthorizationStatus, ReducerName } from '../types/enums';
+import { IAuth, IErrorDetail, IFilm, IFilmPromo, IFilmShort, IResponseError, IReview, IReviewData, IUser } from '../types/interfaces';
+import { AppDispatch, State } from '../types/types';
+import { setAuthorizationErrors, setAuthorizationStatus, setCommentAddErrors, setCommentUploadingStatus, setFavorites, setFavoritesLoadingStatus, setFilm, setFilmComments, setFilmLoadingError, setFilmLoadingStatus, setFilms, setFilmsLoadingStatus, setGenres, setPromoFilm, setSimilarFilms, setSimilarFilmsLoadingStatus } from './action';
 
 export const getFilmsAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;

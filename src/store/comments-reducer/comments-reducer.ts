@@ -1,8 +1,8 @@
 
 import { createSlice } from '@reduxjs/toolkit';
+import { ReducerName } from '../../types/enums';
 import { ICommentsReducer } from '../../types/interfaces';
 import { setCommentAddErrors, setCommentUploadingStatus, setFilmComments } from '../action';
-import { ReducerName } from '../../types/enums';
 
 const initialState: ICommentsReducer = {
   comments: [],

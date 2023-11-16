@@ -1,8 +1,8 @@
 
 import { createSlice } from '@reduxjs/toolkit';
+import { ReducerName } from '../../types/enums';
 import { IFavoritesReducer } from '../../types/interfaces';
 import { setFavorites } from '../action';
-import { ReducerName } from '../../types/enums';
 
 const initialState: IFavoritesReducer = {
   favorites: [],

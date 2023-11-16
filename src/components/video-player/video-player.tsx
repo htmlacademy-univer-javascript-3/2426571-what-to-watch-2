@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { IFilm } from '../../types/interfaces';
-import playIcon from '/img/icons/play-s.svg';
-import pauseIcon from '/img/icons/pause.svg';
+import { formatDuration } from './utils';
 import fullscreenIcon from '/img/icons/full-screen.svg';
 import mutedIcon from '/img/icons/muted.svg';
+import pauseIcon from '/img/icons/pause.svg';
+import playIcon from '/img/icons/play-s.svg';
 import unmutedIcon from '/img/icons/unmuted.svg';
-import { formatDuration } from './utils';
 
 const TIMEOUT_SEC = 1000;
 

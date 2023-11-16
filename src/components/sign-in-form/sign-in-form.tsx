@@ -1,10 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { IAuth } from '../../types/interfaces';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setAuthorizationErrors } from '../../store/action';
 import { loginAction } from '../../store/api-actions';
 import { ReducerName } from '../../types/enums';
+import { IAuth } from '../../types/interfaces';
 import { capitalize } from '../../utils/utils';
-import { setAuthorizationErrors } from '../../store/action';
 
 export const SignInForm = () => {
   const authorizationErrors = useAppSelector((state) => state[ReducerName.User].authorizationErrors);

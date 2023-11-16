@@ -1,15 +1,15 @@
+import { useEffect } from 'react';
+import { Button } from '../../components/button/button';
+import { FilmsList } from '../../components/films-list/films-list';
 import { Footer } from '../../components/footer/footer';
+import { GenresCatalogue } from '../../components/genres-catalogue/genres-catalogue';
 import { Header } from '../../components/header/header';
+import { LoadingScreen } from '../../components/loading-screen/loading-screen';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { clearPromoFilm, setGenres } from '../../store/action';
+import { getGenresAction, getPromoFilmAction } from '../../store/api-actions';
 import { ReducerName, RoutePath } from '../../types/enums';
 import './main-page.scss';
-import { GenresCatalogue } from '../../components/genres-catalogue/genres-catalogue';
-import { FilmsList } from '../../components/films-list/films-list';
-import { Button } from '../../components/button/button';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { LoadingScreen } from '../../components/loading-screen/loading-screen';
-import { getGenresAction, getPromoFilmAction } from '../../store/api-actions';
-import { useEffect } from 'react';
-import { clearPromoFilm, setGenres } from '../../store/action';
 
 const FILMS_TO_SHOW_AMOUNT = 8;
 

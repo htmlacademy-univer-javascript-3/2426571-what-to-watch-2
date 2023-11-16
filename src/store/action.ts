@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
-import { IResponseError, IFilm, IFilmShort, IFilmPromo, IGenre, IReview } from '../types/interfaces';
 import { AuthorizationStatus } from '../types/enums';
+import { IFilm, IFilmPromo, IFilmShort, IGenre, IResponseError, IReview } from '../types/interfaces';
 
 export const setActiveGenre = createAction<{genre: IGenre}>('films/setActiveGenre');
 
