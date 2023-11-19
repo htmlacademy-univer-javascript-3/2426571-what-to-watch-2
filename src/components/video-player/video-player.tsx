@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { RoutePath } from '../../types/enums';
 import { IFilm } from '../../types/interfaces';
 import { formatDuration } from './utils';
 import fullscreenIcon from '/img/icons/full-screen.svg';
@@ -82,7 +84,7 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
         muted={isMuted}
       >
       </video>
-      <button type="button" className="player__exit">Exit</button>
+      <Link className="player__exit" to={`/${RoutePath.Films}/${film.id}`}>Exit</Link>
 
       <div className="player__controls">
         <div className="player__controls-row">
