@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Button } from '../../components/button/button';
+import { FilmCard } from '../../components/film-card/film-card';
 import { FilmsList } from '../../components/films-list/films-list';
 import { Footer } from '../../components/footer/footer';
 import { GenresCatalogue } from '../../components/genres-catalogue/genres-catalogue';
@@ -8,7 +8,7 @@ import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { clearPromoFilm, setGenres } from '../../store/action';
 import { getGenresAction, getPromoFilmAction } from '../../store/api-actions';
-import { ReducerName, RoutePath } from '../../types/enums';
+import { ReducerName } from '../../types/enums';
 import './main-page.scss';
 
 const FILMS_TO_SHOW_AMOUNT = 8;
@@ -50,33 +50,7 @@ export const MainPage = () => {
               <img src={promoFilm.posterImage} alt={`${promoFilm.name} poster`} />
             </div>
 
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{promoFilm.name}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{promoFilm.genre}</span>
-                <span className="film-card__year">{promoFilm.released}</span>
-              </p>
-
-              <div className="film-card__buttons">
-                <Button
-                  buttonClassName="btn--play"
-                  buttonLink={`/${RoutePath.Player}/${promoFilm.id}`}
-                  svgHref="#play-s"
-                >
-                  <span>Play</span>
-                </Button>
-                <Button
-                  buttonClassName="btn--list"
-                  buttonLink={`/${RoutePath.MyList}`}
-                  svgHref="#add"
-                >
-                  <>
-                    <span>My list</span>
-                    <span className="film-card__count">9</span>
-                  </>
-                </Button>
-              </div>
-            </div>
+            <FilmCard film={promoFilm} />
           </div>
         </div>
       </section>
