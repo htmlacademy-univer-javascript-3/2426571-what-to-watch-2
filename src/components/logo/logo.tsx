@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { RoutePath } from '../../types/enums';
 
@@ -5,7 +6,7 @@ interface LogoProps {
   logoClassName?: string;
 }
 
-export const Logo = ({logoClassName}: LogoProps) => (
+export const LogoComponent = ({logoClassName}: LogoProps) => (
   <div className="logo">
     <Link className={`logo__link ${logoClassName ?? ''}`} to={RoutePath.Main}>
       <span className="logo__letter logo__letter--1">W</span>
@@ -14,3 +15,5 @@ export const Logo = ({logoClassName}: LogoProps) => (
     </Link>
   </div>
 );
+
+export const Logo = memo(LogoComponent);
