@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
@@ -6,10 +7,10 @@ import { Button } from '../button/button';
 
 interface FilmCardProps {
   film: IFilmPromo | IFilm;
-  addReviewButtonEnabled?: boolean
+  addReviewButtonEnabled?: boolean;
 }
 
-export const FilmCard = ({film, addReviewButtonEnabled}: FilmCardProps) => {
+const FilmCardComponent = ({film, addReviewButtonEnabled}: FilmCardProps) => {
   const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
 
   return (
@@ -46,4 +47,6 @@ export const FilmCard = ({film, addReviewButtonEnabled}: FilmCardProps) => {
       </div>
     </div>
   );
-}
+};
+
+export const FilmCard = memo(FilmCardComponent);
