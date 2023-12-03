@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getFilmsByGenre, setActiveGenre } from '../../store/action';
 import { ReducerName } from '../../types/enums';
@@ -8,7 +9,7 @@ interface GenresCatalogueProps {
   genres: IGenre[];
 }
 
-export const GenresCatalogue = ({genres}: GenresCatalogueProps) => {
+const GenresCatalogueComponent = ({genres}: GenresCatalogueProps) => {
   const activeGenre = useAppSelector((state) => state[ReducerName.Films].activeGenre);
   const dispatch = useAppDispatch();
 
@@ -32,3 +33,5 @@ export const GenresCatalogue = ({genres}: GenresCatalogueProps) => {
     </ul>
   );
 };
+
+export const GenresCatalogue = memo(GenresCatalogueComponent);

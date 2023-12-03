@@ -1,24 +1,22 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { FilmCard } from '../../components/film-card/film-card';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
-import { AuthorizationStatus, ReducerName, RoutePath } from '../../types/enums';
-import './film-page.scss';
-import { Button } from '../../components/button/button';
-import { Tabs } from '../../components/tabs/tabs';
-import { SimilarFilms } from '../../components/similar-films/similar-films';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getFilmAction, getFilmCommentsAction, getSimilarFilmsAction } from '../../store/api-actions';
-import { useEffect } from 'react';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
+import { SimilarFilms } from '../../components/similar-films/similar-films';
+import { Tabs } from '../../components/tabs/tabs';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { clearFilm, setFilmComments, setFilmLoadingError, setSimilarFilms } from '../../store/action';
+import { getFilmAction, getFilmCommentsAction, getSimilarFilmsAction } from '../../store/api-actions';
+import { ReducerName, RoutePath } from '../../types/enums';
+import './film-page.scss';
 
 export const FilmPage = () => {
   const params = useParams();
-  const { id = '' } = params;
   const film = useAppSelector((state) => state[ReducerName.Films].film);
   const similarFilms = useAppSelector((state) => state[ReducerName.Films].similarFilms);
   const comments = useAppSelector((state) => state[ReducerName.Comments].comments);
-  const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
   const filmLoadingStatus = useAppSelector((state) => state[ReducerName.Films].filmLoadingStatus);
   const similarFilmsLoadingStatus = useAppSelector((state) => state[ReducerName.Films].similarFilmsLoadingStatus);
   const filmLoadingError = useAppSelector((state) => state[ReducerName.Films].filmLoadingError);
@@ -62,38 +60,7 @@ export const FilmPage = () => {
           <Header headerClassName="film-card__head" />
 
           <div className="film-card__wrap">
-            <div className="film-card__desc">
-              <h2 className="film-card__title">{film.name}</h2>
-              <p className="film-card__meta">
-                <span className="film-card__genre">{film.genre}</span>
-                <span className="film-card__year">{film.released}</span>
-              </p>
-
-              <div className="film-card__buttons">
-                <Button
-                  buttonClassName="btn--play"
-                  buttonLink={`/${RoutePath.Player}/${id}`}
-                  svgHref="#play-s"
-                >
-                  <span>Play</span>
-                </Button>
-                <Button
-                  buttonClassName="btn--list"
-                  buttonLink={`/${RoutePath.MyList}`}
-                  svgHref="#add"
-                >
-                  <>
-                    <span>My list</span>
-                    <span className="film-card__count">9</span>
-                  </>
-                </Button>
-                {authorizationStatus === AuthorizationStatus.Auth ?
-                  <Link to={`/${RoutePath.Films}/${id}/${RoutePath.AddReview}`} className="btn film-card__button">
-                    Add review
-                  </Link> :
-                  null}
-              </div>
-            </div>
+            <FilmCard film={film} addReviewButtonEnabled />
           </div>
         </div>
 

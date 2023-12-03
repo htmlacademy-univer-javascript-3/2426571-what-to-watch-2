@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment, MouseEvent, useEffect, useState } from 'react';
+import { ChangeEvent, MouseEvent, memo, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCommentAddErrors } from '../../store/action';
@@ -6,6 +6,7 @@ import { addFilmCommentAction } from '../../store/api-actions';
 import { ReducerName, RoutePath } from '../../types/enums';
 import { IReviewData } from '../../types/interfaces';
 import { capitalize } from '../../utils/utils';
+import { RatingStars } from './rating-stars/rating-stars';
 import './add-review-form.scss';
 
 const COMMENT_MIN_LENGTH = 50;
@@ -15,7 +16,7 @@ interface AddReviewFormProps {
   filmId: string;
 }
 
-export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
+const AddReviewFormComponent = ({filmId}: AddReviewFormProps) => {
   const commentUploadingStatus = useAppSelector((state) => state[ReducerName.Comments].commentUploadingStatus);
   const commentAddErrors = useAppSelector((state) => state[ReducerName.Comments].commentAddErrors);
   const dispatch = useAppDispatch();
@@ -35,12 +36,12 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
     setReviewForm({...reviewForm, [name]: value});
   };
 
-  const handleInputChange = (event: MouseEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((event: MouseEvent<HTMLInputElement>) => {
     if (event.target instanceof HTMLInputElement) {
       const {name, value} = event.target;
-      setReviewForm({...reviewForm, [name]: Number(value)});
+      setReviewForm((previousState) => ({...previousState, [name]: Number(value)}));
     }
-  };
+  }, []);
 
   const handleSubmitClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -50,20 +51,6 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
       }
     });
   };
-
-  const ratingStars = [...Array(10).keys()].reverse().map((i) => (
-    <Fragment key={i + 1} >
-      <input
-        className="rating__input"
-        id={`star-${i + 1}`}
-        type="radio"
-        name="rating"
-        value={i + 1}
-        onClick={handleInputChange}
-      />
-      <label className="rating__label" htmlFor={`star-${i + 1}`}>Rating {i + 1}</label>
-    </Fragment>
-  ));
 
   return (
     <div className="add-review">
@@ -75,7 +62,7 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
           null}
         <div className="rating">
           <div className="rating__stars">
-            {ratingStars}
+            <RatingStars handleInputChange={handleInputChange} />
           </div>
         </div>
 
@@ -105,3 +92,5 @@ export const AddReviewForm = ({filmId}: AddReviewFormProps) => {
     </div>
   );
 };
+
+export const AddReviewForm = memo(AddReviewFormComponent);

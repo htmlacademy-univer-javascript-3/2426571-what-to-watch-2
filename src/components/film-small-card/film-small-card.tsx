@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { RoutePath } from '../../types/enums';
 import { IFilmShort } from '../../types/interfaces';
@@ -7,7 +8,7 @@ interface FilmSmallCardProps {
   film: IFilmShort;
 }
 
-export const FilmSmallCard = ({film}: FilmSmallCardProps) => (
+const FilmSmallCardComponent = ({film}: FilmSmallCardProps) => (
   <article className="small-film-card catalog__films-card">
     <div className="small-film-card__image">
       <img src={film.previewImage} alt={`${film.name} poster`} />
@@ -17,3 +18,5 @@ export const FilmSmallCard = ({film}: FilmSmallCardProps) => (
     </h3>
   </article>
 );
+
+export const FilmSmallCard = memo(FilmSmallCardComponent);

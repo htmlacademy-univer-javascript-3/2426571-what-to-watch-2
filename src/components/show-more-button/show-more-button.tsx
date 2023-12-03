@@ -1,9 +1,11 @@
+import { memo } from 'react';
+
 interface ShowMoreButtonProps {
   isVisible: boolean;
   handleShowMoreButtonClick: () => void;
 }
 
-export const ShowMoreButton = ({isVisible, handleShowMoreButtonClick}: ShowMoreButtonProps) => {
+const ShowMoreButtonComponent = ({isVisible, handleShowMoreButtonClick}: ShowMoreButtonProps) => {
   if (isVisible) {
     return (
       <div className="catalog__more">
@@ -13,3 +15,5 @@ export const ShowMoreButton = ({isVisible, handleShowMoreButtonClick}: ShowMoreB
   }
   return null;
 };
+
+export const ShowMoreButton = memo(ShowMoreButtonComponent);

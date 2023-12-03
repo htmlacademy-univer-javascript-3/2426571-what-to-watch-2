@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
@@ -9,7 +10,7 @@ interface HeaderProps {
   children?: JSX.Element;
 }
 
-export const Header = ({ headerClassName, children }: HeaderProps) => {
+const HeaderComponent = ({ headerClassName, children }: HeaderProps) => {
   const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
   const dispatch = useAppDispatch();
 
@@ -24,7 +25,7 @@ export const Header = ({ headerClassName, children }: HeaderProps) => {
       {authorizationStatus === AuthorizationStatus.Auth ?
         <ul className="user-block">
           <li className="user-block__item">
-            <div className="user-block__avatar">
+            <div className="user-block__avatar">∏
               <img src="img/avatar.jpg" alt="User avatar" />
             </div>
           </li>
@@ -42,3 +43,5 @@ export const Header = ({ headerClassName, children }: HeaderProps) => {
     </header>
   );
 };
+
+export const Header = memo(HeaderComponent);
