@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 interface ButtonProps {
@@ -7,7 +8,7 @@ interface ButtonProps {
   children?: JSX.Element;
 }
 
-export const Button = ({buttonClassName, buttonLink, svgHref, children}: ButtonProps) => (
+const ButtonComponent = ({buttonClassName, buttonLink, svgHref, children}: ButtonProps) => (
   <Link to={buttonLink} className={`btn ${buttonClassName} film-card__button`}>
     <svg viewBox="0 0 19 20" width="19" height="20">
       <use xlinkHref={svgHref}></use>
@@ -15,3 +16,5 @@ export const Button = ({buttonClassName, buttonLink, svgHref, children}: ButtonP
     {children}
   </Link>
 );
+
+export const Button = memo(ButtonComponent);
