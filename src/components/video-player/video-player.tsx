@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { SyntheticEvent, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RoutePath } from '../../types/enums';
 import { IFilm } from '../../types/interfaces';
@@ -20,6 +20,13 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [timeLeft, setTimeLeft] = useState(videoRef.current?.duration ?? 0);
+  const [progress, setProgress] = useState(0);
+
+  const updateTimeLeft = (event: SyntheticEvent<HTMLVideoElement, Event>) => {
+    setTimeLeft(event.currentTarget.duration - event.currentTarget.currentTime);
+    setProgress(event.currentTarget.currentTime / event.currentTarget.duration * 100);
+  }
 
   useEffect(() => () => clearTimeout(timeout), [timeout]);
 
@@ -82,6 +89,7 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
         className="player__video"
         poster={film.posterImage}
         muted={isMuted}
+        onTimeUpdate={(event) => {updateTimeLeft(event)} }
       >
       </video>
       <Link className="player__exit" to={`/${RoutePath.Films}/${film.id}`}>Exit</Link>
@@ -89,10 +97,10 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={{left: '30%'}}>Toggler</div>
+            <progress className="player__progress" value={progress} max="100"></progress>
+            <div className="player__toggler" style={{left: `${progress}%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">{videoRef.current ? formatDuration(videoRef.current?.duration) : ''}</div>
+          <div className="player__time-value">-{formatDuration(timeLeft)}</div>
         </div>
 
         <div className="player__controls-row">
