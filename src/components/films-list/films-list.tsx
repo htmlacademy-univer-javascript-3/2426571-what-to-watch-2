@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { IFilmShort } from '../../types/interfaces';
 import { FilmSmallCard } from '../film-small-card/film-small-card';
 import { ShowMoreButton } from '../show-more-button/show-more-button';
@@ -11,12 +11,12 @@ interface FilmsListProps {
 export const FilmsList = ({films, amountToShow}: FilmsListProps) => {
   const [shownFilmsAmount, setShownFilmsAmount] = useState(amountToShow ?? films.length);
 
-  const handleShowMoreButtonClick = () => {
+  const handleShowMoreButtonClick = useCallback(() => {
     if (amountToShow) {
       const newAmountToShow = shownFilmsAmount + amountToShow < films.length ? shownFilmsAmount + amountToShow : films.length;
       setShownFilmsAmount(newAmountToShow);
     }
-  };
+  }, [amountToShow, films.length, shownFilmsAmount]);
 
   const filmsSmallCards = films.map((film) => (
     <FilmSmallCard
