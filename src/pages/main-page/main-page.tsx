@@ -6,7 +6,7 @@ import { GenresCatalogue } from '../../components/genres-catalogue/genres-catalo
 import { Header } from '../../components/header/header';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { clearPromoFilm, setGenres } from '../../store/action';
+import { clearPromoFilm } from '../../store/action';
 import { getGenresAction, getPromoFilmAction } from '../../store/api-actions';
 import { ReducerName } from '../../types/enums';
 import './main-page.scss';
@@ -25,7 +25,6 @@ export const MainPage = () => {
 
     return (() => {
       dispatch(clearPromoFilm());
-      dispatch(setGenres([]));
     });
   }, [dispatch]);
 
