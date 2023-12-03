@@ -50,7 +50,7 @@ export const filmsReducer = createSlice({
         state.promoFilm = null;
       })
       .addCase(setGenres, (state, action) => {
-        if (state.genres.length === 0) {
+        if (state.genres.length === 0 && action.payload.length > 0) {
           const films = action.payload;
           const genresNames: string[] = [];
           films.forEach((film) => {
