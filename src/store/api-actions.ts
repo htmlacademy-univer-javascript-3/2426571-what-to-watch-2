@@ -149,14 +149,8 @@ export const getFilmCommentsAction = createAsyncThunk<void, string, {
 }>(
   'comments/getFilmComments',
   async (filmId, {dispatch, extra: api}) => {
-    try {
-      const {data} = await api.get<IReview[]>(`${APIRoute.Comments}/${filmId}`);
-      dispatch(setFilmComments(data));
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.log(error.response?.data);
-      }
-    }
+    const {data} = await api.get<IReview[]>(`${APIRoute.Comments}/${filmId}`);
+    dispatch(setFilmComments(data));
   },
 );
 
