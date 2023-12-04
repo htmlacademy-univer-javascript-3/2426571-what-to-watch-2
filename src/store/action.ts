@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../types/enums';
-import { IFilm, IFilmPromo, IFilmShort, IGenre, IResponseError, IReview } from '../types/interfaces';
+import { IFavoriteStatusSet, IFilm, IFilmPromo, IFilmShort, IGenre, IResponseError, IReview } from '../types/interfaces';
 
 export const setActiveGenre = createAction<{genre: IGenre}>('films/setActiveGenre');
 
@@ -64,5 +64,7 @@ export const setCommentAddErrors = createAction<IResponseError[]>('comments/setC
 export const getFavorites = createAction('favorites/getFavorites');
 
 export const setFavorites = createAction<IFilmShort[]>('favorites/setFavorites');
+
+export const setFavoriteStatus = createAction<IFavoriteStatusSet>('favorites/setFavoriteStatus');
 
 export const setFavoritesLoadingStatus = createAction<boolean>('favorites/setFavoritesLoadingStatus');
