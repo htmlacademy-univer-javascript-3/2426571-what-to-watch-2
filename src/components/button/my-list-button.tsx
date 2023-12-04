@@ -23,7 +23,7 @@ const MyListButtonComponent = ({filmId}: MyListButtonProps) => {
     const favoriteStatusSet: IFavoriteStatusSet = {
       filmId: filmId,
       status: isFavorite ? 0 : 1,
-    }
+    };
     dispatch(setFavoriteStatusAction(favoriteStatusSet)).then(() => dispatch(getFavoritesAction()));
   }, [authorizationStatus, dispatch, filmId, isFavorite, navigate]);
 
@@ -34,8 +34,8 @@ const MyListButtonComponent = ({filmId}: MyListButtonProps) => {
       </svg>
       <span>My list</span>
       <span className="film-card__count">{favorites.length}</span>
-    </button> 
-  )
+    </button>
+  );
 };
 
 export const MyListButton = memo(MyListButtonComponent);

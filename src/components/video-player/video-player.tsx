@@ -26,7 +26,7 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
   const updateTimeLeft = (event: SyntheticEvent<HTMLVideoElement, Event>) => {
     setTimeLeft(event.currentTarget.duration - event.currentTarget.currentTime);
     setProgress(event.currentTarget.currentTime / event.currentTarget.duration * 100);
-  }
+  };
 
   useEffect(() => () => clearTimeout(timeout), [timeout]);
 
@@ -89,7 +89,7 @@ export const VideoPlayer = ({film}: VideoPlayerProps) => {
         className="player__video"
         poster={film.posterImage}
         muted={isMuted}
-        onTimeUpdate={(event) => {updateTimeLeft(event)} }
+        onTimeUpdate={(event) => updateTimeLeft(event)}
       >
       </video>
       <Link className="player__exit" to={`/${RoutePath.Films}/${film.id}`}>Exit</Link>
