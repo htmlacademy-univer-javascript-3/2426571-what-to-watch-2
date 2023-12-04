@@ -75,7 +75,7 @@ export const getFilmAction = createAsyncThunk<void, string, {
         if (!error?.response) {
           errors.push({'property': 'server', messages: ['Server unavailable']});
         } else if (`${error.response?.status}`.startsWith('4')) {
-          dispatch(setFilmLoadingError(error.response?.data?.message));
+          dispatch(setFilmLoadingError(<string>error.response?.data?.message));
         } else {
           errors.push({'property': 'app', messages: ['Sign in failed']});
         }

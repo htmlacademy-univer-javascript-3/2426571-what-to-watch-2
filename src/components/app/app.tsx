@@ -19,7 +19,6 @@ import { LoadingScreen } from '../loading-screen/loading-screen';
 import { PrivateRoute } from '../private-route/private-route';
 
 export const App = () => {
-  const authorizationStatus = useAppSelector((state) => state[ReducerName.User].authorizationStatus);
   const filmsLoadingStatus = useAppSelector((state) => state[ReducerName.Films].filmsLoadingStatus);
   const dispatch = useAppDispatch();
 
@@ -33,10 +32,8 @@ export const App = () => {
     });
   }, [dispatch]);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || filmsLoadingStatus) {
-    return (
-      <LoadingScreen />
-    );
+  if (filmsLoadingStatus) {
+    return <LoadingScreen />;
   }
 
   return (
@@ -54,7 +51,12 @@ export const App = () => {
           <Route path={RoutePath.Films}>
             <Route path={RoutePath.Film}>
               <Route index element={<FilmPage />} />
-              <Route path={RoutePath.AddReview} element={<AddReviewPage />} />
+              <Route path={RoutePath.AddReview} element={
+                <PrivateRoute>
+                  <AddReviewPage />
+                </PrivateRoute>
+              }
+              />
             </Route>
           </Route>
           <Route path={RoutePath.Player}>
