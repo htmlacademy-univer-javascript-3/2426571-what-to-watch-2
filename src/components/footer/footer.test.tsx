@@ -9,7 +9,8 @@ describe('Component: Footer', () => {
     render(
       <MemoryRouter>
         <Footer />
-      </MemoryRouter>);
+      </MemoryRouter>
+    );
 
     expect(screen.getByText(expectedText)).toBeInTheDocument();
   });
@@ -21,7 +22,8 @@ describe('Component: Footer', () => {
     render(
       <MemoryRouter>
         <Footer />
-      </MemoryRouter>);
+      </MemoryRouter>
+    );
 
     expect(screen.getAllByText(expectedTextW)).toHaveLength(3);
     expect(screen.getByText(expectedTextT)).toBeInTheDocument();

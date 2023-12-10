@@ -10,7 +10,8 @@ describe('Component: Logo', () => {
     render(
       <MemoryRouter>
         <Logo />
-      </MemoryRouter>);
+      </MemoryRouter>
+    );
 
     expect(screen.getAllByText(expectedTextW)).toHaveLength(2);
     expect(screen.getByText(expectedTextT)).toBeInTheDocument();
