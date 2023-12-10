@@ -4,7 +4,7 @@ import { DetailsItem } from './details-item';
 const mockDetailsItem = {
   name: 'mock DetailsItem name',
   value: 'mock DetailsItem value',
-}
+};
 
 describe('Component: DetailsItem', () => {
   it('should render correctly', () => {
