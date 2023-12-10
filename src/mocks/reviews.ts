@@ -4,7 +4,7 @@ export const reviews: IReview[] = [
   {
     id: '1',
     user:  'Christina',
-    rating: 7,
+    rating: 6,
     comment: 'A movie that will take you to another world full of emotions.',
     date: '2022-06-02T12:25:36.946Z'
   },
