@@ -26,6 +26,6 @@ describe('Component: Footer', () => {
     );
 
     expect(screen.getAllByText(expectedTextW)).toHaveLength(3);
-    expect(screen.getByText(expectedTextT)).toBeInTheDocument();
+    expect(screen.getAllByText(expectedTextT)).toHaveLength(2);
   });
 });

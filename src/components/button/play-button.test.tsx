@@ -4,7 +4,7 @@ import { PlayButton } from './play-button';
 
 const testFilmId = 'testFilmId123';
 
-describe('Component: Play Button', () => {
+describe('Component: PlayButton', () => {
   it('should render correctly', () => {
     const expectedText = /Play/i;
 

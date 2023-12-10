@@ -4,7 +4,7 @@ import { AddReviewButton } from './add-review-button';
 
 const testFilmId = 'testFilmId123';
 
-describe('Component: Add Review Button', () => {
+describe('Component: AddReviewButton', () => {
   it('should render correctly', () => {
     const expectedText = /Add review/i;
 
