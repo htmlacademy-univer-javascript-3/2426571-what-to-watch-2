@@ -107,3 +107,8 @@ export interface IErrorDetail {
   property: string;
   value: string;
 }
+
+export interface IFavoriteStatusSet {
+  filmId: string;
+  status: number;
+}

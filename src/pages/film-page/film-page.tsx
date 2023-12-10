@@ -7,8 +7,8 @@ import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 import { SimilarFilms } from '../../components/similar-films/similar-films';
 import { Tabs } from '../../components/tabs/tabs';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { clearFilm, setFilmComments, setFilmLoadingError, setSimilarFilms } from '../../store/action';
-import { getFilmAction, getFilmCommentsAction, getSimilarFilmsAction } from '../../store/api-actions';
+import { clearFilm, setFavorites, setFilmComments, setFilmLoadingError, setSimilarFilms } from '../../store/action';
+import { getFavoritesAction, getFilmAction, getFilmCommentsAction, getSimilarFilmsAction } from '../../store/api-actions';
 import { ReducerName, RoutePath } from '../../types/enums';
 import './film-page.scss';
 
@@ -19,6 +19,7 @@ export const FilmPage = () => {
   const comments = useAppSelector((state) => state[ReducerName.Comments].comments);
   const filmLoadingStatus = useAppSelector((state) => state[ReducerName.Films].filmLoadingStatus);
   const similarFilmsLoadingStatus = useAppSelector((state) => state[ReducerName.Films].similarFilmsLoadingStatus);
+  const favoritesLoadingStatus = useAppSelector((state) => state[ReducerName.Favorites].favoritesLoadingStatus);
   const filmLoadingError = useAppSelector((state) => state[ReducerName.Films].filmLoadingError);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ export const FilmPage = () => {
       });
       dispatch(getSimilarFilmsAction(params.id));
       dispatch(getFilmCommentsAction(params.id));
+      dispatch(getFavoritesAction());
     }
 
     return (() => {
@@ -40,10 +42,11 @@ export const FilmPage = () => {
       dispatch(setSimilarFilms([]));
       dispatch(setFilmComments([]));
       dispatch(setFilmLoadingError(''));
+      dispatch(setFavorites([]));
     });
   }, [params.id, dispatch, navigate, filmLoadingError]);
 
-  if (!film || filmLoadingStatus || similarFilmsLoadingStatus) {
+  if (!film || filmLoadingStatus || similarFilmsLoadingStatus || favoritesLoadingStatus) {
     return <LoadingScreen />;
   }
 

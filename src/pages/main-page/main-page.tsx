@@ -6,8 +6,8 @@ import { GenresCatalogue } from '../../components/genres-catalogue/genres-catalo
 import { Header } from '../../components/header/header';
 import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { clearPromoFilm } from '../../store/action';
-import { getGenresAction, getPromoFilmAction } from '../../store/api-actions';
+import { clearPromoFilm, setFavorites } from '../../store/action';
+import { getFavoritesAction, getGenresAction, getPromoFilmAction } from '../../store/api-actions';
 import { ReducerName } from '../../types/enums';
 import './main-page.scss';
 
@@ -17,18 +17,21 @@ export const MainPage = () => {
   const activeGenreFilms = useAppSelector((state) => state[ReducerName.Films].currentFilms);
   const promoFilm = useAppSelector((state) => state[ReducerName.Films].promoFilm);
   const genres = useAppSelector((state) => state[ReducerName.Films].genres);
+  const favoritesLoadingStatus = useAppSelector((state) => state[ReducerName.Favorites].favoritesLoadingStatus);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getPromoFilmAction());
     dispatch(getGenresAction());
+    dispatch(getFavoritesAction());
 
     return (() => {
       dispatch(clearPromoFilm());
+      dispatch(setFavorites([]));
     });
   }, [dispatch]);
 
-  if (!promoFilm) {
+  if (!promoFilm || favoritesLoadingStatus) {
     return <LoadingScreen />;
   }
 
