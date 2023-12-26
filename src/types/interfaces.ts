@@ -112,3 +112,11 @@ export interface IFavoriteStatusSet {
   filmId: string;
   status: number;
 }
+
+export interface IResponseErrorMessage {
+  message: string;
+}
+
+export interface IResponseErrorDetails {
+  details: IErrorDetail[];
+}

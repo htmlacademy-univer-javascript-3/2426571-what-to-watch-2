@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosError, AxiosInstance } from 'axios';
+import axios, { AxiosError, AxiosInstance } from 'axios';
 import { dropToken, saveToken } from '../services/token';
 import { APIRoute, AuthorizationStatus, ReducerName } from '../types/enums';
-import { IAuth, IErrorDetail, IFavoriteStatusSet, IFilm, IFilmPromo, IFilmShort, IResponseError, IReview, IReviewData, IUser } from '../types/interfaces';
+import { IAuth, IFavoriteStatusSet, IFilm, IFilmPromo, IFilmShort, IResponseError, IResponseErrorDetails, IResponseErrorMessage, IReview, IReviewData, IUser } from '../types/interfaces';
 import { AppDispatch, State } from '../types/types';
 import { setAuthorizationErrors, setAuthorizationStatus, setCommentAddErrors, setCommentUploadingStatus, setFavorites, setFavoritesLoadingStatus, setFilm, setFilmComments, setFilmLoadingError, setFilmLoadingStatus, setFilms, setFilmsLoadingStatus, setGenres, setPromoFilm, setSimilarFilms, setSimilarFilmsLoadingStatus } from './action';
 
@@ -70,12 +70,12 @@ export const getFilmAction = createAsyncThunk<void, string, {
       dispatch(setFilm(data));
       dispatch(setFilmLoadingStatus(false));
     } catch (error) {
-      if (error instanceof AxiosError) {
+      if (axios.isAxiosError(error)) {
         const errors: IResponseError[] = [];
         if (!error?.response) {
           errors.push({'property': 'server', messages: ['Server unavailable']});
         } else if (`${error.response?.status}`.startsWith('4')) {
-          dispatch(setFilmLoadingError(<string>error.response?.data?.message));
+          dispatch(setFilmLoadingError((<IResponseErrorMessage>error.response?.data).message));
         } else {
           errors.push({'property': 'app', messages: ['Sign in failed']});
         }
@@ -112,12 +112,12 @@ export const loginAction = createAsyncThunk<void, IAuth, {
       saveToken(token);
       dispatch(setAuthorizationStatus(AuthorizationStatus.Auth));
     } catch (error) {
-      if (error instanceof AxiosError) {
+      if (axios.isAxiosError(error)) {
         const errors: IResponseError[] = [];
         if (!error?.response) {
           errors.push({'property': 'server', messages: ['Server unavailable']});
         } else if (error.response?.status === 400) {
-          error.response?.data?.details?.forEach((errorDetail: IErrorDetail) => {
+          (<IResponseErrorDetails>error.response?.data).details?.forEach((errorDetail) => {
             errors.push({property: errorDetail.property, messages: errorDetail.messages});
           });
           dispatch(setAuthorizationErrors(errors));
@@ -173,7 +173,7 @@ export const addFilmCommentAction = createAsyncThunk<void, IReviewData, {
         if (!error?.response) {
           errors.push({'property': 'server', messages: ['Server unavailable']});
         } else if (error.response?.status === 400) {
-          error.response?.data?.details?.forEach((errorDetail: IErrorDetail) => {
+          (<IResponseErrorDetails>error.response?.data).details?.forEach((errorDetail) => {
             errors.push({property: errorDetail.property, messages: errorDetail.messages});
           });
           dispatch(setCommentAddErrors(errors));
