@@ -8,7 +8,7 @@ interface PlayButtonProps {
 
 const PlayButtonComponent = ({filmId}: PlayButtonProps) => (
   <Link to={`/${RoutePath.Player}/${filmId}`} className="btn btn--play film-card__button">
-    <svg viewBox="0 0 19 20" width="19" height="20">
+    <svg viewBox="0 0 19 20" width="19" height="20" role='play-icon'>
       <use xlinkHref="#play-s"></use>
     </svg>
     <span>Play</span>
