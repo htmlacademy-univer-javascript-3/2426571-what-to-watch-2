@@ -25,9 +25,11 @@ const HeaderComponent = ({ headerClassName, children }: HeaderProps) => {
       {authorizationStatus === AuthorizationStatus.Auth ?
         <ul className="user-block">
           <li className="user-block__item">
-            <div className="user-block__avatar">∏
-              <img src="img/avatar.jpg" alt="User avatar" />
-            </div>
+            <Link to={RoutePath.MyList}>
+              <div className="user-block__avatar">
+                <img src="img/avatar.jpg" alt="User avatar" />
+              </div>
+            </Link>
           </li>
           <li className="user-block__item">
             <Link className="user-block__link" onClick={handleSignOutClick} to={RoutePath.Main}>
