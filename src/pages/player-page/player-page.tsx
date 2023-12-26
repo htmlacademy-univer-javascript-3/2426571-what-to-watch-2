@@ -1,11 +1,11 @@
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ReducerName, RoutePath } from '../../types/enums';
+import { LoadingScreen } from '../../components/loading-screen/loading-screen';
 import { VideoPlayer } from '../../components/video-player/video-player';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { LoadingScreen } from '../../components/loading-screen/loading-screen';
-import { useEffect } from 'react';
-import { getFilmAction } from '../../store/api-actions';
 import { clearFilm, setFilmLoadingError } from '../../store/action';
+import { getFilmAction } from '../../store/api-actions';
+import { ReducerName, RoutePath } from '../../types/enums';
 
 export const PlayerPage = () => {
   const params = useParams();
@@ -36,6 +36,6 @@ export const PlayerPage = () => {
   }
 
   return (
-    <VideoPlayer film={film}/>
+    <VideoPlayer.FullVideoPlayer film={film}/>
   );
 };
