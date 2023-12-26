@@ -8,7 +8,7 @@ const initialState: IUserReducer = {
   authorizationErrors: [],
 };
 
-export const authorizationReducer = createSlice({
+export const userReducer = createSlice({
   name: ReducerName.User,
   initialState,
   reducers: {},
