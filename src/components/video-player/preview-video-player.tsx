@@ -14,7 +14,6 @@ export const PreviewVideoPlayer = ({film}: VideoPlayerProps) => {
   useEffect(() => () => clearTimeout(timeout), [timeout]);
 
   const handleMouseEnter = () => {
-    console.log("MOUSE IN")
     if (timeout) {
       clearTimeout(timeout);
     }
@@ -24,7 +23,6 @@ export const PreviewVideoPlayer = ({film}: VideoPlayerProps) => {
   };
 
   const handleMouseLeave = () => {
-    console.log("MOUSE OUT")
     if (timeout) {
       clearTimeout(timeout);
     }
@@ -42,7 +40,7 @@ export const PreviewVideoPlayer = ({film}: VideoPlayerProps) => {
         src={film.previewVideoLink}
         className="player__video"
         poster={film.previewImage}
-        muted={true}
+        muted
       >
       </video>
     </div>
